@@ -63,7 +63,6 @@ the README.
   measured SLO, quality summary with links), then requirements, how to run (with URLs), how to test,
   structure, development conventions (incl. AI-assisted development note), design, SLO +
   calibration, load test, assumptions, enhancements, quality gates (local vs CI table).
-- `docs/implementation-plan.md`: agreed design, decisions and numbered steps (one PR each).
 - Repo `CLAUDE.md`: a table pointing to README sections + Claude-only rules (TDD, run the local
   gate before finishing, keep SLO and k6 thresholds in sync, no Co-Authored-By, push only after
   confirmation) + any overrides of the personal baseline, with the reason.

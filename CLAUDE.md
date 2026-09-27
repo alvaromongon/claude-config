@@ -44,5 +44,4 @@ repo-level rule wins, and the override should state why.
 - Commits are authored as me (my git identity), without `Co-Authored-By` trailers.
 - Never `git push` without my explicit confirmation for that push.
 - Discuss the analysis and alternatives with me before implementing non-trivial designs.
-- Record the agreed design and the step-by-step plan in `docs/implementation-plan.md` (update it when
-  a decision changes); deliver one pull request per step, each built with TDD.
+- Deliver one pull request per step, each built with TDD.
