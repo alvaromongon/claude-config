@@ -7,7 +7,8 @@ Microsoft; TypeScript → TypeScript/ESLint community standards; others → thei
 
 ## Baseline
 - **Tests**: unit + component (in-process, external dependencies stubbed, never call real third-party
-  services) + load tests validating the SLO. Apply **TDD**. Test folders/namespaces mirror the source.
+  services) + load tests validating the SLO. Apply **TDD**. Test folders/namespaces mirror the source;
+  shared hand-written fakes/stubs live in a `TestDoubles/` folder per test project.
 - **SLO** defined in the README (latency percentiles at a sustained load, error rate, and protection
   of downstream dependencies) and enforced as load-test thresholds; scheduled load-test pipeline
   publishing a report to the run summary.

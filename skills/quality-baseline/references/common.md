@@ -8,6 +8,10 @@
 - **Load**: k6 against the container with dependencies stubbed (WireMock with latency), via Docker
   Compose. The SLO numbers are the k6 **thresholds**. Also assert downstream protection by counting
   requests received by the stub (`/__admin/requests/count`).
+- **Test doubles**: hand-written fakes/stubs shared by several tests (e.g. a stub
+  `HttpMessageHandler`) live in a `TestDoubles/` folder (namespace `<TestProject>.TestDoubles`) at
+  the root of each test project, the only folder that does not mirror the source. Prefer a mocking
+  library for one-off collaborators.
 - TDD: failing test → minimal code → refactor; one PR per step.
 
 ## SLO (in README)
