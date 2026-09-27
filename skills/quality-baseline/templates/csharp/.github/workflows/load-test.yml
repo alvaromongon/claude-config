@@ -1,14 +1,16 @@
 name: Load test
 
 on:
-  schedule:
-    # Nightly at 03:00 UTC (low activity window for shared runners).
-    - cron: "0 3 * * *"
+  # Optional, per project: uncomment to track the SLO nightly. Otherwise run it on demand after
+  # relevant changes.
+  # schedule:
+  #   # Nightly at 03:00 UTC (low activity window for shared runners).
+  #   - cron: "0 3 * * *"
   workflow_dispatch:
     inputs:
       rate:
         description: Requests per second (SLO load)
-        default: "500"
+        default: "1000"
         required: true
       duration:
         description: Test duration (e.g. 90s, 3m)
@@ -24,7 +26,7 @@ concurrency:
 
 env:
   COMPOSE_FILE: tests/HackerNews.BestStories.Api.LoadTests/compose.yaml
-  RATE: ${{ inputs.rate || '500' }}
+  RATE: ${{ inputs.rate || '1000' }}
   DURATION: ${{ inputs.duration || '3m' }}
 
 jobs:

@@ -8,14 +8,14 @@ import { textSummary } from 'https://jslib.k6.io/k6-summary/0.1.0/index.js';
 const BASE_URL = __ENV.BASE_URL || 'http://localhost:8080';
 const ENDPOINT = __ENV.ENDPOINT || '/api/stories/best';
 const STUB_ADMIN_URL = __ENV.STUB_ADMIN_URL || 'http://localhost:8081/__admin';
-const RATE = Number(__ENV.RATE || 500);
+const RATE = Number(__ENV.RATE || 1000);
 const DURATION = __ENV.DURATION || '3m';
 const REFRESH_INTERVAL_SECONDS = Number(__ENV.REFRESH_INTERVAL_SECONDS || 60);
 
-// SLO targets.
+// SLO targets, calibrated on the reference runner (saturation at ~2000-2700 req/s, see README.md).
 const SLO = {
-  p95Ms: 100,
-  p99Ms: 250,
+  p95Ms: 50,
+  p99Ms: 100,
   maxErrorRate: 0.001,
   rps: RATE,
 };
@@ -51,17 +51,17 @@ export const options = {
 };
 
 export function setup() {
-  // Wait for the API to be ready and warm the cache, so the test measures steady state.
+  // Wait until the API is ready (the ranking is cached), so the test measures steady state.
   const deadline = Date.now() + 60_000;
   let ready = false;
   while (!ready && Date.now() < deadline) {
-    ready = http.get(`${BASE_URL}${ENDPOINT}?count=1`, { tags: { name: 'warmup' } }).status === 200;
+    ready = http.get(`${BASE_URL}/health/ready`, { tags: { name: 'readiness' } }).status === 200;
     if (!ready) {
       sleep(1);
     }
   }
   if (!ready) {
-    throw new Error(`API not ready at ${BASE_URL}${ENDPOINT}`);
+    throw new Error(`API not ready at ${BASE_URL}/health/ready`);
   }
 
   // Only count upstream requests made during the measured window.

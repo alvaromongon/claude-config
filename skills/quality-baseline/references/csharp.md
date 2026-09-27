@@ -13,6 +13,8 @@ Templates: `../templates/csharp/` (verified in CI). Adapt names and versions.
 - Typed `HttpClient` + `Microsoft.Extensions.Http.Resilience` (`AddStandardResilienceHandler`),
   options with validation on start, `HybridCache` for caching, `TimeProvider` for time,
   `LoggerMessage` source-generated logging, health checks (live/ready).
+- Console apps / scheduled jobs: Generic Host (`Host.CreateApplicationBuilder`) with the same
+  options validation, typed clients and logging; exit codes documented in the README.
 
 ## Build configuration
 - `global.json`: SDK with `rollForward: latestFeature`; `"test": { "runner": "Microsoft.Testing.Platform" }`.
@@ -26,6 +28,7 @@ Templates: `../templates/csharp/` (verified in CI). Adapt names and versions.
   `PackageReference`.
 - `.editorconfig`: start from `dotnet new editorconfig` (Microsoft defaults), add charset/LF/final
   newline, raise key IDE/CA rules to warning, relax CA1707/CA1515 etc. under `tests/**`.
+- CodeQL: see the SARIF filter for `obj/**` in `templates/csharp/.github/workflows/codeql.yml`.
 - `dotnet-tools.json` with ReportGenerator; `build/coverage.sh` merges Cobertura and enforces the threshold.
 
 ## Tests
