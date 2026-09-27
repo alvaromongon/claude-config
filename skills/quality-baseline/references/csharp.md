@@ -37,6 +37,15 @@ commercial), WireMock.Net, `Microsoft.AspNetCore.Mvc.Testing` (`WebApplicationFa
 `Microsoft.Extensions.TimeProvider.Testing`, `Microsoft.Testing.Extensions.CodeCoverage`.
 Run: `dotnet test --coverage --coverage-output-format cobertura --results-directory artifacts/TestResults`.
 
+## Migrating an existing repo
+- xUnit v2 → `xunit.v3.mtp-v2`: drop `Microsoft.NET.Test.Sdk`, `xunit.runner.visualstudio` and
+  coverlet; custom `FactAttribute`s need a constructor forwarding `[CallerFilePath]`/`[CallerLineNumber]`
+  (xUnit3003).
+- Run `dotnet format` once and commit it apart from behaviour changes; keep process-culture code
+  (e.g. a fixed `es-ES`) out of `InvariantGlobalization`.
+- When coverage starts below the threshold, measure and publish first (threshold 0 in
+  `build/coverage.sh`) and raise it to 80% in the PR that adds the missing tests.
+
 ## Docker
 SDK image build stage with `CI=true` and restore from csproj + `packages.lock.json`; runtime
 `mcr.microsoft.com/dotnet/aspnet:<ver>-noble-chiseled`, `USER $APP_UID`, port 8080.

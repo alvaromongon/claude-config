@@ -45,6 +45,8 @@ the README.
 ## Pitfalls learned
 - **Never use workflow-level `paths:` filters on workflows with required checks**: skipped workflows
   never report and PRs block forever. Use job-level `if:` from a `changes` job; skipped jobs count as passed.
+- A matrix job skipped by its `if:` reports its check with the unexpanded name (`Tests (${{ matrix.os }})`),
+  which never matches a required check: use one explicit job per OS for required checks.
 - A job with `needs:` on a skipped job is skipped too: use `if: !failure() && !cancelled() && ...`.
 - Default test-results directories differ between SDK versions: always pass an explicit results
   directory and unique per-project coverage file names.
