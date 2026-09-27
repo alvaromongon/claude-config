@@ -46,6 +46,19 @@ Run: `dotnet test --coverage --coverage-output-format cobertura --results-direct
 - When coverage starts below the threshold, measure and publish first (threshold 0 in
   `build/coverage.sh`) and raise it to 80% in the PR that adds the missing tests.
 
+## Component tests pitfalls
+- MTP runs test projects in parallel: pass `--max-parallel-test-modules 1` (hook, CI, README) when
+  unit and component tests share process-external state (a library's data folder, a database).
+- Libraries with static state (settings, certificates, caches): one xUnit collection with
+  `DisableParallelization` + a collection fixture; redirect their data folders to a temp dir.
+- Entry point of top-level statements: `assembly.EntryPoint.Invoke(null, [args])` returns `int`
+  even for async code; capture `Console.Out/Error` and set config through environment variables.
+- WireMock.Net: `WithBodyAsJson` uses Newtonsoft (breaks `System.Text.Json.JsonElement`); serialize
+  with System.Text.Json and `WithBody`. Among equal-priority mappings the latest match wins, and
+  `AtPriority(n>0)` ranks *below* the default.
+- Code whose URLs are built inside (e.g. `https://{shop}/...`): redirect with a `DelegatingHandler`
+  test double instead of adding test hooks to production code.
+
 ## Docker
 SDK image build stage with `CI=true` and restore from csproj + `packages.lock.json`; runtime
 `mcr.microsoft.com/dotnet/aspnet:<ver>-noble-chiseled`, `USER $APP_UID`, port 8080.
