@@ -1,0 +1,6 @@
+# Whitelist: only versioned personal standards; everything else in ~/.claude is private runtime state.
+/*
+!/.gitignore
+!/README.md
+!/CLAUDE.md
+!/skills/
