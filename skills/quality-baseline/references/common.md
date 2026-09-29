@@ -64,8 +64,12 @@ the README.
   structure, development conventions (incl. AI-assisted development note), design, SLO +
   calibration, load test, assumptions, enhancements, quality gates (local vs CI table).
 - Repo `CLAUDE.md`: a table pointing to README sections + Claude-only rules (TDD, run the local
-  gate before finishing, keep SLO and k6 thresholds in sync, no Co-Authored-By, push only after
+  gate before finishing, keep SLO and k6 thresholds in sync, push only after
   confirmation) + any overrides of the personal baseline, with the reason.
+- **Decision log**: `docs/decisions/` with ADRs in MADR format and an index `README.md`, linked from
+  the repo README (design section). Brownfield audit: propose retroactive ADRs for the main past
+  decisions. Format and process: the `adr` skill.
+- Repo `CLAUDE.md` says that designs are recorded as ADRs proposed via PR.
 - Versioned `.claude/settings.json`: `allow` build/test/format/coverage/local gate and read-only
   git (`status`, `diff`, `log`); `ask` for `git push`.
 

@@ -26,6 +26,7 @@ repo-level rule wins, and the override should state why.
 - **Branch protection**: ruleset on the default branch (PRs, required checks, up-to-date branch,
   linear history, no force-push/deletion); secret scanning + push protection; Dependabot.
 - **CI efficiency**: job-level path filters so unrelated changes skip jobs while required checks still report.
+- **Decision log**: `docs/decisions/` with ADRs (MADR) and an index, linked from the README.
 - **Folder structure and naming** per the platform's official conventions, documented in the README.
 - **Editor/format config** (`.editorconfig`, formatter config) and centralized build/dependency config.
 - **Dockerfile**: multi-stage, minimal non-root runtime image.
@@ -41,7 +42,10 @@ repo-level rule wins, and the override should state why.
   project's language.
 
 ## Working agreements
-- Commits are authored as me (my git identity), without `Co-Authored-By` trailers.
-- Never `git push` without my explicit confirmation for that push.
+- Commits are authored as me (my git identity).
+- Never `git push` without my explicit confirmation for that push. Hard rule by default; a repo's
+  `CLAUDE.md` may relax it (e.g. for certain branches or kinds of change) and must say when.
 - Discuss the analysis and alternatives with me before implementing non-trivial designs.
+- Record architecturally significant decisions as ADRs (MADR) in `docs/decisions/`, proposed via
+  PR; use the `adr` skill.
 - Deliver one pull request per step, each built with TDD.

@@ -1,6 +1,6 @@
 ---
 name: quality-baseline
-description: Set up or audit a repository against my personal engineering quality baseline — tests (unit, component, load/SLO), CI gates, pre-push hook, branch protection, coverage, dependency audit, CodeQL, Docker, folder structure, editorconfig and centralized build config — following each language's official conventions (C#/.NET Microsoft, TypeScript, others). Use when creating a new repo/project, scaffolding a solution, or when asked to check/raise the quality of an existing repo.
+description: Set up or audit a repository against my personal engineering quality baseline — tests (unit, component, load/SLO), CI gates, pre-push hook, branch protection, coverage, dependency audit, CodeQL, Docker, ADR decision log, folder structure, editorconfig and centralized build config — following each language's official conventions (C#/.NET Microsoft, TypeScript, others). Use when creating a new repo/project, scaffolding a solution, or when asked to check/raise the quality of an existing repo.
 ---
 
 # Quality baseline
@@ -19,10 +19,10 @@ load test to the kind of project (HTTP service, batch job/CLI, library).
    - Other languages → apply `references/common.md` with that language's official conventions.
 4. **Verify locally**: run the full local gate (pre-push hook), build the container and smoke-test it.
 5. **Document**: README as single source of truth (At a glance, run, test, structure, design, SLO,
-   assumptions, quality gates, enhancements), a short repo
+   assumptions, quality gates, enhancements), `docs/decisions/` for ADRs (`adr` skill), a short repo
    `CLAUDE.md` pointing to the README plus Claude-only rules and baseline overrides, and a
    versioned `.claude/settings.json` (`ask` for `git push`).
-6. **Commit** as the user (no Co-Authored-By). Push / open PRs / change GitHub settings only with
+6. **Commit** as the user. Push / open PRs / change GitHub settings only with
    explicit confirmation.
 
 ## Adapting templates
