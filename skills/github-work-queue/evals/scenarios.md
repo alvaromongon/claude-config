@@ -20,4 +20,6 @@ End-to-end run on 2026-10-03 in [claude-workflow-sandbox](https://github.com/alv
 |---|---|
 | 1 | Pass: #1 → #2 (unblocked by #1's merge) → #3, each implement → two parallel worktree reviewers → CI → squash merge; frontier recomputed after each merge (B may come before C once A lands). Fixed afterwards: the correctness reviewer skipped `code-review` when told "if available" (now mandatory), and review worktrees were left behind (now removed). |
 | — | Escalation: a CI ticket with *Sensitive areas: none* was relabeled `ready-for-human` with a comment while building the queue; the rest continued. |
-| 2–5 | Not run. |
+| 3 | Pass (second run, 2026-10-03, Sonnet 5.5, $0.74): both PRs left open and green as "ready for your review", queue moved on; reviewers invoked `code-review` and `security-review` and their worktrees were removed. Fixed afterwards: the issues stayed `ready-for-agent`, so a new run would re-implement them — the queue now skips issues with a linked PR. |
+| 2 | Not run: a deliberately insecure brief (e.g. `eval` of argv) is blocked by the auto-mode classifier when creating it; needs a human-created issue. |
+| 4, 5 | Not run. |

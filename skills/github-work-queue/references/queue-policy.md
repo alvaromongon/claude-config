@@ -11,7 +11,9 @@ missing — without push rights every ticket would end as a local branch.
 List open issues labeled `ready-for-agent` (optionally scoped to one milestone if the user asked
 for that). Compute the **frontier** per `../../github-workflow-setup/references/dependencies.md`:
 issues in that set whose blocking issues are all closed. Only the frontier is workable right now;
-the rest wait for their blockers.
+the rest wait for their blockers. Leave out issues that already have a linked PR
+(`gh issue view <n> --json closedByPullRequestsReferences`): they are waiting for review from an
+earlier run (`Unattended merge: no`), and implementing them again would open a duplicate PR.
 
 ## Per-ticket loop
 

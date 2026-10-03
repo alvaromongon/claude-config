@@ -54,7 +54,8 @@ already has), replacing `main` with the repo's default branch:
   "Bash(git push*--delete*)",
   "Bash(git push*-d *)",
   "Bash(git push*--mirror*)",
-  "Bash(git push*--all*)"
+  "Bash(git push*--all*)",
+  "Bash(gh pr merge*--admin*)"
 ]
 ```
 
@@ -65,6 +66,8 @@ Verified against Claude Code (see `../evals/scenarios.md`):
 - **`deny` closes the gaps of the `issue-*` wildcard**, which would otherwise also match
   `git push origin issue-1:main` or `--force`. Write deny patterns without a final `:*` — Claude
   Code reads a trailing `:*` as the legacy prefix syntax, so `git push*:*` matches nothing.
+  `gh pr merge --admin` would bypass the ruleset, so it is denied too. These patterns limit what
+  runs unprompted; they are not a security boundary.
 - **The dependency check keeps its `--jq` suffix** in the pattern; the command is never run bare.
 - **Skill files live outside the repo**: without `Read(~/.claude/skills/**)` the work queue can't
   read its own `references/`.
