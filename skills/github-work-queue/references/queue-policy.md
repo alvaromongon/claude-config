@@ -13,11 +13,14 @@ For each issue on the frontier, one at a time (no parallel worktrees in this ver
 
 1. **Implement**: spawn a subagent (via the `Agent` tool, fresh context) with a prompt that
    invokes `github-implement` on this issue. Wait for it to finish; collect branch/PR.
-2. **Review**: spawn a **separate** subagent (fresh context, never the implementer's) with a
-   prompt that invokes `code-review` against the PR's diff, explicitly instructed to report
-   findings only and not edit code — same pattern as Matt Pocock's `code-review` axes.
-3. **Fix loop**: if the review raises blocking findings, spawn one more implementer subagent to
-   address them, referencing the review's findings verbatim. One retry only — if it's still not
+2. **Review**: spawn two **separate** subagents in parallel (fresh context each, never the
+   implementer's): one invoking `code-review` against the PR's diff (correctness, reuse,
+   simplification — same pattern as Matt Pocock's `code-review` axes), one invoking
+   `security-review` against the same diff. Both report-only, neither edits code. This is the
+   only review gate before an unattended merge, so security findings get the same weight as
+   correctness findings here, not left to CI's CodeQL pass alone.
+3. **Fix loop**: if either review raises blocking findings, spawn one more implementer subagent to
+   address them, referencing both reviews' findings verbatim. One retry only — if it's still not
    clean after that, escalate (see below), don't keep looping.
 4. **CI**: wait for the PR's checks (`gh pr checks <n> --watch` or poll) to go green.
 5. **Merge or hand off**: if everything above is clean, merge (`gh pr merge --squash` or the

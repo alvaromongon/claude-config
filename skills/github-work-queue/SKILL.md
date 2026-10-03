@@ -1,6 +1,6 @@
 ---
 name: github-work-queue
-description: Sequentially work through the ready-for-agent backlog without asking for approval between tickets — implement, independently review, wait for CI, merge or hand off, then move to the next. Use when the user wants the agent to process a batch of ready issues autonomously instead of being invoked ticket by ticket.
+description: Sequentially work through the ready-for-agent backlog without asking for approval between tickets — implement, independently review for correctness and security, wait for CI, merge or hand off, then move to the next. Use when the user wants the agent to process a batch of ready issues autonomously instead of being invoked ticket by ticket.
 ---
 
 # GitHub work queue
@@ -21,9 +21,10 @@ this skill is not just instructions read in the main session, it actively dispat
 ## Procedure
 
 Follow `references/queue-policy.md`: build the queue and its frontier, then per ticket —
-implement (subagent) → independent review (different subagent, report-only) → one fix retry if
-needed → wait for CI → merge or hand off → recompute the frontier → continue. Escalate a single
-ticket without stalling the rest of the queue. Report a summary at the end.
+implement (subagent) → independent review, correctness and security in parallel (two separate
+subagents, report-only) → one fix retry if needed → wait for CI → merge or hand off → recompute
+the frontier → continue. Escalate a single ticket without stalling the rest of the queue. Report
+a summary at the end.
 
 ## Reference
 
