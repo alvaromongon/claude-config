@@ -12,7 +12,9 @@ Templates: `../templates/csharp/` (verified in CI). Adapt names and versions.
   `Services/`, `Program.cs`. Tests mirror these folders and namespaces.
 - Typed `HttpClient` + `Microsoft.Extensions.Http.Resilience` (`AddStandardResilienceHandler`),
   options with validation on start, `HybridCache` for caching, `TimeProvider` for time,
-  `LoggerMessage` source-generated logging, health checks (live/ready).
+  `LoggerMessage` source-generated logging, health checks (live/ready). Graceful shutdown comes
+  from the host (`SIGTERM` → `IHostApplicationLifetime.ApplicationStopping`): honour the
+  `CancellationToken` in background services and set `HostOptions.ShutdownTimeout` explicitly.
 - Console apps / scheduled jobs: Generic Host (`Host.CreateApplicationBuilder`) with the same
   options validation, typed clients and logging; exit codes documented in the README.
 
@@ -29,7 +31,10 @@ Templates: `../templates/csharp/` (verified in CI). Adapt names and versions.
 - `.editorconfig`: start from `dotnet new editorconfig` (Microsoft defaults), add charset/LF/final
   newline, raise key IDE/CA rules to warning, relax CA1707/CA1515 etc. under `tests/**`.
 - CodeQL: see the SARIF filter for `obj/**` in `templates/csharp/.github/workflows/codeql.yml`.
-- `dotnet-tools.json` with ReportGenerator; `build/coverage.sh` merges Cobertura and enforces the threshold.
+- `dotnet-tools.json` (repository root) with ReportGenerator; `build/coverage.sh` merges Cobertura
+  and enforces the threshold.
+- `.gitignore`: the template is minimal on purpose; `dotnet new gitignore` is the exhaustive
+  official alternative.
 
 ## Tests
 xUnit v3 (`xunit.v3.mtp-v2`), NSubstitute (+ analyzers), AwesomeAssertions (FluentAssertions is

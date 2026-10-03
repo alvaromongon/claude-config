@@ -26,7 +26,19 @@ load test to the kind of project (HTTP service, batch job/CLI, library).
    explicit confirmation.
 
 ## Adapting templates
-Templates come from a real, CI-verified repo (HackerNews.BestStories.Api). Replace project names,
-paths, endpoints and SLO numbers; re-check latest versions of packages, actions and images
-(NuGet API, `gh api repos/<owner>/<action>/releases/latest`) instead of copying versions blindly.
-Always read `references/common.md` for the cross-language pieces and known pitfalls.
+Templates come from a real, CI-verified repo (HackerNews.BestStories.Api). Re-check latest
+versions of packages, actions and images (NuGet API, `gh api repos/<owner>/<action>/releases/latest`)
+instead of copying versions blindly. Always read `references/common.md` for the cross-language
+pieces and known pitfalls.
+
+Replace every example-specific value (`grep -rni "hackernews\|best-\?stories" .` must come back
+empty afterwards):
+- `HackerNews.BestStories.Api` — project, assembly, folder and test-project names (`Directory.Build.props`
+  `ConfigureGitHooks` condition, `Dockerfile`, `.github/path-filters.yml`, workflows, compose).
+- `hackernews-beststories` — image tag (`ci.yml`) and compose project name.
+- `hackernews-stub` + `hackernews-stub/mappings/` — the stubbed dependency and its WireMock mappings.
+- `HackerNews__*` environment variables, `ENDPOINT` (`/api/stories/best`), `REQUESTS_PER_REFRESH`
+  and the `hackernews_upstream_requests` metric in the k6 script.
+- SLO numbers (k6 `SLO` object, `RATE` defaults) and the required check names in
+  `.github/rulesets/main.json` (must match the job `name:`s).
+- `README.md`, `CLAUDE.md` and `docs/decisions/README.md` are skeletons: fill in every `<...>`.

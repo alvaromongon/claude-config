@@ -30,6 +30,12 @@ Cross-language baseline for the code itself, independent of CI gates:
 - **Input validation at boundaries**: parse and validate every external input (HTTP request,
   message payload, CLI arg) against a schema before using it; never trust `any`/untyped data past
   the boundary.
+- **Health checks**: every long-running service exposes liveness (`/health/live`: the process
+  responds) and readiness (`/health/ready`: dependencies reachable, warm-up done, e.g. cache
+  primed). The load test's `setup()` waits on readiness.
+- **Graceful shutdown**: on `SIGTERM`, stop accepting new work, drain in-flight requests/messages
+  within a bounded timeout, close connections, then exit — so deploys and container restarts
+  don't surface as errors.
 
 ## SLO (in README)
 Every repo has one, adapted to the kind of project:

@@ -1,0 +1,17 @@
+# Build outputs
+bin/
+obj/
+artifacts/
+
+# Load-test results (k6 report, summaries)
+tests/*.LoadTests/results/
+
+# IDE and OS
+.vs/
+.vscode/
+.idea/
+*.user
+.DS_Store
+
+# Claude Code local (non-versioned) settings
+.claude/settings.local.json

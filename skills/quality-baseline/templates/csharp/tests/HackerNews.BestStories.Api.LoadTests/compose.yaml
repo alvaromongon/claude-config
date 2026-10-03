@@ -30,11 +30,11 @@ services:
   k6:
     image: grafana/k6:2.3.0
     profiles: ["loadtest"]
-    command: ["run", "/scripts/best-stories.js"]
+    command: ["run", "/scripts/slo-load-test.js"]
     environment:
       BASE_URL: http://api:8080
       STUB_ADMIN_URL: http://hackernews-stub:8080/__admin
-      RATE: ${RATE:-500}
+      RATE: ${RATE:-1000}
       DURATION: ${DURATION:-3m}
       REFRESH_INTERVAL_SECONDS: ${REFRESH_INTERVAL_SECONDS:-60}
       ENDPOINT: ${ENDPOINT:-/api/stories/best}

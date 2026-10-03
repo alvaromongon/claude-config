@@ -1,0 +1,21 @@
+{
+  "request": {
+    "method": "GET",
+    "urlPathPattern": "/v0/item/[0-9]+\\.json"
+  },
+  "response": {
+    "status": 200,
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "body": "{{regexExtract request.path 'item/([0-9]+)' 'parts'}}{\"id\":{{parts.0}},\"type\":\"story\",\"by\":\"load-test\",\"time\":1767225600,\"title\":\"Story {{parts.0}}\",\"url\":\"https://example.com/{{parts.0}}\",\"score\":{{randomInt lower=1 upper=1000}},\"descendants\":{{randomInt lower=0 upper=500}}}",
+    "transformers": [
+      "response-template"
+    ],
+    "delayDistribution": {
+      "type": "lognormal",
+      "median": 80,
+      "sigma": 0.4
+    }
+  }
+}
