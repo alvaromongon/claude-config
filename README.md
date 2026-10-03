@@ -162,15 +162,15 @@ This repo holds documentation and templates, not an application, so:
 | One PR per step, review via PR | Direct commits to `main` by the owner (ruleset bypass); PRs for everyone else | Single maintainer, nothing for PR CI to gate beyond the docs checks. |
 | Pre-push hook | Run `validate.py` manually | A hook needs `core.hooksPath` in `.git/config`, which isn't versioned. |
 | Push policy | Ask before every push | Default from [ADR 0002](docs/decisions/0002-per-repository-push-and-merge-policy.md). |
-| Ruleset, secret scanning | Pending publication | Private repo on a free plan; see below. |
 
-### Making it public
+### Repository protection
 
-The versioned files contain no personal data beyond my name and GitHub username. Once public:
-apply the ruleset (`gh api -X POST repos/{owner}/{repo}/rulesets --input .github/rulesets/main.json`
-— no deletion or force-push of `main`; everyone else goes through a PR with the docs check green,
-while the repo admin bypasses it to commit directly) and enable secret scanning with push
-protection.
+The repo is public; the versioned files contain no personal data beyond my name and GitHub
+username, and commits use the GitHub noreply email. `main` is protected by the ruleset in
+`.github/rulesets/main.json` (applied with
+`gh api -X POST repos/{owner}/{repo}/rulesets --input .github/rulesets/main.json`): no deletion or
+force-push; everyone else goes through a PR with the docs check green, while the repo admin
+bypasses it to commit directly. Secret scanning with push protection is enabled.
 
 ## New machine
 
