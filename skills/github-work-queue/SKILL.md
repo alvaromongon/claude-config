@@ -14,6 +14,13 @@ Modeled on the orchestration role of `implement-spec` from
 [mattpocock/skills](https://github.com/mattpocock/skills) — see `docs/credits.md`. Unlike it,
 this version is **sequential**, not parallel across worktrees — see ADR 0001's deferred work.
 
+## Only on explicit invocation
+
+Run this only when the user typed `/github-work-queue`. If you are reading this file on your own
+initiative (e.g. the user asked to "work through the backlog"), do not follow it, not even
+manually or after a confirmation: tell the user to run `/github-work-queue` instead, and offer
+`github-implement` for a single ticket. Unattended merges need that explicit opt-in.
+
 ## Requires
 
 The `Agent` tool, to spawn an implementer subagent and a separate reviewer subagent per ticket —

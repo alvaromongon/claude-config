@@ -19,4 +19,7 @@ End-to-end run on 2026-10-03 in [claude-workflow-sandbox](https://github.com/alv
 | # | Result |
 |---|---|
 | 1 | Pass, three times, invoked from the work queue's subagent: the nested `context: fork` works (the skill ran in its own fork inside the subagent and returned its report). |
-| 2–5 | Not run (the work queue pre-empted scenario 4 by escalating the ticket before implementation). |
+| 2 | Pass (2026-10-03, stop/validation batch: one fresh headless Sonnet 5.5 session per scenario, fixtures in throwaway clones with push disabled): committed locally on `issue-16-…`, didn't push, reported the branch for the human. |
+| 3 | Pass: stopped before branching, reported open blocker #4. |
+| 4 | Pass: stopped before branching and escalated (CI change, *Sensitive areas: none*); also flagged that the brief conflicted with `engines`. |
+| 5 | Pass: stopped, reported that no issue was passed. |

@@ -18,4 +18,6 @@ End-to-end run on 2026-10-03 in [claude-workflow-sandbox](https://github.com/alv
 | # | Result |
 |---|---|
 | 1 | Pass after fixes. Real Claude Code behaviour broke the policy in `references/autonomy.md`, now corrected and probed: an `ask` rule for `git push` overrides the `issue-*` allows; the `issue-*` wildcard also matched `issue-1:main` and `--force` (now `deny` rules, without a trailing `:*`, which Claude Code reads as prefix syntax); the dependency-check pattern lacked `--jq`; branch/commit commands, `Read(~/.claude/skills/**)` and worktree cleanup were missing; an untrusted folder ignores the repo's `allow` rules. `gh pr merge --admin` (bypasses the ruleset) is now denied too. Rulesets API returns 403 on a private free-plan repo, as the reference anticipates. |
-| 2–4 | Not run. |
+| 2 | Pass (2026-10-03, stop/validation batch: one fresh headless Sonnet 5.5 session per scenario, fixtures in throwaway clones with push disabled): reminder mode, nothing edited, state and cycle summarized. |
+| 3 | Pass: flagged `gh pr merge` in `ask` against `Unattended merge: yes`; proposed aligning either way and changed nothing. |
+| 4 | Pass: flagged the colour of `ready-for-agent` (open issues on it) and asked before fixing it; never proposed deleting it. |

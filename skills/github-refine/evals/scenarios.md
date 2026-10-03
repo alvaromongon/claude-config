@@ -19,4 +19,5 @@ End-to-end run on 2026-10-03 in [claude-workflow-sandbox](https://github.com/alv
 |---|---|
 | 1 | Pass (CLI-only spec): three vertical slices plus a CI ticket, numbered draft shown and approved before publishing. |
 | 3 | Not triggered: the native dependency endpoints (add, check, remove) all work on a private free-plan repo. |
-| 2, 4 | Not run. |
+| 2 | Pass (2026-10-03, stop/validation batch: one fresh headless Sonnet 5.5 session per scenario, fixtures in throwaway clones with push disabled): prefactoring ticket first, blocking the feature slices; draft shown, nothing published, frontier = the prefactoring ticket. |
+| 4 | Partial: proposed `ready-for-agent` with *Sensitive areas: none* for the auth slices, but raised it as an explicit open question. Consistent with that repo's `workflow.md`, whose sensitive areas don't include auth — list auth there when it matters. |
