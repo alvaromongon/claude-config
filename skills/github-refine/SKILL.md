@@ -27,10 +27,9 @@ Modeled on `to-tickets` from [mattpocock/skills](https://github.com/mattpocock/s
    `github-triage`: human judgment, manual/visual testing, or a sensitive area means
    `ready-for-human`.
 5. **Publish**, only after approval: `gh issue create --title ... --body <brief> --milestone ...
-   --label <ready-for-agent|ready-for-human>` for each ticket. Set blocking edges via GitHub's
-   native issue-dependency relations (`gh api .../issues/{number}/dependencies/blocked_by`, or the
-   web UI); if that API isn't available on the plan, fall back to a checklist of issue numbers in
-   the body and say so explicitly.
+   --label <ready-for-agent|ready-for-human>` for each ticket. Set blocking edges per
+   `../github-workflow-setup/references/dependencies.md` (native relations, or the checklist
+   fallback — say explicitly if you had to fall back).
 6. **Report the frontier**: tell the user which ticket(s) have zero blockers and are immediately
    workable by `github-work-queue` or `github-implement`.
 
@@ -38,3 +37,4 @@ Modeled on `to-tickets` from [mattpocock/skills](https://github.com/mattpocock/s
 
 - `references/tracer-bullets.md` — the vertical-slice principle, pitfalls, and prefactoring.
 - `../github-triage/references/brief-format.md` — the brief format each published ticket gets.
+- `../github-workflow-setup/references/dependencies.md` — how blocking edges are written.

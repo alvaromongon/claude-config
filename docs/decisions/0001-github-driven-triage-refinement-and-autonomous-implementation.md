@@ -101,8 +101,8 @@ built on top of it.
 
 - Prior art: [mattpocock/skills](https://github.com/mattpocock/skills) — in particular `triage`,
   `to-tickets`, `implement`, `implement-spec`, `pr`, `code-review`, `setup-matt-pocock-skills`, and
-  the `grilling` interview primitive. Credited centrally in a future credits note and referenced
-  per-`SKILL.md`.
+  the `grilling` interview primitive. Credited centrally in [docs/credits.md](../credits.md) and
+  referenced per-`SKILL.md`.
 
 - Architecture agreed in the design conversation that produced this ADR:
   - **Concept mapping**: GitHub Milestone = spec/epic; GitHub Issue = tracer-bullet ticket; blocking

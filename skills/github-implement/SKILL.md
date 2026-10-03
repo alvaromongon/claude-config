@@ -1,6 +1,7 @@
 ---
 name: github-implement
 description: Implement one ready-for-agent GitHub issue end to end with TDD — branch, red-green-refactor at the brief's acceptance criteria, local quality gate, push, open PR. Run as an isolated subagent per ticket, one ticket per invocation. Use when a single issue needs implementing, or when github-work-queue dispatches one ticket from the backlog.
+context: fork
 ---
 
 # GitHub implement
@@ -15,8 +16,11 @@ Modeled on `implement` from [mattpocock/skills](https://github.com/mattpocock/sk
 
 ## Preconditions
 
-- The issue carries `ready-for-agent`. If not, or if any issue it's blocked by is still open,
-  stop and say so instead of proceeding.
+- Target issue: `$ARGUMENTS` (number or URL). This skill runs in a forked context and does not see
+  the caller's conversation: if no issue was passed, stop and report that instead of guessing.
+- The issue carries `ready-for-agent`. If not, or if any issue it's blocked by is still open
+  (check per `../github-workflow-setup/references/dependencies.md`), stop and say so instead of
+  proceeding.
 - Read the brief (`../github-triage/references/brief-format.md` format) from the issue body/
   comments. If it's missing acceptance criteria, stop — that's a triage/refine gap, not something
   to guess around here.

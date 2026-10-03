@@ -16,4 +16,4 @@ Already-standard GitHub default labels (`bug`, `enhancement`, `wontfix`, `duplic
 recreate them.
 
 Blocking dependencies between issues use GitHub's native issue-blocking relations (sub-issues /
-"blocked by"), not a label — see `github-refine`.
+"blocked by"), not a label — see `dependencies.md`.

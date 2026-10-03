@@ -14,15 +14,19 @@ dependencies are GitHub's native issue-blocking relations.
 ## Cycle
 
 1. **Triage** (`github-triage`) — incoming issues start `needs-triage`. Classified into
-   `needs-info`, `ready-for-agent`, `ready-for-human`, or closed `wontfix`.
+   `needs-info`, `ready-for-agent`, `ready-for-human`, or closed `wontfix`. External PRs are
+   reviewed as text and never checked out or run on the host.
 2. **Refine** (`github-refine`) — a spec or milestone is broken into tracer-bullet issues with
-   blocking edges, each ending up `ready-for-agent` or `ready-for-human`.
+   blocking edges (GitHub's native issue dependencies), each ending up `ready-for-agent` or
+   `ready-for-human`.
 3. **Implement** (`github-implement`) — one `ready-for-agent` issue at a time, TDD, in an
-   isolated subagent.
-4. **Review** — a separate subagent reviews the diff/PR (reusing `code-review`, fresh context,
-   report-only) before merge.
+   isolated subagent; ends with a pushed branch and an open PR.
+4. **Review** — two separate subagents review the PR's branch in parallel, each in its own git
+   worktree, report-only: `code-review` (correctness) and `security-review` (security). One fix
+   round if either finds blocking issues.
 5. **Work queue** (`github-work-queue`) — orchestrates steps 3-4 sequentially over the
-   `ready-for-agent` backlog, escalating to a human when a ticket needs it (see below).
+   `ready-for-agent` backlog, waits for CI, merges, and escalates individual tickets to a human
+   when needed (see below) without stopping the rest of the queue.
 
 ## Autonomy
 
@@ -32,11 +36,13 @@ Per-issue, via labels — not a repo-wide switch:
 
 ## Escalation triggers
 
-The work queue stops and asks instead of continuing when:
+The work queue stops working on a ticket — leaves its branch/PR as-is, relabels it
+`ready-for-human` with a comment explaining why — and moves on to the next one when:
 - tests don't stabilize after [N, default 3] attempts,
 - acceptance criteria turn out ambiguous mid-implementation,
 - the change touches a sensitive area: [list for this repo, e.g. auth, payments, infra, CI],
-- the issue lacks the `ready-for-agent` label.
+- the issue lacks the `ready-for-agent` label or still has an open blocker,
+- the review fix round didn't produce a clean review.
 
 ## Overrides for this repo
 

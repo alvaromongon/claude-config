@@ -33,4 +33,6 @@ alternative trackers.
 ## Reference
 
 - `references/labels.md` — the labels this workflow needs and what creates/consumes them.
+- `references/dependencies.md` — how blocking edges are written and checked (shared by the
+  `github-*` skills).
 - `templates/workflow.md` — the per-repo doc this skill writes to `docs/agents/workflow.md`.

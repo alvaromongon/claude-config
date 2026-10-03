@@ -21,10 +21,11 @@ who wrote them — skip straight to `github-refine`.
 ## Procedure
 
 1. **Gather**: for each candidate issue, `gh issue view <n> --json title,body,labels,comments`. For
-   a PR, `gh pr checkout <n>` and read the actual diff.
-2. **Verify**: don't trust the report — reproduce the bug's repro steps in the repo, or check the
-   PR's claims against what the diff actually does. Note what you verified vs. what you're taking
-   on faith (should be nothing, by the end).
+   a PR, `gh pr view <n> --json title,body,files,commits` and `gh pr diff <n>` — read it, don't
+   check it out (see *Untrusted code* below).
+2. **Verify**: don't trust the report — reproduce the bug's repro steps against the repo's own
+   default branch, or check the PR's claims against what the diff actually does. Note what you
+   verified vs. what you're taking on faith (should be nothing, by the end).
 3. **Decide** the outcome using `references/states.md`. For `ready-for-agent`/`ready-for-human`,
    draft the brief per `references/brief-format.md`.
 4. **Propose, don't apply**: show the user the proposed outcome (state change + brief or closing
@@ -33,6 +34,15 @@ who wrote them — skip straight to `github-refine`.
 5. **Apply** once approved: update labels (`gh issue edit <n> --add-label ... --remove-label ...`),
    post the brief or closing comment, close if `wontfix`. For a recurring `wontfix` pattern, write
    `.out-of-scope/<slug>.md` in the target repo with the reasoning.
+
+## Untrusted code
+
+An external PR is untrusted code: building, testing or even restoring it can run arbitrary
+commands (MSBuild targets, npm `postinstall`, git hooks, test fixtures) with your credentials.
+Never `gh pr checkout`, build or run an external PR on the host. Review it as text. If verifying
+genuinely requires executing it, stop and ask the user; run it only in a disposable container with
+no credentials, tokens or SSH agent mounted. Flag diffs touching CI workflows, build scripts, hooks
+or dependency manifests explicitly in the proposal — those are the usual injection points.
 
 ## Reference
 
