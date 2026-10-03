@@ -32,7 +32,10 @@ For each issue on the frontier, one at a time (no parallel worktrees in this ver
 
    Both report-only, neither edits code nor pushes. This is the only review gate before an
    unattended merge, so security findings get the same weight as correctness findings here, not
-   left to CI's CodeQL pass alone.
+   left to CI's CodeQL pass alone. Tell each reviewer it **must** invoke its skill through the
+   Skill tool — not "if available": given the option, reviewers skip `code-review` and review by
+   hand. Afterwards remove both worktrees (`git worktree remove --force <path>`, then
+   `git branch -D worktree-agent-*`): they hold another commit, so Claude Code keeps them.
 3. **Fix loop**: if either review raises blocking findings, spawn one more implementer subagent to
    address them, referencing both reviews' findings verbatim. One retry only — if it's still not
    clean after that, escalate (see below), don't keep looping.
@@ -48,6 +51,10 @@ For each issue on the frontier, one at a time (no parallel worktrees in this ver
 
 Same triggers as `github-implement`'s stop conditions, plus:
 - the fix loop in step 3 didn't produce a clean review.
+
+When a brief's acceptance criteria already require a sensitive area its *Sensitive areas* field
+doesn't list, escalate it while building the queue instead of spawning an implementer that would
+only stop.
 
 On escalation: leave the ticket's branch/PR as-is, label it back to `ready-for-human` with a
 comment explaining why, and **keep processing the rest of the frontier** — one stuck ticket

@@ -22,6 +22,7 @@ gh api repos/{owner}/{repo}/issues/<n>/dependencies/blocked_by \
 gh api -X DELETE repos/{owner}/{repo}/issues/<n>/dependencies/blocked_by/"$blocker_id"
 ```
 
+Verified on 2026-10-03, including on a private free-plan repo (`POST` returns the blocked issue).
 If these endpoints fail (plan or API not available), say so and use the fallback below — never
 silently skip the blocking edges.
 

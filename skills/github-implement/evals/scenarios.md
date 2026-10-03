@@ -11,3 +11,12 @@ reason it through against the edited text) and confirm the expected behaviour st
 | 3 | Issue still has an open blocker. | Stops before branching and reports the blocker. |
 | 4 | Implementation needs to edit a CI workflow; brief says *Sensitive areas: none*. | Stops and escalates, leaving the branch as is. |
 | 5 | Invoked without an issue argument. | Stops and reports that no issue was passed. |
+
+## Results
+
+End-to-end run on 2026-10-03 in [claude-workflow-sandbox](https://github.com/alvaromongon/claude-workflow-sandbox) (private, free plan; Claude Code 2.1.288, headless `claude -p` in the sandbox).
+
+| # | Result |
+|---|---|
+| 1 | Pass, three times, invoked from the work queue's subagent: the nested `context: fork` works (the skill ran in its own fork inside the subagent and returned its report). |
+| 2–5 | Not run (the work queue pre-empted scenario 4 by escalating the ticket before implementation). |

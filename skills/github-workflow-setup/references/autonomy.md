@@ -17,11 +17,20 @@ For a supervised repo, write "Ask before every `git push`." instead and set `Una
 
 ## 2. Repo `.claude/settings.json` — the enforcement
 
-Claude Code applies these to subagents too: anything left in `ask` blocks an unattended run.
-Merge into the existing `permissions` (never drop entries the repo already has):
+Claude Code applies these to subagents too: anything not in `allow` is prompted for, which an
+unattended run can't answer. Merge into the existing `permissions` (never drop entries the repo
+already has), replacing `main` with the repo's default branch:
 
 ```json
 "allow": [
+  "Read(~/.claude/skills/**)",
+  "Bash(git worktree remove --force .claude/worktrees/*)",
+  "Bash(git branch -D worktree-agent-*)",
+  "Bash(git checkout -b issue-*)",
+  "Bash(git checkout main)",
+  "Bash(git pull:*)",
+  "Bash(git add:*)",
+  "Bash(git commit:*)",
   "Bash(git push -u origin issue-*)",
   "Bash(git push origin issue-*)",
   "Bash(gh issue view:*)",
@@ -34,15 +43,38 @@ Merge into the existing `permissions` (never drop entries the repo already has):
   "Bash(gh pr checks:*)",
   "Bash(gh pr checkout:*)",
   "Bash(gh pr merge:*)",
-  "Bash(gh api repos/*/dependencies/blocked_by)"
+  "Bash(gh api repos/*/dependencies/blocked_by --jq *)"
 ],
-"ask": [
-  "Bash(git push:*)"
+"deny": [
+  "Bash(git push*--force*)",
+  "Bash(git push*-f *)",
+  "Bash(git push*+*)",
+  "Bash(git push*:main*)",
+  "Bash(git push*:refs/*)",
+  "Bash(git push*--delete*)",
+  "Bash(git push*-d *)",
+  "Bash(git push*--mirror*)",
+  "Bash(git push*--all*)"
 ]
 ```
 
-Keep the generic `git push` in `ask`: only `issue-*` branches are pre-approved. Leave a generic
-`gh api` out of `allow` — it can do anything the token can.
+Verified against Claude Code (see `../evals/scenarios.md`):
+
+- **No `ask` rule for `git push`**: `ask` wins over `allow`, so a generic `Bash(git push:*)` in
+  `ask` blocks the `issue-*` pushes too. Other pushes stay unapproved because nothing allows them.
+- **`deny` closes the gaps of the `issue-*` wildcard**, which would otherwise also match
+  `git push origin issue-1:main` or `--force`. Write deny patterns without a final `:*` — Claude
+  Code reads a trailing `:*` as the legacy prefix syntax, so `git push*:*` matches nothing.
+- **The dependency check keeps its `--jq` suffix** in the pattern; the command is never run bare.
+- **Skill files live outside the repo**: without `Read(~/.claude/skills/**)` the work queue can't
+  read its own `references/`.
+- **Review worktrees** need the cleanup rules above, and `.claude/worktrees/` in `.gitignore`.
+- Leave a generic `gh api` out of `allow` — it can do anything the token can.
+- **Trust the workspace**: Claude Code ignores a project's `allow` rules until the folder has
+  been trusted once (run `claude` there interactively and accept the dialog). Say so at the end of
+  setup.
+- An unattended run (e.g. `claude -p "/github-work-queue"`) also needs file edits approved: use
+  `--permission-mode acceptEdits` (or auto mode in an interactive session).
 
 ## 3. `docs/agents/workflow.md` — the switch the work queue reads
 

@@ -30,7 +30,10 @@ alternative trackers.
    `CLAUDE.md`.
 4. **Autonomy**: ask the user whether agents may push and merge in this repo, then write the
    matching policy in `CLAUDE.md`, `.claude/settings.json` and `workflow.md` per
-   `references/autonomy.md`. Never widen permissions without that explicit answer.
+   `references/autonomy.md`. Never widen permissions without that explicit answer. With autonomy
+   on, also add `.claude/worktrees/` to `.gitignore` (the work queue's review worktrees) and end
+   the setup by telling the user to trust the folder once (`claude` there, accept the dialog) —
+   until then Claude Code ignores the repo's `allow` rules.
 5. **Intake**: copy `templates/ISSUE_TEMPLATE/` to `.github/ISSUE_TEMPLATE/` (issue forms that
    apply `needs-triage`) and `templates/workflows/needs-info-reply.yml` to `.github/workflows/`
    (sends a reporter's reply on a `needs-info` issue back to `needs-triage`).

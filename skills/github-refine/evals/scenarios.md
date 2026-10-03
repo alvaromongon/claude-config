@@ -10,3 +10,13 @@ reason it through against the edited text) and confirm the expected behaviour st
 | 2 | Feature that first needs a seam extracted. | A prefactoring ticket comes first and blocks the feature tickets; the frontier reported at the end is that ticket. |
 | 3 | Native issue-dependency API returns an error. | Falls back to a `## Blocked by` checklist in the body and says so explicitly. |
 | 4 | A slice changes authentication. | Labels it `ready-for-human` (or `ready-for-agent` only with the area listed in *Sensitive areas* after the user approves it). |
+
+## Results
+
+End-to-end run on 2026-10-03 in [claude-workflow-sandbox](https://github.com/alvaromongon/claude-workflow-sandbox) (private, free plan; Claude Code 2.1.288, headless `claude -p` in the sandbox).
+
+| # | Result |
+|---|---|
+| 1 | Pass (CLI-only spec): three vertical slices plus a CI ticket, numbered draft shown and approved before publishing. |
+| 3 | Not triggered: the native dependency endpoints (add, check, remove) all work on a private free-plan repo. |
+| 2, 4 | Not run. |
