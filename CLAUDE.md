@@ -50,10 +50,10 @@ repo-level rule wins, and the override should state why.
   PR; use the `adr` skill.
 - Deliver one pull request per step, each built with TDD.
 
-## Cuando trabajo dentro de ~/.claude (este repositorio)
+## When working inside ~/.claude (this repository)
 
-Esta carpeta mezcla estándares personales versionados (README.md, CLAUDE.md, skills/) con
-estado de runtime privado y no versionado (settings.json, sessions/, cache/, history.jsonl...).
-Puedo leer cualquier archivo libremente, pero solo debo crear/editar/borrar archivos que estén
-versionados en el repo (comprobar con `git check-ignore -v <path>` si hay duda). Para tocar
-cualquier archivo no versionado necesito permiso explícito tuyo.
+This folder mixes versioned personal standards (README.md, CLAUDE.md, skills/) with private,
+non-versioned runtime state (settings.json, sessions/, cache/, history.jsonl...). I may read any
+file freely, but I must only create/edit/delete files that are versioned in the repo (check with
+`git check-ignore -v <path>` if in doubt). Touching any non-versioned file requires your explicit
+permission.
