@@ -15,6 +15,19 @@ the rest wait for their blockers. Leave out issues that already have a linked PR
 (`gh issue view <n> --json closedByPullRequestsReferences`): they are waiting for review from an
 earlier run (`Unattended merge: no`), and implementing them again would open a duplicate PR.
 
+## Waiting PRs
+
+With `Unattended merge: no`, PRs wait for review side by side, each branched from the same
+default branch; once the human merges one, the others can conflict with it. (With `yes` this
+can't happen: each ticket is merged before the next one branches.) So before the per-ticket loop,
+check every open PR linked to a `ready-for-agent` issue (`gh pr view <n> --json mergeable`) and,
+for each `CONFLICTING` one, spawn an implementer subagent to refresh it: `gh pr checkout <n>`,
+`git pull --no-rebase origin <default branch>`, resolve keeping both sides' intent, run the local
+gate, `git push origin <issue branch>` (a normal push — never rewrite the branch). Then review it
+again (step 2 below) and wait for CI, and leave it ready for review. If a conflict can't be
+resolved without guessing at intent, escalate that ticket. Re-run the queue after merging a
+waiting PR to refresh the rest.
+
 ## Per-ticket loop
 
 For each issue on the frontier, one at a time (no parallel worktrees in this version — see ADR
@@ -64,5 +77,5 @@ doesn't stall tickets that don't depend on it.
 
 ## End-of-run report
 
-Summarize: merged, waiting-for-human-review, escalated (with reason), and still-blocked (with
+Summarize: merged, waiting-for-human-review (including refreshed ones), escalated (with reason), and still-blocked (with
 what they're waiting on).

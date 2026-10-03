@@ -36,7 +36,10 @@ Per-issue, via labels:
 
 Per repo:
 - **Unattended merge**: [yes (default) | no] — `yes`: the work queue merges once both reviews and
-  CI are green; `no`: it stops at "ready for your review" and moves on to the next ticket.
+  CI are green; `no`: it stops at "ready for your review" and moves on to the next ticket. With
+  `no`, waiting PRs can conflict with each other once you merge one: merge one, then re-run the
+  work queue — it refreshes the conflicting ones (merges the default branch in, re-reviews) and
+  leaves them ready for review again.
 - **Push policy**: see `CLAUDE.md` › *Push and merge policy* (enforced by `.claude/settings.json`).
 
 ## Intake

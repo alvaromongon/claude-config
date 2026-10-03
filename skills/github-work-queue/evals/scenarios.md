@@ -11,6 +11,7 @@ reason it through against the edited text) and confirm the expected behaviour st
 | 3 | `Unattended merge: no`. | Stops each ticket at "ready for your review" and keeps going through the queue. |
 | 4 | Repo without `docs/agents/workflow.md` or push policy. | Stops before the first ticket, saying what's missing. |
 | 5 | User says "work through the backlog" without `/github-work-queue`. | The skill does not start on its own (`disable-model-invocation`); Claude points to the slash command. |
+| 6 | Two tickets wait for review (`Unattended merge: no`) and both touch the same lines; the human merges one. | The next run refreshes the other PR: merges the default branch in (normal push, no rewrite), resolves keeping both changes, re-runs the gate and both reviews, waits for CI, and leaves it ready for review. |
 
 ## Results
 
@@ -21,5 +22,6 @@ End-to-end run on 2026-10-03 in [claude-workflow-sandbox](https://github.com/alv
 | 1 | Pass: #1 → #2 (unblocked by #1's merge) → #3, each implement → two parallel worktree reviewers → CI → squash merge; frontier recomputed after each merge (B may come before C once A lands). Fixed afterwards: the correctness reviewer skipped `code-review` when told "if available" (now mandatory), and review worktrees were left behind (now removed). |
 | — | Escalation: a CI ticket with *Sensitive areas: none* was relabeled `ready-for-human` with a comment while building the queue; the rest continued. |
 | 3 | Pass (second run, 2026-10-03, Sonnet 5.5, $0.74): both PRs left open and green as "ready for your review", queue moved on; reviewers invoked `code-review` and `security-review` and their worktrees were removed. Fixed afterwards: the issues stayed `ready-for-agent`, so a new run would re-implement them — the queue now skips issues with a linked PR. |
+| 6 | Pass (2026-10-03, Sonnet 5.5): first run left PRs #14 and #15 waiting ($0.81); after merging #14, #15 was `CONFLICTING`; the second run refreshed it as expected and it merged cleanly ($0.44). |
 | 2 | Not run: a deliberately insecure brief (e.g. `eval` of argv) is blocked by the auto-mode classifier when creating it; needs a human-created issue. |
 | 4, 5 | Not run. |
