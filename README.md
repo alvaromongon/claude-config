@@ -10,6 +10,8 @@ Versioned subset of `~/.claude` (the repo lives in place so Claude Code loads it
   (labels, per-issue autonomy, workflow doc) used by the `github-*` skills (see ADR 0001).
 - `skills/github-triage/` – skill to classify incoming external GitHub issues and route them to
   `needs-info` / `ready-for-agent` / `ready-for-human` / closed `wontfix`.
+- `skills/github-refine/` – skill to turn an agreed spec into a GitHub milestone of tracer-bullet
+  issues with blocking dependencies.
 - `docs/decisions/` – decision log for this repository, written with the `adr` skill.
 - `docs/credits.md` – attribution for prior art the GitHub workflow skills are modeled on.
 
