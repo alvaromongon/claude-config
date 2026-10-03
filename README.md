@@ -14,6 +14,8 @@ Versioned subset of `~/.claude` (the repo lives in place so Claude Code loads it
   issues with blocking dependencies.
 - `skills/github-implement/` – skill to implement one ready-for-agent issue end to end with TDD,
   as an isolated subagent per ticket.
+- `skills/github-work-queue/` – skill to sequentially work through the ready-for-agent backlog
+  (implement, independently review, merge or hand off) without per-ticket approval.
 - `docs/decisions/` – decision log for this repository, written with the `adr` skill.
 - `docs/credits.md` – attribution for prior art the GitHub workflow skills are modeled on.
 
