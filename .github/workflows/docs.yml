@@ -1,0 +1,31 @@
+name: Docs
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  validate:
+    name: Validate docs
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+
+      - name: Skills frontmatter, relative links, YAML/JSON
+        run: |
+          python3 -m pip install --quiet pyyaml==6.0.3
+          python3 .github/scripts/validate.py
+
+      - name: Shell scripts (templates)
+        run: shellcheck $(git ls-files '*.sh' '*/.githooks/*')
