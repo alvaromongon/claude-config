@@ -18,3 +18,20 @@ Not yet verified in a real repo like the C# templates: check current versions an
 - **Local gate**: `.githooks/pre-push` (or lefthook) running typecheck, lint, format, tests.
 - **Docker**: multi-stage, `node:<lts>-slim` build, distroless/`-slim` non-root runtime, `npm ci`/`pnpm` from lockfile.
 - **Monorepo**: workspaces + Turborepo/Nx; one centralized config per concern (tsconfig base, eslint, prettier).
+
+## Production runtime practices (see `common.md` for the cross-language principles)
+- **Config validation**: parse `process.env` through a `zod` schema (or `envalid`) once at startup;
+  throw and exit non-zero on failure instead of reading `process.env.X` ad hoc throughout the code.
+- **Structured logging**: `pino` (or the framework's built-in logger, e.g. Fastify) with a
+  request-id/correlation-id bound via `asyncLocalStorage` or the framework's request context;
+  never `console.log` in production code.
+- **Resilience on outbound calls**: `undici` with a connect/body timeout and a bounded
+  `Agent`/pool, plus a retry-with-backoff wrapper (`cockatiel` or `p-retry`) and a concurrency cap
+  for third-party calls; this implements the SLO's downstream-protection requirement.
+- **Input validation at boundaries**: validate every request body/query/params (and message
+  payloads) with a `zod` schema at the route/handler boundary; treat the parsed result, not the
+  raw `unknown`/`any`, as the type used downstream.
+- **Health checks**: `/health/live` and `/health/ready` endpoints (ready checks real dependency
+  connectivity) for any long-running service; the load test's `setup()` waits on `/health/ready`.
+- **Graceful shutdown**: on `SIGTERM`, stop accepting new connections, drain in-flight requests,
+  close DB/queue connections, then exit.

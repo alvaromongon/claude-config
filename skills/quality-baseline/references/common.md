@@ -17,6 +17,20 @@
   library for one-off collaborators.
 - TDD: failing test → minimal code → refactor; one PR per step.
 
+## Runtime production practices
+Cross-language baseline for the code itself, independent of CI gates:
+- **Config validation**: parse and validate configuration/env vars at startup; fail fast with a
+  clear error instead of failing lazily on first use.
+- **Observability**: structured logging (not string concatenation) carrying a
+  request/correlation id through the call chain; log levels used consistently (no `info` for
+  errors or vice versa); no secrets/PII in logs.
+- **Resilience on outbound calls**: explicit timeout, retry (bounded, with backoff) and circuit
+  breaker/concurrency limit on every call to an external dependency — this is what the SLO's
+  downstream-protection requirement is actually implemented with.
+- **Input validation at boundaries**: parse and validate every external input (HTTP request,
+  message payload, CLI arg) against a schema before using it; never trust `any`/untyped data past
+  the boundary.
+
 ## SLO (in README)
 Every repo has one, adapted to the kind of project:
 - HTTP service: sustained load (req/s) + latency p95/p99 at that load + error rate + downstream
