@@ -16,8 +16,11 @@ Versioned subset of `~/.claude` (the repo lives in place so Claude Code loads it
   as an isolated subagent per ticket.
 - `skills/github-work-queue/` – skill to sequentially work through the ready-for-agent backlog
   (implement, independently review, merge or hand off) without per-ticket approval.
+- `skills/check-upstream-skills/` – on-demand skill to review mattpocock/skills for improvements
+  applicable to the `github-*` skills.
 - `docs/decisions/` – decision log for this repository, written with the `adr` skill.
 - `docs/credits.md` – attribution for prior art the GitHub workflow skills are modeled on.
+- `docs/upstream-watch.md` – marker of how far `check-upstream-skills` has reviewed upstream.
 
 Everything else in `~/.claude` (history, sessions, caches, settings) is ignored on purpose.
 
