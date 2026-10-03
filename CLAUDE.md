@@ -1,44 +1,24 @@
-# Personal engineering baseline (applies to every repository)
-
-Everything I build must meet this quality baseline. When starting a new repo, or when a repo is
-missing parts of it, use the `quality-baseline` skill (`~/.claude/skills/quality-baseline`) to set up
-or audit it. Always follow the **official conventions of the language/platform** (C#/.NET →
-Microsoft; TypeScript → TypeScript/ESLint community standards; others → their official style guide).
+# Global instructions (apply to every repository)
 
 **These are defaults.** A repository may override any item in its own `CLAUDE.md` (or README); the
 repo-level rule wins, and the override should state why.
 
-## Baseline
-- **Tests**: unit + component (in-process, external dependencies stubbed, never call real third-party
-  services) + load tests validating the SLO. Apply **TDD**. Test folders/namespaces mirror the source;
-  shared hand-written fakes/stubs live in a `TestDoubles/` folder per test project.
-- **SLO**: every repo defines one in the README, adapted to the kind of project (e.g. an HTTP service:
-  latency percentiles at a sustained load and error rate; a batch job/CLI: duration per run at a
-  given volume), always including protection of downstream dependencies. Its numbers are the
-  load-test thresholds. The load-test pipeline publishes a report to the run summary and runs at
-  least on demand (after relevant changes); a schedule is optional, per project.
-- **Quality gates** (same checks locally and in CI): formatting, build with analyzers and warnings as
-  errors, tests, coverage threshold (≥ 80% lines), dependency vulnerability audit, locked/pinned
-  dependency restore, static analysis (CodeQL), container build + image scan.
-- **Cross-platform**: when a project claims to support several OSes, CI runs the tests on each of
-  them (OS matrix).
-- **Local gate**: versioned git `pre-push` hook mirroring CI, enabled automatically.
-- **Branch protection**: ruleset on the default branch (PRs, required checks, up-to-date branch,
-  linear history, no force-push/deletion); secret scanning + push protection; Dependabot.
-- **CI efficiency**: job-level path filters so unrelated changes skip jobs while required checks still report.
-- **Decision log**: `docs/decisions/` with ADRs (MADR) and an index, linked from the README.
-- **Folder structure and naming** per the platform's official conventions, documented in the README.
-- **Editor/format config** (`.editorconfig`, formatter config) and centralized build/dependency config.
-- **Dockerfile**: multi-stage, minimal non-root runtime image.
-- **README is the single source of truth**: an *At a glance* summary first (what it does, how to run
-  it, measured SLO, quality), then requirements, how to run and test, structure and conventions,
-  design, SLO, assumptions, quality gates, future enhancements, and a note on the AI-assisted
-  development process.
-- **Repo CLAUDE.md**: short; points to the README sections instead of duplicating them, and holds
-  only the rules specific to Claude, the repo's push/merge policy (and any overrides of this
-  baseline).
-- **Repo `.claude/settings.json`** (versioned): `allow` the build/test/format/local-gate commands and
-  read-only git; `ask` for `git push` unless the repo's push policy allows it.
+## Engineering baseline
+Every repo I build meets my engineering baseline: tests (unit, component, load against an SLO),
+CI quality gates mirrored by a pre-push hook, branch protection, ADR decision log, Docker and
+centralized build/format config. Its full definition is the `quality-baseline` skill
+(`~/.claude/skills/quality-baseline`, canonical list in `references/common.md`); use it to set up
+a new repo or audit one that is missing parts of it.
+
+Rules that apply in every session, with or without that skill:
+- Follow the **official conventions of the language/platform** (C#/.NET → Microsoft;
+  TypeScript → TypeScript/ESLint community standards; others → their official style guide).
+- **TDD**: failing test → minimal code → refactor. Unit + component tests (in-process, external
+  dependencies stubbed, never call real third-party services). Test folders/namespaces mirror the
+  source; shared hand-written fakes/stubs live in a `TestDoubles/` folder per test project.
+- Before finishing a change, run the repo's local quality gate (the same checks as CI).
+- The **README is the single source of truth**; other docs (including the repo `CLAUDE.md`) point
+  to it instead of duplicating it.
 - **Language**: code, identifiers and code comments in English; README and docs may use the
   project's language.
 
@@ -61,5 +41,5 @@ file freely, but I must only create/edit/delete files that are versioned in the 
 `git check-ignore -v <path>` if in doubt). Touching any non-versioned file requires your explicit
 permission.
 
-This repo's own conventions and its overrides of the baseline (direct commits to `main`, ask before
-pushing, documentation-only checks instead of tests/SLO/Docker) are in the README.
+This repo's own conventions and its overrides of the baseline are in the README › *Changing this
+repository*.

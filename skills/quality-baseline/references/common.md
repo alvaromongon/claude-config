@@ -1,5 +1,18 @@
 # Cross-language baseline
 
+The canonical definition of my engineering baseline. `~/.claude/CLAUDE.md` keeps only the rules
+that apply in every session (conventions, TDD, test layout, language) and points here for the rest.
+Every item is a default: a repo may override it in its `CLAUDE.md`/README, stating why.
+
+## Structure and configuration
+- **Official conventions** of the language/platform for code style, folder structure and naming
+  (language references: `csharp.md`, `typescript.md`); the structure is documented in the README.
+- **Editor/format config** (`.editorconfig`, the formatter's config) and **centralized
+  build/dependency config** (e.g. `Directory.Build.props` + `Directory.Packages.props`, a single
+  workspace manifest) with locked/pinned dependency restore.
+- **Language**: code, identifiers and code comments in English; README and docs may use the
+  project's language.
+
 ## Tests
 - **Unit**: fast, isolated, mocks for collaborators. Folder/namespace mirrors source; one test
   class/file per unit; names `Method_Scenario_ExpectedResult` (or the language idiom).
@@ -85,10 +98,11 @@ the README.
   `-**/obj/**`) and upload it with `codeql-action/upload-sarif`.
 
 ## Repository docs and Claude settings
-- **README is the single source of truth**: *At a glance* first (one-command run, what it does,
-  measured SLO, quality summary with links), then requirements, how to run (with URLs), how to test,
-  structure, development conventions (incl. AI-assisted development note), design, SLO +
-  calibration, load test, assumptions, enhancements, quality gates (local vs CI table).
+- **README is the single source of truth**, in this order (as in `templates/csharp/README.md`):
+  *At a glance* (what it does, one-command run, measured SLO, quality summary with links), then
+  requirements, how to run (with URLs), how to test (incl. load test), structure and conventions,
+  design, SLO + calibration, assumptions, quality gates (local vs CI table), future enhancements,
+  and a note on the AI-assisted development process.
 - Repo `CLAUDE.md`: a table pointing to README sections + Claude-only rules (TDD, run the local
   gate before finishing, keep SLO and k6 thresholds in sync) + the repo's **push/merge policy**
   (who may push which branches and whether agents may merge; omitted = ask before every push) +
@@ -119,3 +133,20 @@ A locked restore fails when a lock file is stale: update it deliberately (`dotne
 ## Docker
 Multi-stage; restore layer from manifests/lock files first; minimal non-root runtime (e.g. chiseled
 for .NET, distroless for Node); `.dockerignore` excluding tests, git and build outputs.
+
+## Adopting the baseline in an existing repository
+Start with an audit (present / missing / deviating), agree the plan, then change things; existing
+files are merged into, never overwritten. A practical order, one commit (or PR, per the repo's
+rules) per step:
+1. **Audit first**: report the checklist; no changes yet.
+2. **Record the current shape**: write retroactive ADRs for the main past decisions nobody wrote
+   down, before changing them (`adr` skill › *Brownfield*).
+3. **Formatting alone**: apply the formatter once in a commit of its own, apart from behaviour
+   changes, so history stays readable.
+4. **Gates without a red build**: when coverage starts below 80%, publish it with threshold 0 and
+   raise it in the step that adds the missing tests; add each CI gate once the code already passes
+   it. Language specifics: `csharp.md` › *Migrating an existing repo*.
+5. **Repo docs**: restructure the existing README to the order above, keeping its content; add a
+   short `CLAUDE.md` with the push policy and any baseline overrides (with the reason).
+6. **Issue workflow** and **autonomy**: `github-workflow-setup` (it proposes the open backlog for
+   approval); start supervised and widen autonomy once reviews and CI behave as expected.

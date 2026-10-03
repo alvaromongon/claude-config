@@ -29,8 +29,8 @@ Modeled on `implement` from [mattpocock/skills](https://github.com/mattpocock/sk
 
 1. **Branch**: per `references/delivery.md`.
 2. **TDD**: for each acceptance criterion, red (failing test) → green (minimal code to pass) →
-   refactor, per this repo's testing conventions (`~/.claude/CLAUDE.md` baseline, `quality-
-   baseline` skill). Unit/component tests as appropriate; never production code ahead of a
+   refactor, per this repo's testing conventions (`~/.claude/CLAUDE.md`, `quality-baseline`
+   skill). Unit/component tests as appropriate; never production code ahead of a
    failing test for it.
 3. **Local gate**: run the repo's full local quality gate (the same checks as its pre-push hook —
    format, build, tests, coverage) before considering the ticket done.

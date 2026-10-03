@@ -5,23 +5,22 @@ description: Set up or audit a repository against my personal engineering qualit
 
 # Quality baseline
 
-Set up (new repo) or audit (existing repo) against the baseline in `~/.claude/CLAUDE.md`.
+Set up (new repo) or audit (existing repo) against the baseline defined in `references/common.md`.
 Items are defaults: honour overrides recorded in the repo's `CLAUDE.md`/README, and adapt the SLO and
 load test to the kind of project (HTTP service, batch job/CLI, library).
 
 ## Procedure
 1. **Detect** language(s), framework, package manager and what already exists. For an audit, report
-   a checklist of present / missing / deviating items and agree the plan before changing anything.
+   a checklist of present / missing / deviating items and agree the plan before changing anything;
+   follow `references/common.md` › *Adopting the baseline in an existing repository*.
 2. **Discuss** the design and choices with the user before implementing (alternatives + recommendation).
 3. **Scaffold** using the language reference:
    - C#/.NET → `references/csharp.md` + proven templates in `templates/csharp/`.
    - TypeScript/Node → `references/typescript.md`.
    - Other languages → apply `references/common.md` with that language's official conventions.
 4. **Verify locally**: run the full local gate (pre-push hook), build the container and smoke-test it.
-5. **Document**: README as single source of truth (At a glance, run, test, structure, design, SLO,
-   assumptions, quality gates, enhancements), `docs/decisions/` for ADRs (`adr` skill), a short repo
-   `CLAUDE.md` pointing to the README plus Claude-only rules and baseline overrides, and a
-   versioned `.claude/settings.json` (`ask` for `git push` unless the repo's push policy allows it).
+5. **Document**: README, `docs/decisions/` (`adr` skill), repo `CLAUDE.md` and versioned
+   `.claude/settings.json`, per `references/common.md` › *Repository docs and Claude settings*.
 6. **Commit** as the user. Push / open PRs per the repo's push policy (ask when it has none);
    change GitHub settings only with explicit confirmation.
 

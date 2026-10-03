@@ -6,7 +6,8 @@ lives in place, so Claude Code loads it directly in every session.
 ## At a glance
 
 - **What it is**: a methodology, not an application — a personal engineering baseline
-  ([`CLAUDE.md`](CLAUDE.md)) plus skills that set up repositories against it and run a
+  ([`common.md`](skills/quality-baseline/references/common.md), everyday rules in
+  [`CLAUDE.md`](CLAUDE.md)) plus skills that set up repositories against it and run a
   GitHub-native triage → refine → implement → review → merge loop, autonomously where a repo allows it.
 - **Use it**: in any repo, `/quality-baseline` to set up or audit quality gates, then
   `/github-workflow-setup` to enable the issue workflow. See [Setting up a repository](#setting-up-a-repository).
@@ -17,7 +18,7 @@ lives in place, so Claude Code loads it directly in every session.
 
 | Path | What it is |
 |---|---|
-| [`CLAUDE.md`](CLAUDE.md) | Personal baseline and working agreements, applied to every repository. |
+| [`CLAUDE.md`](CLAUDE.md) | Global instructions loaded in every session: everyday engineering rules and working agreements. |
 | `skills/<name>/SKILL.md` | One skill per folder; `references/`, `templates/` and `evals/` beside it. |
 | [`docs/decisions/`](docs/decisions/README.md) | ADRs for this repository. |
 | [`docs/credits.md`](docs/credits.md) | Prior art the GitHub workflow skills are modeled on. |
@@ -54,7 +55,7 @@ the repo (`gh auth status`), and — for branch rulesets — a public repo or a 
 
 1. **Quality baseline** — `/quality-baseline`. Detects what exists, agrees a plan with you, then
    scaffolds tests, CI, pre-push hook, rulesets, Docker, README, repo `CLAUDE.md` and
-   `.claude/settings.json`. What it applies: [`CLAUDE.md`](CLAUDE.md) › *Baseline* and
+   `.claude/settings.json`. What it applies:
    [`references/common.md`](skills/quality-baseline/references/common.md).
 2. **Issue workflow** — `/github-workflow-setup`. Creates the
    [labels](skills/github-workflow-setup/references/labels.md), `docs/agents/workflow.md` (from
@@ -73,27 +74,11 @@ just explains the cycle.
 ### Adopting it in an existing repository
 
 Both skills start with an audit when the repo already has content: they report what is present,
-missing or deviating, agree a plan with you, and only then change things. Existing files are
-merged into, never overwritten. A practical order, one commit (or PR, per the repo's rules) per step:
-
-1. **Audit first** — `/quality-baseline` in audit mode. Expect a checklist, not changes.
-2. **Record the current shape** — for the main past decisions nobody wrote down, write retroactive
-   ADRs before changing them (`adr` skill › *Brownfield*; `common.md` › *Decision log*).
-3. **Formatting alone** — apply the formatter once in a commit of its own, apart from behaviour
-   changes, so history stays readable.
-4. **Gates without a red build** — when coverage starts below 80%, publish it with threshold 0 and
-   raise it in the step that adds the missing tests; for C#, see
-   [`csharp.md` › *Migrating an existing repo*](skills/quality-baseline/references/csharp.md)
-   (e.g. xUnit v2 → v3). Add each CI gate when the code already passes it.
-5. **Repo docs** — restructure the existing README to the baseline order, keeping its content;
-   add a short `CLAUDE.md` with the push policy and any baseline overrides (with the reason).
-6. **Issue workflow** — `/github-workflow-setup`. Existing labels are kept (colours/descriptions
-   updated only with your OK); the open backlog is proposed in one table for approval —
-   external reports to `needs-triage`, your own issues to `github-refine` or a brief — and closed
-   issues are left alone.
-7. **Autonomy last** — start with `Unattended merge: no` or a supervised push policy, run
-   `/github-implement <issue>` on a couple of tickets, and widen autonomy once the reviews and
-   CI behave as expected.
+missing or deviating, agree a plan with you, and only then change things; existing files are
+merged into, never overwritten. In short: audit, retroactive ADRs, formatting in its own commit,
+gates added without a red build, README restructured, then the issue workflow with autonomy
+widened last. The full order:
+[`common.md` › *Adopting the baseline in an existing repository*](skills/quality-baseline/references/common.md#adopting-the-baseline-in-an-existing-repository).
 
 ## How the GitHub workflow works
 
