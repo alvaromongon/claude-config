@@ -49,3 +49,11 @@ repo-level rule wins, and the override should state why.
 - Record architecturally significant decisions as ADRs (MADR) in `docs/decisions/`, proposed via
   PR; use the `adr` skill.
 - Deliver one pull request per step, each built with TDD.
+
+## Cuando trabajo dentro de ~/.claude (este repositorio)
+
+Esta carpeta mezcla estándares personales versionados (README.md, CLAUDE.md, skills/) con
+estado de runtime privado y no versionado (settings.json, sessions/, cache/, history.jsonl...).
+Puedo leer cualquier archivo libremente, pero solo debo crear/editar/borrar archivos que estén
+versionados en el repo (comprobar con `git check-ignore -v <path>` si hay duda). Para tocar
+cualquier archivo no versionado necesito permiso explícito tuyo.
