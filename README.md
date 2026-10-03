@@ -70,6 +70,31 @@ the repo (`gh auth status`), and — for branch rulesets — a public repo or a 
 Re-run either skill at any time to audit the repo; `github-workflow-setup` with nothing to change
 just explains the cycle.
 
+### Adopting it in an existing repository
+
+Both skills start with an audit when the repo already has content: they report what is present,
+missing or deviating, agree a plan with you, and only then change things. Existing files are
+merged into, never overwritten. A practical order, one commit (or PR, per the repo's rules) per step:
+
+1. **Audit first** — `/quality-baseline` in audit mode. Expect a checklist, not changes.
+2. **Record the current shape** — for the main past decisions nobody wrote down, write retroactive
+   ADRs before changing them (`adr` skill › *Brownfield*; `common.md` › *Decision log*).
+3. **Formatting alone** — apply the formatter once in a commit of its own, apart from behaviour
+   changes, so history stays readable.
+4. **Gates without a red build** — when coverage starts below 80%, publish it with threshold 0 and
+   raise it in the step that adds the missing tests; for C#, see
+   [`csharp.md` › *Migrating an existing repo*](skills/quality-baseline/references/csharp.md)
+   (e.g. xUnit v2 → v3). Add each CI gate when the code already passes it.
+5. **Repo docs** — restructure the existing README to the baseline order, keeping its content;
+   add a short `CLAUDE.md` with the push policy and any baseline overrides (with the reason).
+6. **Issue workflow** — `/github-workflow-setup`. Existing labels are kept (colours/descriptions
+   updated only with your OK); the open backlog is proposed in one table for approval —
+   external reports to `needs-triage`, your own issues to `github-refine` or a brief — and closed
+   issues are left alone.
+7. **Autonomy last** — start with `Unattended merge: no` or a supervised push policy, run
+   `/github-implement <issue>` on a couple of tickets, and widen autonomy once the reviews and
+   CI behave as expected.
+
 ## How the GitHub workflow works
 
 Design: [ADR 0001](docs/decisions/0001-github-driven-triage-refinement-and-autonomous-implementation.md).
@@ -134,7 +159,7 @@ This repo holds documentation and templates, not an application, so:
 |---|---|---|
 | Unit/component/load tests, SLO, coverage | Behavioural scenarios (`evals/`) | Skills are prose; templates are verified in the repos they come from. |
 | Build, CodeQL, Docker | Docs CI (frontmatter, links, YAML/JSON, shellcheck) | No executable product. |
-| One PR per step, review via PR | Direct commits to `main` | Single maintainer, nothing for PR CI to gate beyond the docs checks. |
+| One PR per step, review via PR | Direct commits to `main` by the owner (ruleset bypass); PRs for everyone else | Single maintainer, nothing for PR CI to gate beyond the docs checks. |
 | Pre-push hook | Run `validate.py` manually | A hook needs `core.hooksPath` in `.git/config`, which isn't versioned. |
 | Push policy | Ask before every push | Default from [ADR 0002](docs/decisions/0002-per-repository-push-and-merge-policy.md). |
 | Ruleset, secret scanning | Pending publication | Private repo on a free plan; see below. |
@@ -143,8 +168,9 @@ This repo holds documentation and templates, not an application, so:
 
 The versioned files contain no personal data beyond my name and GitHub username. Once public:
 apply the ruleset (`gh api -X POST repos/{owner}/{repo}/rulesets --input .github/rulesets/main.json`
-— no deletion or force-push of `main`, direct commits still allowed) and enable secret scanning
-with push protection.
+— no deletion or force-push of `main`; everyone else goes through a PR with the docs check green,
+while the repo admin bypasses it to commit directly) and enable secret scanning with push
+protection.
 
 ## New machine
 

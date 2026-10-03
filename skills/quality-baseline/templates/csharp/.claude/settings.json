@@ -10,7 +10,12 @@
       "Bash(./build/coverage.sh:*)",
       "Bash(git status:*)",
       "Bash(git diff:*)",
-      "Bash(git log:*)"
+      "Bash(git log:*)",
+      "Bash(./.githooks/pre-push:*)",
+      "Bash(dotnet list package:*)",
+      "Bash(docker build:*)",
+      "Bash(git show:*)",
+      "Bash(git branch:*)"
     ],
     "ask": [
       "Bash(git push:*)"

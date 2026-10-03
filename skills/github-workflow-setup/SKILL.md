@@ -34,10 +34,18 @@ alternative trackers.
 5. **Intake**: copy `templates/ISSUE_TEMPLATE/` to `.github/ISSUE_TEMPLATE/` (issue forms that
    apply `needs-triage`) and `templates/workflows/needs-info-reply.yml` to `.github/workflows/`
    (sends a reporter's reply on a `needs-info` issue back to `needs-triage`).
-6. **Reminder mode**: if everything already exists and nothing needs changing, just summarize
+6. **Existing backlog** (repo with open issues): list open issues carrying none of the state
+   labels (`gh issue list --state open --json number,title,author,labels`) and propose, in one
+   table for approval, `needs-triage` for external reports and `github-refine`/a brief for the
+   owner's own issues. Nothing is relabeled in bulk without that approval; closed issues are left
+   alone.
+7. **Reminder mode**: if everything already exists and nothing needs changing, just summarize
    the cycle from `docs/agents/workflow.md` back to the user instead of editing anything.
-7. **Commit** as the user. Push per the repo's push policy (ask when it has none); change GitHub
+8. **Commit** as the user. Push per the repo's push policy (ask when it has none); change GitHub
    repo settings (labels, rulesets) only with explicit confirmation.
+
+Existing files (`CLAUDE.md`, `.claude/settings.json`, issue templates, labels) are merged into,
+never overwritten: keep what the repo already has and add only what's missing, showing the diff.
 
 ## Reference
 
