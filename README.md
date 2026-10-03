@@ -12,6 +12,8 @@ Versioned subset of `~/.claude` (the repo lives in place so Claude Code loads it
   `needs-info` / `ready-for-agent` / `ready-for-human` / closed `wontfix`.
 - `skills/github-refine/` – skill to turn an agreed spec into a GitHub milestone of tracer-bullet
   issues with blocking dependencies.
+- `skills/github-implement/` – skill to implement one ready-for-agent issue end to end with TDD,
+  as an isolated subagent per ticket.
 - `docs/decisions/` – decision log for this repository, written with the `adr` skill.
 - `docs/credits.md` – attribution for prior art the GitHub workflow skills are modeled on.
 
