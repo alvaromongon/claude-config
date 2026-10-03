@@ -2,7 +2,7 @@
 status: Proposed   # Proposed | Accepted | Rejected | Deprecated | Superseded by [NNNN](NNNN-title.md)
 date: yyyy-mm-dd   # of the last status change
 decision-makers: <who decides>
-consulted: <optional: who was consulted>
+consulted: "<optional: who was consulted>"
 ---
 
 # NNNN. <Title: the problem solved and the solution, in a short phrase>
