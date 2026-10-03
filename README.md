@@ -5,6 +5,8 @@ Versioned subset of `~/.claude` (the repo lives in place so Claude Code loads it
 - `CLAUDE.md` – personal engineering baseline applied to every repository.
 - `skills/quality-baseline/` – skill to set up or audit a repo against that baseline, with
   language references (C#, TypeScript, common) and CI-verified C# templates.
+- `skills/adr/` – skill to write, propose, supersede or list Architecture Decision Records.
+- `docs/decisions/` – decision log for this repository, written with the `adr` skill.
 
 Everything else in `~/.claude` (history, sessions, caches, settings) is ignored on purpose.
 
