@@ -1,6 +1,7 @@
 ---
 name: github-work-queue
 description: Sequentially work through the ready-for-agent backlog without asking for approval between tickets — implement, independently review for correctness and security, wait for CI, merge or hand off, then move to the next. Use when the user wants the agent to process a batch of ready issues autonomously instead of being invoked ticket by ticket.
+disable-model-invocation: true
 ---
 
 # GitHub work queue

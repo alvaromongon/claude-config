@@ -1,5 +1,11 @@
 # Queue policy
 
+## Preconditions
+
+The repo is set up by `github-workflow-setup`: `docs/agents/workflow.md` exists and the push
+policy lets agents push `issue-*` branches. If not, stop before the first ticket and say what's
+missing — without push rights every ticket would end as a local branch.
+
 ## Building the queue
 
 List open issues labeled `ready-for-agent` (optionally scoped to one milestone if the user asked
@@ -31,11 +37,11 @@ For each issue on the frontier, one at a time (no parallel worktrees in this ver
    address them, referencing both reviews' findings verbatim. One retry only — if it's still not
    clean after that, escalate (see below), don't keep looping.
 4. **CI**: wait for the PR's checks (`gh pr checks <n> --watch` or poll) to go green.
-5. **Merge or hand off**: if everything above is clean, merge (`gh pr merge --squash` or the
-   repo's configured strategy). If the repo/issue isn't actually configured for unattended
-   merges, stop at "ready for your review" instead of merging — but keep the ticket marked done
-   on this skill's side and continue the queue; don't block other frontier tickets on this one's
-   human review.
+5. **Merge or hand off**: if everything above is clean and `docs/agents/workflow.md` says
+   `Unattended merge: yes` (the default), merge (`gh pr merge --squash` or the repo's configured
+   strategy). With `Unattended merge: no`, stop at "ready for your review" instead — but keep the
+   ticket marked done on this skill's side and continue the queue; don't block other frontier
+   tickets on this one's human review.
 6. **Recompute the frontier** (closing this ticket may unblock others) and continue.
 
 ## Escalation

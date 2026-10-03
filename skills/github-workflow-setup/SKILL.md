@@ -16,23 +16,34 @@ alternative trackers.
 
 ## Procedure
 
-1. **Detect**: `gh label list` for existing labels, and whether `docs/agents/workflow.md` already
-   exists. For an audit, report present / missing / deviating items (labels, doc, any `CLAUDE.md`
-   override) and agree the plan before changing anything.
+1. **Detect**: `gh label list` for existing labels; whether `docs/agents/workflow.md`,
+   `.github/ISSUE_TEMPLATE/` and `.github/workflows/needs-info-reply.yml` exist; the push/merge
+   policy in the repo's `CLAUDE.md` and `.claude/settings.json`; and whether a default-branch
+   ruleset exists (`gh api repos/{owner}/{repo}/rulesets`). For an audit, report present /
+   missing / deviating items and agree the plan before changing anything.
 2. **Labels**: create any missing label from `references/labels.md` with
    `gh label create <name> --color <hex> --description "<description>"`. Never delete or repurpose
    a label that has open issues on it without checking with the user first.
 3. **Workflow doc**: copy `templates/workflow.md` to `docs/agents/workflow.md` in the target repo,
-   filling in the escalation triggers and overrides for that repo (ask the user for anything
-   repo-specific: sensitive areas, retry count, etc.). Link it from the repo's `CLAUDE.md`.
-4. **Reminder mode**: if labels and doc already exist and nothing needs changing, just summarize
+   filling in the escalation triggers, `Unattended merge` and overrides for that repo (ask the
+   user for anything repo-specific: sensitive areas, retry count, etc.). Link it from the repo's
+   `CLAUDE.md`.
+4. **Autonomy**: ask the user whether agents may push and merge in this repo, then write the
+   matching policy in `CLAUDE.md`, `.claude/settings.json` and `workflow.md` per
+   `references/autonomy.md`. Never widen permissions without that explicit answer.
+5. **Intake**: copy `templates/ISSUE_TEMPLATE/` to `.github/ISSUE_TEMPLATE/` (issue forms that
+   apply `needs-triage`) and `templates/workflows/needs-info-reply.yml` to `.github/workflows/`
+   (sends a reporter's reply on a `needs-info` issue back to `needs-triage`).
+6. **Reminder mode**: if everything already exists and nothing needs changing, just summarize
    the cycle from `docs/agents/workflow.md` back to the user instead of editing anything.
-5. **Commit** as the user. Push / change GitHub repo settings only with explicit confirmation —
-   this is the default baseline rule unless the repo's own `CLAUDE.md` relaxes it.
+7. **Commit** as the user. Push per the repo's push policy (ask when it has none); change GitHub
+   repo settings (labels, rulesets) only with explicit confirmation.
 
 ## Reference
 
 - `references/labels.md` — the labels this workflow needs and what creates/consumes them.
 - `references/dependencies.md` — how blocking edges are written and checked (shared by the
   `github-*` skills).
+- `references/autonomy.md` — the push/merge policy and the permissions that enforce it.
 - `templates/workflow.md` — the per-repo doc this skill writes to `docs/agents/workflow.md`.
+- `templates/ISSUE_TEMPLATE/`, `templates/workflows/needs-info-reply.yml` — issue intake.

@@ -1,6 +1,7 @@
 ---
 name: check-upstream-skills
 description: Diff mattpocock/skills since the last reviewed commit and propose applicable improvements to our github-* skills. Use on demand when the user wants to check for upstream improvements, not automatically — this is a manual, occasional review, not a background sync.
+disable-model-invocation: true
 ---
 
 # Check upstream skills

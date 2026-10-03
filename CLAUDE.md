@@ -35,16 +35,19 @@ repo-level rule wins, and the override should state why.
   design, SLO, assumptions, quality gates, future enhancements, and a note on the AI-assisted
   development process.
 - **Repo CLAUDE.md**: short; points to the README sections instead of duplicating them, and holds
-  only the rules specific to Claude (and any overrides of this baseline).
+  only the rules specific to Claude, the repo's push/merge policy (and any overrides of this
+  baseline).
 - **Repo `.claude/settings.json`** (versioned): `allow` the build/test/format/local-gate commands and
-  read-only git; `ask` for `git push`.
+  read-only git; `ask` for `git push` unless the repo's push policy allows it.
 - **Language**: code, identifiers and code comments in English; README and docs may use the
   project's language.
 
 ## Working agreements
 - Commits are authored as me (my git identity).
-- Never `git push` without my explicit confirmation for that push. Hard rule by default; a repo's
-  `CLAUDE.md` may relax it (e.g. for certain branches or kinds of change) and must say when.
+- Push and merge policy is per repository: its `CLAUDE.md` (enforced by its `.claude/settings.json`)
+  says what may be pushed or merged without asking — e.g. repos running the autonomous GitHub
+  workflow set up by `github-workflow-setup`. If a repo defines no policy, ask before every
+  `git push`.
 - Discuss the analysis and alternatives with me before implementing non-trivial designs.
 - Record architecturally significant decisions as ADRs (MADR) in `docs/decisions/`, proposed via
   PR; use the `adr` skill.
@@ -57,3 +60,6 @@ non-versioned runtime state (settings.json, sessions/, cache/, history.jsonl...)
 file freely, but I must only create/edit/delete files that are versioned in the repo (check with
 `git check-ignore -v <path>` if in doubt). Touching any non-versioned file requires your explicit
 permission.
+
+This repo's own conventions and its overrides of the baseline (direct commits to `main`, ask before
+pushing, documentation-only checks instead of tests/SLO/Docker) are in the README.

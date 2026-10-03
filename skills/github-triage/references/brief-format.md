@@ -15,10 +15,17 @@ read, log/error confirmed — not just "the reporter says">
 - <checkable condition>
 - <checkable condition>
 
+**Sensitive areas**: <`none`, or the sensitive areas (per docs/agents/workflow.md) this change is
+expected to touch and that the human approved for agent work, e.g. "CI workflows">
+
 **Pointers**: <relevant files/modules if already known; omit if unknown — do not guess>
 
 **Out of scope**: <anything explicitly not included, to prevent scope creep>
 ```
+
+*Sensitive areas* makes the implementer's stop condition decidable: touching a sensitive area
+not listed here means stop and escalate. An issue whose sensitive areas aren't acceptable for
+agent work is `ready-for-human`, not `ready-for-agent` with a long list.
 
 Keep it short enough to re-read in one pass. No file paths/line numbers unless you actually
 verified them — stale pointers are worse than none.

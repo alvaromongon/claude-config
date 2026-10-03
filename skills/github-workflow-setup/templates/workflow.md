@@ -30,9 +30,20 @@ dependencies are GitHub's native issue-blocking relations.
 
 ## Autonomy
 
-Per-issue, via labels — not a repo-wide switch:
+Per-issue, via labels:
 - `ready-for-agent`: the agent may implement it without asking after every step.
 - `ready-for-human`: needs supervision; the work queue skips it.
+
+Per repo:
+- **Unattended merge**: [yes (default) | no] — `yes`: the work queue merges once both reviews and
+  CI are green; `no`: it stops at "ready for your review" and moves on to the next ticket.
+- **Push policy**: see `CLAUDE.md` › *Push and merge policy* (enforced by `.claude/settings.json`).
+
+## Intake
+
+New issues come through the issue forms in `.github/ISSUE_TEMPLATE/`, which apply
+`needs-triage`. When the reporter answers a `needs-info` issue, the `needs-info-reply` workflow
+moves it back to `needs-triage`; GitHub notifies the maintainers of the reply as usual.
 
 ## Escalation triggers
 
@@ -40,7 +51,8 @@ The work queue stops working on a ticket — leaves its branch/PR as-is, relabel
 `ready-for-human` with a comment explaining why — and moves on to the next one when:
 - tests don't stabilize after [N, default 3] attempts,
 - acceptance criteria turn out ambiguous mid-implementation,
-- the change touches a sensitive area: [list for this repo, e.g. auth, payments, infra, CI],
+- the change touches a sensitive area — [list for this repo, e.g. auth, payments, infra, CI] —
+  not listed in the brief's *Sensitive areas*,
 - the issue lacks the `ready-for-agent` label or still has an open blocker,
 - the review fix round didn't produce a clean review.
 

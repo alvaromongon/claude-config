@@ -34,7 +34,8 @@ Modeled on `implement` from [mattpocock/skills](https://github.com/mattpocock/sk
    failing test for it.
 3. **Local gate**: run the repo's full local quality gate (the same checks as its pre-push hook —
    format, build, tests, coverage) before considering the ticket done.
-4. **Commit, push, open PR**: per `references/delivery.md`. Does not merge, does not self-review.
+4. **Commit, push, open PR**: per `references/delivery.md` (push only if the repo's push policy
+   allows it). Does not merge, does not self-review.
 5. **Report back**: branch name, PR link, which acceptance criteria are covered by which test,
    and anything intentionally left out of scope per the brief.
 

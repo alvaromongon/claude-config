@@ -24,8 +24,8 @@ Modeled on `to-tickets` from [mattpocock/skills](https://github.com/mattpocock/s
    splits — same spirit as `grilling`: surface the open calls, don't just publish a guess.
 4. **Brief + autonomy**: for each ticket, draft the brief (`../github-triage/references/brief-
    format.md`) and decide `ready-for-agent` vs `ready-for-human` — same judgment call as
-   `github-triage`: human judgment, manual/visual testing, or a sensitive area means
-   `ready-for-human`.
+   `github-triage`: human judgment, manual/visual testing, or a sensitive area you wouldn't
+   pre-approve means `ready-for-human`. Fill the brief's *Sensitive areas* field either way.
 5. **Publish**, only after approval: `gh issue create --title ... --body <brief> --milestone ...
    --label <ready-for-agent|ready-for-human>` for each ticket. Set blocking edges per
    `../github-workflow-setup/references/dependencies.md` (native relations, or the checklist

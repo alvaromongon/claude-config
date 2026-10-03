@@ -13,6 +13,13 @@ Small, logical, each referencing the issue (`#<number>` in the body). TDD red/gr
 can be separate commits or squashed at the end — whichever makes the diff easiest to review; don't
 leave a broken intermediate commit as the final history.
 
+## Push policy
+
+Push and open the PR only if the repo's push policy allows it (`CLAUDE.md` › *Push and merge
+policy*, see `github-workflow-setup`'s `references/autonomy.md`). If the repo has no policy or it
+doesn't cover `issue-*` branches, stop after the local commits and report the branch — the human
+pushes.
+
 ## Pull request
 
 Open with `gh pr create`, body covering:
@@ -32,8 +39,8 @@ Matches the defaults in `github-workflow-setup`'s `templates/workflow.md` (check
 
 - Tests don't stabilize after 3 attempts at the same seam.
 - An acceptance criterion turns out ambiguous once you're implementing it.
-- The change touches a sensitive area (auth, payments, infra, CI) that wasn't already flagged
-  `ready-for-agent` with that in mind.
+- The change touches a sensitive area (per the repo's `docs/agents/workflow.md`; default auth,
+  payments, infra, CI) that the brief's *Sensitive areas* field doesn't list.
 - The issue doesn't actually carry `ready-for-agent`, or one of its blocking issues isn't closed
   yet.
 
