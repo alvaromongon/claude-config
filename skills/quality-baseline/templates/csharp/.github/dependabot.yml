@@ -4,6 +4,10 @@ updates:
     directory: /
     schedule:
       interval: weekly
+    # Wait before proposing a just-published version: most compromised releases are caught and
+    # yanked within days.
+    cooldown:
+      default-days: 7
     groups:
       microsoft:
         patterns: ["Microsoft.*", "System.*"]
@@ -14,8 +18,12 @@ updates:
     directory: /
     schedule:
       interval: weekly
+    cooldown:
+      default-days: 7
 
   - package-ecosystem: docker
     directory: /
     schedule:
       interval: weekly
+    cooldown:
+      default-days: 7

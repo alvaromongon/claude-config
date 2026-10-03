@@ -5,11 +5,22 @@ set -euo pipefail
 
 cd "$(git rev-parse --show-toplevel)"
 
+echo "pre-push: restoring (locked mode, as in CI)..."
+dotnet restore --locked-mode
+
+echo "pre-push: checking vulnerable packages..."
+vulnerable="$(dotnet list package --vulnerable --include-transitive 2>&1)"
+if grep -q -i "has the following vulnerable packages" <<<"$vulnerable"; then
+  echo "$vulnerable"
+  echo "pre-push: vulnerable NuGet packages detected." >&2
+  exit 1
+fi
+
 echo "pre-push: checking format..."
-dotnet format --verify-no-changes
+dotnet format --verify-no-changes --no-restore
 
 echo "pre-push: building (warnings as errors)..."
-dotnet build --configuration Release
+dotnet build --configuration Release --no-restore
 
 echo "pre-push: running tests with coverage..."
 rm -rf artifacts/TestResults

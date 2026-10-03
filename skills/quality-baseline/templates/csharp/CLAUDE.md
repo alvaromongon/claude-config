@@ -16,5 +16,10 @@ The README is the single source of truth. Read the relevant section instead of d
 - Keep the SLO in the README and the k6 thresholds (`tests/*.LoadTests/scripts/`) in sync.
 - Architecturally significant designs are recorded as ADRs (`adr` skill), proposed via PR.
 
+## Push and merge policy
+Ask before every `git push`. <!-- Or, for repos running the autonomous GitHub workflow (set up by
+`github-workflow-setup`): "Agents may push `issue-*` branches, open PRs and merge PRs of
+`ready-for-agent` issues once reviews and CI are green; ask before any other push." -->
+
 ## Overrides of the personal baseline
 None. <!-- State each override and why, e.g. "No load test: library without a runtime." -->

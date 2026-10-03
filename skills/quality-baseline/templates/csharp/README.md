@@ -46,7 +46,7 @@ calibration runs (0.5×, 1×, 2×, 4×) and how the load test enforces them.>
 |---|---|---|
 | Format | ✅ | ✅ |
 | Build, analyzers, warnings as errors | ✅ | ✅ |
-| Locked restore + vulnerable dependencies | — | ✅ |
+| Locked restore + vulnerable dependencies | ✅ | ✅ |
 | Tests + coverage ≥ 80% | ✅ | ✅ |
 | CodeQL | — | ✅ |
 | Container build + image scan | — | ✅ |

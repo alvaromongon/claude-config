@@ -53,7 +53,13 @@ the README.
 - Gates: format check, build with warnings as errors + analyzers, locked restore, vulnerable
   dependency audit, tests with coverage (≥ 80% lines, fail below), coverage summary to
   `$GITHUB_STEP_SUMMARY`, upload results, container build + Trivy scan (CRITICAL/HIGH).
-- Separate CodeQL workflow (PR + push + weekly schedule). Dependabot for packages, actions, docker.
+- Separate CodeQL workflow (PR + push + weekly schedule). Dependabot for packages, actions, docker,
+  each with `cooldown` (e.g. 7 days) so a just-published — possibly compromised — version isn't
+  proposed immediately.
+- Pin third-party actions by full commit SHA with the version in a comment
+  (`uses: owner/action@<sha> # v1.2.3`): a tag can be moved to malicious code, a SHA cannot.
+  Dependabot keeps SHA pins up to date. GitHub-owned actions (`actions/*`, `github/*`) may stay on
+  major tags.
 - Load-test workflow with `workflow_dispatch` (rate/duration inputs), report to run summary,
   artifacts uploaded. Run it on demand after relevant changes; a nightly schedule is optional per
   project (worth it for actively changing services).
@@ -84,18 +90,24 @@ the README.
   structure, development conventions (incl. AI-assisted development note), design, SLO +
   calibration, load test, assumptions, enhancements, quality gates (local vs CI table).
 - Repo `CLAUDE.md`: a table pointing to README sections + Claude-only rules (TDD, run the local
-  gate before finishing, keep SLO and k6 thresholds in sync, push only after
-  confirmation) + any overrides of the personal baseline, with the reason.
+  gate before finishing, keep SLO and k6 thresholds in sync) + the repo's **push/merge policy**
+  (who may push which branches and whether agents may merge; omitted = ask before every push) +
+  any overrides of the personal baseline, with the reason.
 - **Decision log**: `docs/decisions/` with ADRs in MADR format and an index `README.md`, linked from
   the repo README (design section). Brownfield audit: propose retroactive ADRs for the main past
   decisions. Format and process: the `adr` skill.
 - Repo `CLAUDE.md` says that designs are recorded as ADRs proposed via PR.
 - Versioned `.claude/settings.json`: `allow` build/test/format/coverage/local gate and read-only
-  git (`status`, `diff`, `log`); `ask` for `git push`.
+  git (`status`, `diff`, `log`); `ask` for `git push` unless the repo's push policy allows it
+  (e.g. repos running the autonomous GitHub workflow allow pushes to `issue-*` branches — set up by
+  `github-workflow-setup`).
 
 ## Local gate
-Versioned `.githooks/pre-push` running the same checks as CI (format, build, tests, coverage),
-enabled automatically (`git config core.hooksPath .githooks` from the build/install step).
+Versioned `.githooks/pre-push` running the same checks as CI (locked restore, vulnerable
+dependencies, format, build, tests, coverage), enabled automatically (`git config core.hooksPath
+.githooks` from the build/install step). CodeQL, the container scan and the load test stay CI-only.
+A locked restore fails when a lock file is stale: update it deliberately (`dotnet restore
+--force-evaluate`, `pnpm install`) and commit it.
 
 ## GitHub repository
 - Rulesets need a public repo (or paid plan) for private repos.

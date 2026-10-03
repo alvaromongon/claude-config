@@ -28,7 +28,7 @@ jobs:
     steps:
       - uses: actions/checkout@v7
 
-      - uses: dorny/paths-filter@v4
+      - uses: dorny/paths-filter@ceb8a2b8f2d89434be7ff52d3de7ec3738c5cc9d # v4.0.3
         id: filter
         with:
           filters: .github/path-filters.yml
@@ -64,7 +64,7 @@ jobs:
       # Code emitted by source generators under obj/ (OpenAPI, System.Text.Json, the xUnit entry
       # point) is compiled, so CodeQL analyzes it; paths-ignore does not apply to a manual C# build.
       - name: Exclude generated code
-        uses: advanced-security/filter-sarif@v1.1
+        uses: advanced-security/filter-sarif@2da736ff05ef065cb2894ac6892e47b5eac2c3c0 # v1.1
         with:
           patterns: |
             -**/obj/**

@@ -22,8 +22,8 @@ load test to the kind of project (HTTP service, batch job/CLI, library).
    assumptions, quality gates, enhancements), `docs/decisions/` for ADRs (`adr` skill), a short repo
    `CLAUDE.md` pointing to the README plus Claude-only rules and baseline overrides, and a
    versioned `.claude/settings.json` (`ask` for `git push`).
-6. **Commit** as the user. Push / open PRs / change GitHub settings only with
-   explicit confirmation.
+6. **Commit** as the user. Push / open PRs per the repo's push policy (ask when it has none);
+   change GitHub settings only with explicit confirmation.
 
 ## Adapting templates
 Templates come from a real, CI-verified repo (HackerNews.BestStories.Api). Re-check latest
