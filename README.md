@@ -8,6 +8,8 @@ Versioned subset of `~/.claude` (the repo lives in place so Claude Code loads it
 - `skills/adr/` – skill to write, propose, supersede or list Architecture Decision Records.
 - `skills/github-workflow-setup/` – skill to set up or audit a repo's GitHub issue workflow
   (labels, per-issue autonomy, workflow doc) used by the `github-*` skills (see ADR 0001).
+- `skills/github-triage/` – skill to classify incoming external GitHub issues and route them to
+  `needs-info` / `ready-for-agent` / `ready-for-human` / closed `wontfix`.
 - `docs/decisions/` – decision log for this repository, written with the `adr` skill.
 - `docs/credits.md` – attribution for prior art the GitHub workflow skills are modeled on.
 
