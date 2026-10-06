@@ -1,6 +1,7 @@
 ---
 name: quality-baseline
 description: Set up or audit a repository against my personal engineering quality baseline — tests (unit, component, load/SLO), CI gates, pre-push hook, branch protection, coverage, dependency audit, CodeQL, Docker, ADR decision log, folder structure, editorconfig and centralized build config — following each language's official conventions (C#/.NET Microsoft, TypeScript, others). Use when creating a new repo/project, scaffolding a solution, or when asked to check/raise the quality of an existing repo.
+model: sonnet
 ---
 
 # Quality baseline

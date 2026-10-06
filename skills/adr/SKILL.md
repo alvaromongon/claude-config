@@ -1,6 +1,7 @@
 ---
 name: adr
 description: Write, propose, supersede or list Architecture Decision Records (ADRs, MADR 4.0 format) in a repository's docs/decisions/ folder. Use when a decision is architecturally significant — structure, deployment shape, state/persistence, non-functional requirements (security, compliance, availability), dependencies or libraries, interfaces/contracts, anything hard to reverse — when an issue needs a design analysis with options, when a past decision is being revisited, or when the user asks for an ADR or a decision record.
+model: opus
 ---
 
 # Architecture Decision Records

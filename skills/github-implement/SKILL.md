@@ -1,6 +1,7 @@
 ---
 name: github-implement
 description: Implement one ready-for-agent GitHub issue end to end with TDD — branch, red-green-refactor at the brief's acceptance criteria, local quality gate, push, open PR. Run as an isolated subagent per ticket, one ticket per invocation. Use when a single issue needs implementing, or when github-work-queue dispatches one ticket from the backlog.
+model: sonnet
 context: fork
 ---
 

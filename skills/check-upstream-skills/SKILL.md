@@ -1,6 +1,6 @@
 ---
 name: check-upstream-skills
-description: Diff mattpocock/skills since the last reviewed commit and propose applicable improvements to our github-* skills. Use on demand when the user wants to check for upstream improvements, not automatically — this is a manual, occasional review, not a background sync.
+description: Diff mattpocock/skills since the last reviewed commit and propose applicable improvements to our github-* skills, and check whether the per-skill model assignment is still current. Use on demand when the user wants to check for upstream improvements, not automatically — this is a manual, occasional review, not a background sync.
 disable-model-invocation: true
 ---
 
@@ -9,7 +9,9 @@ disable-model-invocation: true
 On-demand review of [mattpocock/skills](https://github.com/mattpocock/skills) for improvements
 applicable to the `github-*` skills modeled on it (see `docs/credits.md`,
 [ADR 0001](../../docs/decisions/0001-github-driven-triage-refinement-and-autonomous-implementation.md)).
-Proposes changes; never applies anything without approval.
+Also checks the per-skill model assignment
+([ADR 0003](../../docs/decisions/0003-assign-models-per-skill-by-role.md)). Proposes changes;
+never applies anything without approval.
 
 ## Procedure
 
@@ -29,8 +31,12 @@ Proposes changes; never applies anything without approval.
 6. **Update the marker**: append a row to `docs/upstream-watch.md` with the new commit reviewed,
    today's date, and a one-line note of what was found/applied — even if nothing was applicable,
    so the next run doesn't re-review the same range.
+7. **Models**: compare the current model line-up and prices with ADR 0003's assignment, using
+   `docs/model-watch.md`'s triggers. If the last review there is older than three months or a
+   trigger has fired, follow its *How to review* (proposing, not applying) and append a row.
 
 ## Reference
 
 - `references/skill-map.md` — which of our skills maps to which of theirs.
 - `../../docs/upstream-watch.md` — the last-reviewed marker this skill reads and updates.
+- `../../docs/model-watch.md` — model review triggers, procedure and log.

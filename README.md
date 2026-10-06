@@ -23,6 +23,7 @@ lives in place, so Claude Code loads it directly in every session.
 | [`docs/decisions/`](docs/decisions/README.md) | ADRs for this repository. |
 | [`docs/credits.md`](docs/credits.md) | Prior art the GitHub workflow skills are modeled on. |
 | [`docs/upstream-watch.md`](docs/upstream-watch.md) | How far `check-upstream-skills` has reviewed upstream. |
+| [`docs/model-watch.md`](docs/model-watch.md) | When and how the per-skill model assignment is reviewed, and its log. |
 | [`.github/`](.github/) | Docs CI, its validation script, Dependabot and the ruleset to apply once public. |
 
 Everything else in `~/.claude` (history, sessions, caches, `settings.json`) is private runtime
@@ -34,19 +35,23 @@ state, excluded by the whitelist in [`.gitignore`](.gitignore).
 `description`; every skill can also be started explicitly with `/<name>`. **Manual only** skills
 set `disable-model-invocation: true`: only typing the slash command starts them.
 
-| Skill | Use it to | Starts | Notes |
-|---|---|---|---|
-| [`quality-baseline`](skills/quality-baseline/SKILL.md) | Set up or audit a repo against the baseline (tests, CI gates, pre-push, rulesets, Docker, ADRs…). | Automatically | C# templates in `templates/csharp/`; language references in `references/`. |
-| [`adr`](skills/adr/SKILL.md) | Write, propose, supersede or list ADRs (MADR 4.0). | Automatically | |
-| [`github-workflow-setup`](skills/github-workflow-setup/SKILL.md) | Set up or audit a repo's issue workflow; or get a reminder of the cycle. | Automatically | Asks before widening any permission. |
-| [`github-triage`](skills/github-triage/SKILL.md) | Classify incoming external issues and PRs. | Automatically | Proposes; applies only after approval. |
-| [`github-refine`](skills/github-refine/SKILL.md) | Turn an agreed spec into a milestone of tracer-bullet issues. | Automatically | Shows the draft before publishing. |
-| [`github-implement`](skills/github-implement/SKILL.md) | Implement one `ready-for-agent` issue with TDD, up to an open PR. | Automatically, e.g. `/github-implement 42` | Runs in a forked context; needs the issue number. |
-| [`github-work-queue`](skills/github-work-queue/SKILL.md) | Work through the `ready-for-agent` backlog unattended. | **Manual only** | Merges PRs where the repo allows it. |
-| [`check-upstream-skills`](skills/check-upstream-skills/SKILL.md) | Review [mattpocock/skills](https://github.com/mattpocock/skills) for improvements. | **Manual only** | Occasional, on demand. |
+| Skill | Use it to | Starts | Model | Notes |
+|---|---|---|---|---|
+| [`quality-baseline`](skills/quality-baseline/SKILL.md) | Set up or audit a repo against the baseline (tests, CI gates, pre-push, rulesets, Docker, ADRs…). | Automatically | `sonnet` | C# templates in `templates/csharp/`; language references in `references/`. |
+| [`adr`](skills/adr/SKILL.md) | Write, propose, supersede or list ADRs (MADR 4.0). | Automatically | `opus` | |
+| [`github-workflow-setup`](skills/github-workflow-setup/SKILL.md) | Set up or audit a repo's issue workflow; or get a reminder of the cycle. | Automatically | `sonnet` | Asks before widening any permission. |
+| [`github-triage`](skills/github-triage/SKILL.md) | Classify incoming external issues and PRs. | Automatically | `sonnet` | Proposes; applies only after approval. |
+| [`github-refine`](skills/github-refine/SKILL.md) | Turn an agreed spec into a milestone of tracer-bullet issues. | Automatically | `opus`, effort high | Shows the draft before publishing. |
+| [`github-implement`](skills/github-implement/SKILL.md) | Implement one `ready-for-agent` issue with TDD, up to an open PR. | Automatically, e.g. `/github-implement 42` | `sonnet` | Runs in a forked context; needs the issue number. |
+| [`github-work-queue`](skills/github-work-queue/SKILL.md) | Work through the `ready-for-agent` backlog unattended. | **Manual only** | `sonnet`; reviewers `opus` | Merges PRs where the repo allows it. |
+| [`check-upstream-skills`](skills/check-upstream-skills/SKILL.md) | Review [mattpocock/skills](https://github.com/mattpocock/skills) for improvements; check the model assignment. | **Manual only** | session | Occasional, on demand. |
 
 The built-in `code-review` and `security-review` skills are reused as the review gate of the work
 queue.
+
+**Model** is a family alias, so each skill follows that family's latest model; the assignment by
+role and how it is kept current: [ADR 0003](docs/decisions/0003-assign-models-per-skill-by-role.md),
+[`docs/model-watch.md`](docs/model-watch.md).
 
 ## Setting up a repository
 
@@ -134,7 +139,8 @@ flowchart LR
   and `shellcheck` on template scripts — the same as the [Docs workflow](.github/workflows/docs.yml).
 - **Behaviour**: before a significant edit to a workflow skill, walk through its
   `evals/scenarios.md` and confirm each expected behaviour still holds.
-- **Upstream**: `/check-upstream-skills` now and then; credits in [docs/credits.md](docs/credits.md).
+- **Upstream and models**: `/check-upstream-skills` now and then — it also checks the model
+  assignment against [docs/model-watch.md](docs/model-watch.md); credits in [docs/credits.md](docs/credits.md).
 
 ### Overrides of the baseline
 

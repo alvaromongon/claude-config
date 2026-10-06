@@ -7,3 +7,4 @@ tracks the work, the ADR holds the reasoning.
 |---|---|---|
 | [0001](0001-github-driven-triage-refinement-and-autonomous-implementation.md) | GitHub-driven workflow for triage, refinement, and autonomous ticket implementation | Accepted |
 | [0002](0002-per-repository-push-and-merge-policy.md) | Per-repository push and merge policy instead of a global "never push" rule | Accepted |
+| [0003](0003-assign-models-per-skill-by-role.md) | Assign a model per skill by role, using family aliases | Accepted |

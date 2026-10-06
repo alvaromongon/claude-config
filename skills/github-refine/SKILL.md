@@ -1,6 +1,8 @@
 ---
 name: github-refine
 description: Turn a spec, design doc, or conversation into a GitHub milestone of tracer-bullet issues with blocking dependencies, each labeled ready-for-agent or ready-for-human. Use when a plan or spec is agreed and needs to become actionable tickets, or when the user asks to break a milestone/epic down into issues.
+model: opus
+effort: high
 ---
 
 # GitHub refine

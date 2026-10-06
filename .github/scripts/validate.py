@@ -17,7 +17,7 @@ import yaml
 
 ROOT = Path(__file__).resolve().parents[2]
 SKILL_KEYS = {"name", "description", "context", "agent", "disable-model-invocation", "allowed-tools",
-              "argument-hint", "user-invocable"}
+              "argument-hint", "user-invocable", "model", "effort"}
 LINK = re.compile(r"\[[^\]]*\]\(([^)\s]+)\)")
 errors: list[str] = []
 

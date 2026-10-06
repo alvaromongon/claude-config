@@ -28,18 +28,26 @@ again (step 2 below) and wait for CI, and leave it ready for review. If a confli
 resolved without guessing at intent, escalate that ticket. Re-run the queue after merging a
 waiting PR to refresh the rest.
 
+## Subagent models
+
+Pass `model` on every `Agent` call
+([ADR 0003](../../../docs/decisions/0003-assign-models-per-skill-by-role.md)): `"sonnet"` for
+implementer subagents (implement, fix loop, refreshing a conflicting PR) and `"opus"` for both
+reviewers. The reviewers are the only gate before an unattended merge, so they run on a stronger
+model than the one whose work they check. Aliases only, never model IDs.
+
 ## Per-ticket loop
 
 For each issue on the frontier, one at a time (no parallel worktrees in this version — see ADR
 0001's deferred work):
 
-1. **Implement**: spawn a subagent (via the `Agent` tool, fresh context) with a prompt that
-   invokes `github-implement` with the issue number as argument. Wait for it to finish; collect
-   branch/PR.
-2. **Review**: spawn two **separate** subagents in parallel (fresh context each, never the
-   implementer's), each with `isolation: "worktree"` and told to run `gh pr checkout <n>` in that
-   worktree first — so both review exactly the PR's branch, without touching each other's or the
-   main session's working tree:
+1. **Implement**: spawn a subagent (via the `Agent` tool, `model: "sonnet"`, fresh context) with
+   a prompt that invokes `github-implement` with the issue number as argument. Wait for it to
+   finish; collect branch/PR.
+2. **Review**: spawn two **separate** subagents in parallel (`model: "opus"`, fresh context each,
+   never the implementer's), each with `isolation: "worktree"` and told to run `gh pr checkout <n>`
+   in that worktree first — so both review exactly the PR's branch, without touching each other's
+   or the main session's working tree:
    - one invoking `code-review` with the PR number as target (correctness, reuse, simplification
      — same pattern as Matt Pocock's `code-review` axes);
    - one invoking `security-review`, which reviews the pending changes of the checked-out branch
