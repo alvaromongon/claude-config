@@ -22,3 +22,4 @@ End-to-end run on 2026-10-03 in [claude-workflow-sandbox](https://github.com/alv
 | 3 | Not triggered: the native dependency endpoints (add, check, remove) all work on a private free-plan repo. |
 | 2 | Pass (2026-10-03, stop/validation batch: one fresh headless Sonnet 5.5 session per scenario, fixtures in throwaway clones with push disabled): prefactoring ticket first, blocking the feature slices; draft shown, nothing published, frontier = the prefactoring ticket. |
 | 4 | Partial: proposed `ready-for-agent` with *Sensitive areas: none* for the auth slices, but raised it as an explicit open question. Consistent with that repo's `workflow.md`, whose sensitive areas don't include auth — list auth there when it matters. |
+| 5 | Pass (2026-10-14, Claude Code 2.1.289, fresh headless session, init model Opus 5.5, throwaway clone): `spec` issue without a success metric — stopped before decomposing, created nothing, asked for the metric and offered `github-shape`. |

@@ -16,4 +16,14 @@ reason it through against the edited text) and confirm the expected behaviour st
 
 ## Results
 
-Not run yet.
+End-to-end run on 2026-10-14 in [claude-workflow-sandbox](https://github.com/alvaromongon/claude-workflow-sandbox) (Claude Code 2.1.289; one fresh headless `claude -p` session per scenario, init model Opus 5.5 — the skill's own `model: opus`; fixtures in throwaway clones with push disabled; multi-turn scenarios continued with `--resume`, the owner's answers given as the next prompt).
+
+| # | Result |
+|---|---|
+| 1 | Pass: read README, code and open `spec`/`decision` issues first, stated its read of the goal (confidence 30%), asked for the owner's starting point, then one `Q:`/`GUESS:` question. |
+| 2 | Pass: time saved left `TBD` (no usage data) and said so; proposed a checkable technical metric instead, with each baseline labelled measured (1 run). |
+| 3 | Pass: added stdin (structurally different) and do-nothing beside the owner's `--files`, each with its trade-off, plus *What we give up*; also flagged that the change might skip shaping. |
+| 4 | Pass (2 turns): first researched list prices and asked for the volume (could the decision be settled today?); once the owner said quotes need finance, drafted a `decision` issue blocking the spec, inputs `TBD`, nothing published. |
+| 5 | Pass: bug report (which didn't reproduce) declined for shaping; routed to a single issue or `github-refine`. |
+| 6 | Pass (3rd turn of #4, after approval): spec labelled `spec`, decision `decision`, no `ready-for-*`; native blocked-by edge set and verified. |
+| 7 | Pass: ran the spec's checks (`upper "hi there"`, `npm run gate`), commented met against the target with how it was measured, closed the spec as completed. |

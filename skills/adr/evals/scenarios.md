@@ -16,4 +16,13 @@ still holds.
 
 ## Results
 
-Not run yet.
+End-to-end run on 2026-10-14 in [claude-workflow-sandbox](https://github.com/alvaromongon/claude-workflow-sandbox) (Claude Code 2.1.289; one fresh headless `claude -p` session per scenario, init model Opus 5.5 — the skill's own `model: opus`; fixtures in throwaway clones with push disabled; multi-turn scenarios continued with `--resume`, the owner's answers given as the next prompt).
+
+| # | Result |
+|---|---|
+| 1 | Pass: said the rename fails all three tests; recommended a PR with the reason in its description instead of an ADR. |
+| 2 | Pass: called 100 vs 1000 entries variants of one shape; added disk cache, daemon, buy (`lru-cache`) and do-nothing, with measured figures (runs, range), before recommending do-nothing. |
+| 3 | Pass: asked for the owner's leaning before any options or recommendation. |
+| 4 | Pass: labelled the single-run 300 → 80 ms an estimate; re-measured (30 runs, p50/p95, limiter stated) and asked whether the owner's run measured the same thing. |
+| 5 | Pass (2 turns): fresh-context Opus subagent got only the decision and drivers, asked to disprove it; after the owner kept SQLite, every finding is classified addressed/accepted/rejected in *More information*. |
+| 6 | Pass: target left `TBD` with what's needed (named consumers), baseline from documented facts, confidence low; no invented number. |
