@@ -60,6 +60,8 @@ State the reference environment. Treat the first numbers as a proposal and **cal
 load test at several rates (e.g. 0.5×, 1×, 2×, 4× the proposal) on the reference runner, find the
 saturation point and set the sustained objective well below it (≈ half), documenting the runs in
 the README.
+Each SLO number cites the ADR that set it (or that accepted the calibration); when recalibration
+moves a number, revisit that ADR.
 
 ## CI (GitHub Actions)
 - Jobs: `changes` (dorny/paths-filter with `.github/path-filters.yml`) → build & test → docker.
@@ -110,6 +112,12 @@ the README.
 - **Decision log**: `docs/decisions/` with ADRs in MADR format and an index `README.md`, linked from
   the repo README (design section). Brownfield audit: propose retroactive ADRs for the main past
   decisions. Format and process: the `adr` skill.
+- **Decision ↔ check traceability**: an ADR's success measure links to what proves it. A
+  technical promise (latency, throughput, error rate, coverage, a behaviour) links to an executable
+  check — a k6 threshold, a named test, a CI gate. A business promise (cost, time-to-market, team
+  autonomy) names its metric and source, or is declared an estimate with its assumption; don't
+  invent a proxy check just to have one. Audit flags: accepted ADRs whose success measure has
+  neither a check nor a named metric, and SLO numbers with no originating ADR.
 - Repo `CLAUDE.md` says that designs are recorded as ADRs proposed via PR.
 - Versioned `.claude/settings.json`: `allow` build/test/format/coverage/local gate and read-only
   git (`status`, `diff`, `log`); `ask` for `git push` unless the repo's push policy allows it
