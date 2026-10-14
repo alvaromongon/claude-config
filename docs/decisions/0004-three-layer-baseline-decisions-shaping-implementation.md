@@ -1,5 +1,5 @@
 ---
-status: Proposed
+status: Accepted
 date: 2026-10-14
 decision-makers: Alvaro Montero
 consulted: "N/A"
