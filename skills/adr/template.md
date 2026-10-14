@@ -10,9 +10,13 @@ consulted: "<optional: who was consulted>"
 - **Issue**: <link>
 - **Supersedes**: <optional: [NNNN](NNNN-title.md)>
 
+**Decision**: <one sentence: what we decide and the outcome we expect, with its figure.>
+
 ## Context and problem statement
 
 <The problem in two or three sentences, with the context needed to understand it without reading anything else.>
+
+**Why it matters**: <the customer, money, risk or date at stake, with a figure labelled measured (source) or estimated (assumption).>
 
 ## Decision drivers
 
@@ -22,10 +26,15 @@ consulted: "<optional: who was consulted>"
 
 - <option 1>
 - <option 2>
+- <buy / do nothing, when they apply>
 
 ## Decision outcome
 
 Chosen option: "<option>", because <justification tied to the decision drivers>.
+
+**What we give up**: <the accepted trade-off; if it adds complexity, why the simple option isn't enough.>
+
+**Sequence**: <optional: what goes first and why, by impact.>
 
 **Confidence**: <high | medium | low>. <What would make us revisit it.>
 
@@ -37,6 +46,8 @@ Chosen option: "<option>", because <justification tied to the decision drivers>.
 ### Confirmation
 
 <How compliance with the decision is checked: a test, a CI check, a review.>
+
+**Success measure**: <the metric, its target, and when and how it's measured.>
 
 ## Pros and cons of the options
 

@@ -26,11 +26,17 @@ current shape; the issue tracks the work, the ADR holds the reasoning.
   another language, translate headings and statuses and keep that translation consistent across ADRs.
 - Keep it pithy and factual. Cite sources (regulation, vendor docs, library issues) with links. Put
   long research in *More information* or a linked document; the decision must stand on its own.
+- Follow the decision method in the global `CLAUDE.md` › *Decisions*: the conclusion up front, the
+  business impact, options including buy and do-nothing when they apply, the accepted trade-off, and
+  a measurable outcome. Label every figure as measured (source) or estimated (assumption); never
+  invent one — ask, or leave a visible `TBD` with what's needed to fill it.
 - Never hide negative consequences. State the confidence level and what would make us revisit it.
 
 ## Process
-1. **Analyse** with the user before writing: options, drivers, pros/cons, recommendation. The decision
-   is the user's.
+1. **Analyse** with the user before writing. Start from the user's position (leaning, hypothesis or
+   open questions) — ask for it if not given — then add the data and options missing, and challenge
+   the weak pieces of the method. Options, drivers, pros/cons, recommendation. The decision is the
+   user's.
 2. **Propose**: open a PR adding the ADR with status `Proposed` and linking the issue (the issue links
    back). The PR review is the discussion.
 3. **Accept**: once the user decides, set the chosen option, status `Accepted` and date, update the

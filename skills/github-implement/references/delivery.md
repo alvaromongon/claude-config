@@ -23,7 +23,9 @@ pushes.
 ## Pull request
 
 Open with `gh pr create`, body covering:
-- **Summary**: what changed and why, tied to the issue's acceptance criteria.
+- **Summary**: open with one sentence on the outcome and its impact (what the user or the system
+  gains, with a figure when there is one), then what changed and why, tied to the issue's
+  acceptance criteria. Trade-offs accepted along the way go here too.
 - **Evidence**: test output showing the change (failing → passing), or before/after for anything
   visual.
 - **Linked issue**: `Closes #<number>`.
