@@ -16,7 +16,8 @@ whether the **balance between families** has moved.
 ## How to review
 
 1. Compare the current line-up and prices (Claude Code `/model`, the `claude-api` skill's model
-   table) with the assignment in ADR 0003.
+   table) with the assignment in ADR 0003, plus `github-shape` (`opus`, judgment role — added by
+   ADR 0004 after 0003 was accepted).
 2. For each role whose best fit may have changed, run the affected skills' `evals/scenarios.md` in
    the workflow sandbox with the candidate alias, and compare against the current one.
 3. If the assignment should change, write a new ADR superseding 0003; then edit the skills'

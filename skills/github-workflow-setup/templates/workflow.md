@@ -8,8 +8,10 @@ map of the cycle, not a copy of the skills themselves.
 
 This repo uses the GitHub-native workflow from `~/.claude/skills/github-*`
 (design: [ADR 0001](https://github.com/alvaromongon/claude-config/blob/main/docs/decisions/0001-github-driven-triage-refinement-and-autonomous-implementation.md)
-in `claude-config`). Milestones are specs/epics; issues are tracer-bullet tickets; blocking
-dependencies are GitHub's native issue-blocking relations.
+and [ADR 0004](https://github.com/alvaromongon/claude-config/blob/main/docs/decisions/0004-three-layer-baseline-decisions-shaping-implementation.md)
+in `claude-config`). A `spec` issue holds the shaped what and why; its milestone is the epic;
+issues are tracer-bullet tickets; blocking dependencies are GitHub's native issue-blocking
+relations.
 
 ## Cycle
 
@@ -20,7 +22,7 @@ dependencies are GitHub's native issue-blocking relations.
 1. **Triage** (`github-triage`) — incoming issues start `needs-triage`. Classified into
    `needs-info`, `ready-for-agent`, `ready-for-human`, or closed `wontfix`. External PRs are
    reviewed as text and never checked out or run on the host.
-2. **Refine** (`github-refine`) — a spec (with a success metric) or milestone is broken into tracer-bullet issues with
+2. **Refine** (`github-refine`) — a spec with a success metric (a `spec` issue, or a bounded change stating its metric) is broken into tracer-bullet issues with
    blocking edges (GitHub's native issue dependencies), each ending up `ready-for-agent` or
    `ready-for-human`.
 3. **Implement** (`github-implement`) — one `ready-for-agent` issue at a time, TDD, in an

@@ -25,6 +25,7 @@ estimated (assumption)>
 - **How it's measured**: <technical promise → the executable check that proves it (k6 threshold,
   named test, CI gate); business promise → the metric and where it's read, or "estimate" with its
   assumption>
+- **Scope**: <which users, teams or systems it affects>
 - **Baseline**: <today's value, measured or estimated, or `TBD` with what's needed>
 
 ## Appetite

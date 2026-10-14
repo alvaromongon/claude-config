@@ -21,7 +21,8 @@ from [addyosmani/agent-skills](https://github.com/addyosmani/agent-skills) and s
 
 Say so and route elsewhere when the work is already bounded: a bug or an external report →
 `github-triage`; a change whose problem, outcome and scope fit in two sentences and need no option
-weighed → straight to `github-refine` (or a single issue). Shaping a one-PR change is overhead.
+weighed → straight to `github-refine` (or a single issue), with its success metric stated in one
+line — refine requires one either way. Shaping a one-PR change is overhead.
 
 ## Procedure: shape
 

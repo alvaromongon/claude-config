@@ -1,6 +1,6 @@
 ---
 name: adr
-description: Write, propose, supersede or list Architecture Decision Records (ADRs, MADR 4.0 format) in a repository's docs/decisions/ folder. Use when a decision is architecturally significant — structure, deployment shape, state/persistence, non-functional requirements (security, compliance, availability), dependencies or libraries, interfaces/contracts, anything hard to reverse — when an issue needs a design analysis with options, when a past decision is being revisited, or when the user asks for an ADR or a decision record.
+description: Write, propose, supersede or list Architecture Decision Records (ADRs, MADR 4.0 format) in a repository's docs/decisions/ folder. Use when a decision is hard to reverse, surprising without context and a real trade-off — typically structure, deployment shape, state/persistence, non-functional requirements (security, compliance, availability), dependencies or libraries, interfaces/contracts — when an issue needs a design analysis with options, when a past decision is being revisited, or when the user asks for an ADR or a decision record.
 model: opus
 ---
 
@@ -30,8 +30,8 @@ current shape; the issue tracks the work, the ADR holds the reasoning.
 - Keep it pithy and factual. Cite sources (regulation, vendor docs, library issues) with links. Put
   long research in *More information* or a linked document; the decision must stand on its own.
 - Follow the decision method in the global `CLAUDE.md` › *Decisions*: the conclusion up front, the
-  business impact, options including buy and do-nothing when they apply, the accepted trade-off, and
-  a measurable outcome. Label every figure as measured (source) or estimated (assumption); never
+  business impact, options including buy and do-nothing when they apply, the accepted trade-off,
+  the sequence by impact, and a measurable outcome with its scope. Label every figure as measured (source) or estimated (assumption); never
   invent one — ask, or leave a visible `TBD` with what's needed to fill it.
 - A **measured** figure carries its evidence: how many runs, the spread, and what limits it (why
   isn't it twice as good — a core, a lock, the network, the load generator itself). Without that
