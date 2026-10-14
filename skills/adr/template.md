@@ -24,6 +24,8 @@ consulted: "<optional: who was consulted>"
 
 ## Considered options
 
+<At least two structurally different options — whole alternatives, not variants of one.>
+
 - <option 1>
 - <option 2>
 - <buy / do nothing, when they apply>
@@ -67,3 +69,5 @@ Chosen option: "<option>", because <justification tied to the decision drivers>.
 ## More information
 
 <Sources, longer research, related decisions, when to revisit it.>
+
+<Doubt review, when it ran: what the fresh-context reviewer challenged and how each finding was handled.>

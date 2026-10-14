@@ -55,7 +55,8 @@ weak, and draft the final version. The direction is mine; the research and the w
 6. **Measurable outcome and scope**: a number (time, cost, risk, customers) with how it will be
    measured, and which teams or people it affects.
 
-Every figure is labelled as **measured** (with its source) or **estimated** (with its assumption);
+Every figure is labelled as **measured** (with its source, and for a measurement its runs, spread
+and what limits it) or **estimated** (with its assumption);
 a rough estimate beats no number, an invented one is never acceptable. Pick the pattern or example
 the problem asks for, not the most familiar one.
 
