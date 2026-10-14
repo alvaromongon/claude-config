@@ -8,8 +8,8 @@ so `github-implement` (or a human) can start from it without re-reading the whol
 
 **What**: <one or two sentences, the demoable behavior change — not a layer>
 
-**Verified**: <what you actually reproduced/checked — repro steps run, PR branch checked out and
-read, log/error confirmed — not just "the reporter says">
+**Verified**: <what you actually reproduced/checked — repro steps run, PR diff read (never
+checked out), log/error confirmed — not just "the reporter says">
 
 **Acceptance criteria**:
 - <checkable condition>

@@ -1,7 +1,7 @@
 # Blocking dependencies
 
 Single reference for how the `github-*` skills record and check "issue A is blocked by issue B".
-Written by `github-refine`; read by `github-implement` (precondition) and `github-work-queue`
+Written by `github-refine` (and `github-shape`: a decision blocks its spec); read by `github-implement` (precondition) and `github-work-queue`
 (frontier). GitHub's native issue dependencies are the source of truth; the checklist is only a
 fallback.
 

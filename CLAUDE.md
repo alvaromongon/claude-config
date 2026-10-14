@@ -30,8 +30,8 @@ Rules that apply in every session, with or without that skill:
   `git push`.
 - Discuss the analysis and alternatives with me before implementing non-trivial designs, following
   *Decisions* below.
-- Record architecturally significant decisions as ADRs (MADR) in `docs/decisions/`, proposed via
-  PR; use the `adr` skill.
+- Record decisions that are hard to reverse, surprising without context and a real trade-off as
+  ADRs (MADR) in `docs/decisions/`, proposed via PR; use the `adr` skill.
 - Deliver one pull request per step, each built with TDD.
 
 ## Decisions

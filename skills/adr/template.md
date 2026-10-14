@@ -38,6 +38,8 @@ Chosen option: "<option>", because <justification tied to the decision drivers>.
 
 **Sequence**: <optional: what goes first and why, by impact.>
 
+**Scope**: <which teams, people or systems the decision affects.>
+
 **Confidence**: <high | medium | low>. <What would make us revisit it.>
 
 ### Consequences

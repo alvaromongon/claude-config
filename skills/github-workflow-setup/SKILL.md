@@ -40,8 +40,8 @@ alternative trackers.
    (sends a reporter's reply on a `needs-info` issue back to `needs-triage`).
 6. **Existing backlog** (repo with open issues): list open issues carrying none of the state
    labels (`gh issue list --state open --json number,title,author,labels`) and propose, in one
-   table for approval, `needs-triage` for external reports and `github-refine`/a brief for the
-   owner's own issues. Nothing is relabeled in bulk without that approval; closed issues are left
+   table for approval, `needs-triage` for external reports and `github-shape` (not yet bounded) or
+   `github-refine`/a brief for the owner's own issues. Nothing is relabeled in bulk without that approval; closed issues are left
    alone.
 7. **Reminder mode**: if everything already exists and nothing needs changing, just summarize
    the cycle from `docs/agents/workflow.md` back to the user instead of editing anything.

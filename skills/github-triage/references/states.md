@@ -15,5 +15,5 @@ Two independent dimensions, both expressed as GitHub labels.
 | `needs-triage` | closed `wontfix` | Out of scope or rejected. Comment with the reasoning; if it's a recurring request, write a short concept note under `.out-of-scope/<slug>.md` so it isn't re-litigated. |
 | `needs-info` | `needs-triage` | Reporter replied with the missing piece — the `needs-info-reply` workflow relabels it automatically; re-run triage on it. No timeout: it waits for the reporter. |
 
-Issues opened by the repo owner/team (not external reporters) skip this skill — they go straight
-to `github-refine`, already scoped by the person who wrote them.
+Issues opened by the repo owner/team (not external reporters) skip this skill — they go to
+`github-shape` (not yet bounded) or `github-refine` (already scoped, with a success metric).

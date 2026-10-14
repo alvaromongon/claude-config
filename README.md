@@ -8,7 +8,8 @@ lives in place, so Claude Code loads it directly in every session.
 - **What it is**: a methodology, not an application — a personal engineering baseline
   ([`common.md`](skills/quality-baseline/references/common.md), everyday rules in
   [`CLAUDE.md`](CLAUDE.md)) plus skills that set up repositories against it and run a
-  GitHub-native shape → triage → refine → implement → review → merge loop, autonomously where a repo allows it.
+  GitHub-native loop — the owner's ideas are shaped and external reports triaged, then refined →
+  implemented → reviewed → merged, autonomously where a repo allows it.
 - **Use it**: in any repo, `/quality-baseline` to set up or audit quality gates, then
   `/github-workflow-setup` to enable the issue workflow. See [Setting up a repository](#setting-up-a-repository).
 - **Quality**: documentation checks in CI ([Docs workflow](.github/workflows/docs.yml)); behavioural
@@ -51,7 +52,8 @@ The built-in `code-review` and `security-review` skills are reused as the review
 queue.
 
 **Model** is a family alias, so each skill follows that family's latest model; the assignment by
-role and how it is kept current: [ADR 0003](docs/decisions/0003-assign-models-per-skill-by-role.md),
+role and how it is kept current: [ADR 0003](docs/decisions/0003-assign-models-per-skill-by-role.md)
+(`github-shape`, added later, is `opus` per [ADR 0004](docs/decisions/0004-three-layer-baseline-decisions-shaping-implementation.md)),
 [`docs/model-watch.md`](docs/model-watch.md).
 
 ## Setting up a repository
@@ -103,6 +105,7 @@ flowchart LR
   dec[decision issues] -.->|block| spec
   spec -->|github-refine| rfa
   spec -->|github-refine| rfh
+  pr -->|milestone closed: metric checked| done[spec closed]
   rfa -->|github-implement / github-work-queue| pr[PR → reviews → CI → merge]
   pr -->|escalation| rfh
 ```
@@ -126,6 +129,7 @@ flowchart LR
   | Skill | Reads | Writes |
   |---|---|---|
   | `github-workflow-setup` | labels, rulesets | labels (after confirmation) |
+  | `github-shape` | README, ADRs, `spec`/`decision` issues | `spec` and `decision` issues, dependencies, comments, closes the spec — after approval |
   | `github-triage` | issues, PR diffs (never checks out or runs external PRs) | labels, comments, closes `wontfix` — after approval |
   | `github-refine` | milestones | milestone, issues, dependencies — after approval |
   | `github-implement` | issue, dependencies | branch push, PR (only if the push policy allows) |
