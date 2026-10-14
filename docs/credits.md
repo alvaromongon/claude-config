@@ -14,6 +14,13 @@ draws on three more sources: `wayfinder` from [mattpocock/skills](https://github
 with a guess and a confidence), and shaping from [Shape Up](https://basecamp.com/shapeup) by Ryan
 Singer (appetite and no-gos before work is committed).
 
+The `adr` skill's decisions layer (same ADR) takes four ideas: the three tests for when an ADR is
+worth writing, from `domain-modeling` in [mattpocock/skills](https://github.com/mattpocock/skills);
+*design it twice* and *explain the number* from Lauren Tan's pstack (read through
+[michael-denyer/pstack-claude](https://github.com/michael-denyer/pstack-claude)); and the
+fresh-context doubt review from `doubt-driven-development` in
+[addyosmani/agent-skills](https://github.com/addyosmani/agent-skills).
+
 See [docs/decisions/0001](decisions/0001-github-driven-triage-refinement-and-autonomous-implementation.md)
 for why this repo builds its own versions instead of adopting that plugin directly, and
 `check-upstream-skills` for how improvements from the original are periodically reviewed.

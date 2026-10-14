@@ -10,8 +10,11 @@ One ADR per decision, stored with the code. The decision log is how the system c
 current shape; the issue tracks the work, the ADR holds the reasoning.
 
 ## When to write one
-- Write an ADR for decisions that affect structure, deployment/state, non-functional requirements,
-  dependencies, interfaces, or that are **hard to reverse**. Not for implementation details.
+- Write an ADR when all three hold: the decision is **hard to reverse** (changing course later is
+  costly), **surprising without context** (a future reader would ask "why this way?"), and the
+  result of a **real trade-off** (genuine alternatives, one chosen for specific reasons). Typical
+  areas: structure, deployment/state, non-functional requirements, dependencies, interfaces. If any
+  of the three is missing, a comment on the issue or PR is enough; not for implementation details.
 - Brownfield: when revisiting a decision that was never recorded, first write it retroactively
   (status `Accepted`, date and source link of the original decision), then the new one that
   supersedes it.
@@ -30,6 +33,9 @@ current shape; the issue tracks the work, the ADR holds the reasoning.
   business impact, options including buy and do-nothing when they apply, the accepted trade-off, and
   a measurable outcome. Label every figure as measured (source) or estimated (assumption); never
   invent one — ask, or leave a visible `TBD` with what's needed to fill it.
+- A **measured** figure carries its evidence: how many runs, the spread, and what limits it (why
+  isn't it twice as good — a core, a lock, the network, the load generator itself). Without that
+  it's an estimate; label it so.
 - Link the success measure to what proves it: an executable check for a technical promise, a named
   metric and source for a business one (`quality-baseline` › *Decision ↔ check traceability*).
 - Never hide negative consequences. State the confidence level and what would make us revisit it.
@@ -39,12 +45,22 @@ current shape; the issue tracks the work, the ADR holds the reasoning.
    open questions) — ask for it if not given — then add the data and options missing, and challenge
    the weak pieces of the method. Options, drivers, pros/cons, recommendation. The decision is the
    user's.
-2. **Propose**: open a PR adding the ADR with status `Proposed` and linking the issue (the issue links
+   - **Design it twice**: at least two **structurally different** options — whole alternatives,
+     not variants or point fixes inside one shape — plus do-nothing and buy when they apply.
+2. **Doubt** (when the decision is hard to reverse, or confidence is low): before proposing, hand a
+   fresh-context subagent (`Agent`, `model: opus`) only the decision in three to five sentences
+   and its drivers — not the conversation — and ask it to **disprove** it: failure modes,
+   unstated assumptions, a missed option, a number that doesn't hold. Classify each finding as
+   addressed (change the ADR), accepted (record it under *Bad* consequences) or rejected (say why),
+   and note the review in *More information*. One round; a second only if the first changed the
+   decision. If you're already inside a subagent, say the review couldn't run instead of
+   faking it.
+3. **Propose**: open a PR adding the ADR with status `Proposed` and linking the issue (the issue links
    back). The PR review is the discussion.
-3. **Accept**: once the user decides, set the chosen option, status `Accepted` and date, update the
+4. **Accept**: once the user decides, set the chosen option, status `Accepted` and date, update the
    index, and merge. Implementation goes in separate PRs that link the ADR.
-4. **Reject**: keep the file with status `Rejected` and the reason, so the debate isn't reopened.
-5. **Immutable once accepted**: never rewrite an accepted ADR's decision. To change it, write a new ADR;
+5. **Reject**: keep the file with status `Rejected` and the reason, so the debate isn't reopened.
+6. **Immutable once accepted**: never rewrite an accepted ADR's decision. To change it, write a new ADR;
    when it's accepted, set the old one to `Superseded by [NNNN](NNNN-...md)` (the only edit allowed,
    plus fixing typos/links) and link the new one back with `Supersedes`.
-6. Code reviews check changes against accepted ADRs.
+7. Code reviews check changes against accepted ADRs.
