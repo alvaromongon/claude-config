@@ -30,6 +30,8 @@ current shape; the issue tracks the work, the ADR holds the reasoning.
   business impact, options including buy and do-nothing when they apply, the accepted trade-off, and
   a measurable outcome. Label every figure as measured (source) or estimated (assumption); never
   invent one — ask, or leave a visible `TBD` with what's needed to fill it.
+- Link the success measure to what proves it: an executable check for a technical promise, a named
+  metric and source for a business one (`quality-baseline` › *Decision ↔ check traceability*).
 - Never hide negative consequences. State the confidence level and what would make us revisit it.
 
 ## Process

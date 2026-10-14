@@ -45,9 +45,9 @@ Chosen option: "<option>", because <justification tied to the decision drivers>.
 
 ### Confirmation
 
-<How compliance with the decision is checked: a test, a CI check, a review.>
+<How compliance with the decision is checked: link the test, CI gate or k6 threshold that enforces it.>
 
-**Success measure**: <the metric, its target, and when and how it's measured.>
+**Success measure**: <the metric and its target. Technical promise → link the executable check that proves it (k6 threshold, named test, CI gate). Business promise → the metric and where it's read, or "estimate" with its assumption.>
 
 ## Pros and cons of the options
 
