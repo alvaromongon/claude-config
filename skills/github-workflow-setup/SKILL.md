@@ -1,6 +1,6 @@
 ---
 name: github-workflow-setup
-description: Set up or audit a repository's GitHub-native issue workflow (triage/autonomy labels, docs/agents/workflow.md, per-issue autonomy via labels) that github-triage, github-refine, github-implement and github-work-queue rely on. Use when configuring a new repo for this workflow, auditing an existing one, or when you want a reminder of how the cycle works in this repo.
+description: Set up or audit a repository's GitHub-native issue workflow (triage/autonomy labels, docs/agents/workflow.md, per-issue autonomy via labels) that github-shape, github-triage, github-refine, github-implement and github-work-queue rely on. Use when configuring a new repo for this workflow, auditing an existing one, or when you want a reminder of how the cycle works in this repo.
 model: sonnet
 ---
 

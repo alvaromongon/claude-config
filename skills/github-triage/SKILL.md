@@ -1,6 +1,6 @@
 ---
 name: github-triage
-description: Classify incoming external GitHub issues (bug reports, feature requests, unsolicited PRs) by verifying the claim against the codebase and routing to needs-info, ready-for-agent, ready-for-human, or closed wontfix. Use when new issues have the needs-triage label, or when the user asks to triage/process incoming issues. Not for issues the repo owner opened themselves — those go straight to github-refine.
+description: Classify incoming external GitHub issues (bug reports, feature requests, unsolicited PRs) by verifying the claim against the codebase and routing to needs-info, ready-for-agent, ready-for-human, or closed wontfix. Use when new issues have the needs-triage label, or when the user asks to triage/process incoming issues. Not for issues the repo owner opened themselves — those go to github-shape or github-refine.
 model: sonnet
 ---
 
@@ -17,7 +17,7 @@ Modeled on `triage` from [mattpocock/skills](https://github.com/mattpocock/skill
 
 Only issues labeled `needs-info` or `needs-triage` **from external reporters** (bug reports,
 feature requests, unsolicited PRs). Issues the repo owner opened are already scoped by the person
-who wrote them — skip straight to `github-refine`.
+who wrote them — skip to `github-shape` (not yet bounded) or `github-refine`.
 
 ## Procedure
 

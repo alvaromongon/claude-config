@@ -8,7 +8,7 @@ lives in place, so Claude Code loads it directly in every session.
 - **What it is**: a methodology, not an application — a personal engineering baseline
   ([`common.md`](skills/quality-baseline/references/common.md), everyday rules in
   [`CLAUDE.md`](CLAUDE.md)) plus skills that set up repositories against it and run a
-  GitHub-native triage → refine → implement → review → merge loop, autonomously where a repo allows it.
+  GitHub-native shape → triage → refine → implement → review → merge loop, autonomously where a repo allows it.
 - **Use it**: in any repo, `/quality-baseline` to set up or audit quality gates, then
   `/github-workflow-setup` to enable the issue workflow. See [Setting up a repository](#setting-up-a-repository).
 - **Quality**: documentation checks in CI ([Docs workflow](.github/workflows/docs.yml)); behavioural
@@ -40,6 +40,7 @@ set `disable-model-invocation: true`: only typing the slash command starts them.
 | [`quality-baseline`](skills/quality-baseline/SKILL.md) | Set up or audit a repo against the baseline (tests, CI gates, pre-push, rulesets, Docker, ADRs…). | Automatically | `sonnet` | C# templates in `templates/csharp/`; language references in `references/`. |
 | [`adr`](skills/adr/SKILL.md) | Write, propose, supersede or list ADRs (MADR 4.0). | Automatically | `opus` | |
 | [`github-workflow-setup`](skills/github-workflow-setup/SKILL.md) | Set up or audit a repo's issue workflow; or get a reminder of the cycle. | Automatically | `sonnet` | Asks before widening any permission. |
+| [`github-shape`](skills/github-shape/SKILL.md) | Shape an idea into a `spec` issue with a success metric; resolve its decisions; close it checking the metric. | Automatically | `opus` | Starts from the owner's position; shows the draft before publishing. |
 | [`github-triage`](skills/github-triage/SKILL.md) | Classify incoming external issues and PRs. | Automatically | `sonnet` | Proposes; applies only after approval. |
 | [`github-refine`](skills/github-refine/SKILL.md) | Turn an agreed spec into a milestone of tracer-bullet issues. | Automatically | `opus`, effort high | Shows the draft before publishing. |
 | [`github-implement`](skills/github-implement/SKILL.md) | Implement one `ready-for-agent` issue with TDD, up to an open PR. | Automatically, e.g. `/github-implement 42` | `sonnet` | Runs in a forked context; needs the issue number. |
@@ -87,7 +88,8 @@ widened last. The full order:
 
 ## How the GitHub workflow works
 
-Design: [ADR 0001](docs/decisions/0001-github-driven-triage-refinement-and-autonomous-implementation.md).
+Design: [ADR 0001](docs/decisions/0001-github-driven-triage-refinement-and-autonomous-implementation.md),
+extended with shaping by [ADR 0004](docs/decisions/0004-three-layer-baseline-decisions-shaping-implementation.md).
 
 ```mermaid
 flowchart LR
@@ -97,13 +99,15 @@ flowchart LR
   nt -->|github-triage| rfa[ready-for-agent]
   nt -->|github-triage| rfh[ready-for-human]
   nt -->|github-triage| wf[closed wontfix]
-  spec[Owner's spec] -->|github-refine| rfa
+  idea[Owner's idea] -->|github-shape| spec[spec issue]
+  dec[decision issues] -.->|block| spec
+  spec -->|github-refine| rfa
   spec -->|github-refine| rfh
   rfa -->|github-implement / github-work-queue| pr[PR → reviews → CI → merge]
   pr -->|escalation| rfh
 ```
 
-- **Mapping**: milestone = spec/epic; issue = tracer-bullet ticket
+- **Mapping**: `spec` issue = the shaped what and why, linked from its milestone; milestone = epic; issue = tracer-bullet ticket
   ([slicing rules](skills/github-refine/references/tracer-bullets.md)); "blocked by" = GitHub's
   native issue dependencies ([how they're written and checked](skills/github-workflow-setup/references/dependencies.md)).
 - **States**: [triage state machine](skills/github-triage/references/states.md). Each issue

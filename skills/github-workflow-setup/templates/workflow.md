@@ -13,10 +13,14 @@ dependencies are GitHub's native issue-blocking relations.
 
 ## Cycle
 
+0. **Shape** (`github-shape`) — the owner's idea becomes a `spec` issue (problem, why it matters,
+   success metric, appetite, options, not doing); open questions are `decision` issues that block
+   it. Skipped for work that is already bounded. When the milestone closes, the spec is closed
+   with the metric checked against its target.
 1. **Triage** (`github-triage`) — incoming issues start `needs-triage`. Classified into
    `needs-info`, `ready-for-agent`, `ready-for-human`, or closed `wontfix`. External PRs are
    reviewed as text and never checked out or run on the host.
-2. **Refine** (`github-refine`) — a spec or milestone is broken into tracer-bullet issues with
+2. **Refine** (`github-refine`) — a spec (with a success metric) or milestone is broken into tracer-bullet issues with
    blocking edges (GitHub's native issue dependencies), each ending up `ready-for-agent` or
    `ready-for-human`.
 3. **Implement** (`github-implement`) — one `ready-for-agent` issue at a time, TDD, in an

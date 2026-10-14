@@ -16,9 +16,12 @@ Modeled on `to-tickets` from [mattpocock/skills](https://github.com/mattpocock/s
 
 ## Procedure
 
-1. **Anchor**: identify the spec (an issue, a doc, or the preceding conversation) and the
-   milestone it belongs to. Create the milestone (`gh api repos/{owner}/{repo}/milestones -f
-   title=...`) if it doesn't exist yet.
+1. **Anchor**: identify the spec (a `spec` issue from `github-shape`, another issue, a doc, or the
+   preceding conversation) and the milestone it belongs to. The spec must name a **success
+   metric** (what is measured, the target, how); if it doesn't, stop and offer `github-shape`
+   rather than inventing one. A `spec` issue must have no open `decision` blockers. Create the
+   milestone (`gh api repos/{owner}/{repo}/milestones -f title=... -f description=...`) if it
+   doesn't exist yet, linking the spec issue in its description.
 2. **Decompose**: draft the ticket list per `references/tracer-bullets.md` — prefactoring first,
    then vertical feature slices, each with its blocking edges.
 3. **Quiz step**: present the numbered draft (title, one-line demoable outcome, blockers) to the
