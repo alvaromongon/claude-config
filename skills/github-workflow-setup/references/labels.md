@@ -10,7 +10,7 @@ in use on open issues without checking first.
 | `needs-info` | `d4c5f9` | Waiting on the reporter for missing information. | `github-triage` |
 | `ready-for-agent` | `0e8a16` | Fully specified; `github-work-queue` may pick it up without per-step approval. | `github-triage`, `github-refine`, `github-work-queue` |
 | `ready-for-human` | `fbca04` | Specified, but needs human judgment, manual testing, or a sensitive-area change. | `github-triage`, `github-work-queue` |
-| `spec` | `1d76db` | Shaped spec: problem, success metric, appetite, options. Input to refinement, not implementation work. | `github-shape`, `github-refine` |
+| `spec` | `1d76db` | Shaped spec: problem, success metric, appetite, options. Refinement input, not implementation work. | `github-shape`, `github-refine` |
 | `decision` | `5319e7` | Open question blocking a spec; resolved by a decision, not code. | `github-shape` |
 
 Already-standard GitHub default labels (`bug`, `enhancement`, `wontfix`, `duplicate`, `invalid`,
