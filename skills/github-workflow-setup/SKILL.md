@@ -20,8 +20,14 @@ alternative trackers.
 1. **Detect**: `gh label list` for existing labels; whether `docs/agents/workflow.md`,
    `.github/ISSUE_TEMPLATE/` and `.github/workflows/needs-info-reply.yml` exist; the push/merge
    policy in the repo's `CLAUDE.md` and `.claude/settings.json`; and whether a default-branch
-   ruleset exists (`gh api repos/{owner}/{repo}/rulesets`). For an audit, report present /
-   missing / deviating items and agree the plan before changing anything.
+   ruleset exists (`gh api repos/{owner}/{repo}/rulesets` lists them without their rules; read
+   each with `gh api repos/{owner}/{repo}/rulesets/<id> --jq '.rules'`). Check required checks,
+   linear history and no force-push, and flag rules that contradict each other (e.g.
+   `allowed_merge_methods` including `merge` while `required_linear_history` is on). When comparing
+   the repo's files with the templates, compare content and ignore Markdown formatting (a repo
+   formatter rewrites blank lines and emphasis). For an audit, report present / missing / deviating
+   items and agree the plan before changing anything; an audit with no findings ends with the
+   reminder summary of step 7, in one paragraph.
 2. **Labels**: create any missing label from `references/labels.md` with
    `gh label create <name> --color <hex> --description "<description>"`. Never delete or repurpose
    a label that has open issues on it without checking with the user first.

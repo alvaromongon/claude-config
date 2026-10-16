@@ -15,8 +15,8 @@ Title: the outcome, not the solution ("Users see their balance without a page re
 
 ## Why it matters
 
-<the customer, money, risk or date at stake, with a figure labelled measured (source) or
-estimated (assumption)>
+<the customer, money, risk, date or time to a decision at stake, with a figure labelled measured
+(source) or estimated (assumption)>
 
 ## Success metric
 
@@ -30,8 +30,9 @@ estimated (assumption)>
 
 ## Appetite
 
-<how much this is worth investing, in PRs or days — e.g. "about 3 PRs", "one week". Past the
-appetite, cut scope or re-shape; don't extend silently>
+<how much this is worth investing, in PRs and agent execution time — e.g. "about 3 PRs, ~2 days
+of agent execution" — plus the human steps it needs (reviews, merges, secrets, manual checks).
+Past the appetite, cut scope or re-shape; don't extend silently>
 
 ## Options
 
@@ -48,11 +49,19 @@ complexity, why the simple option isn't enough>
 
 ## Risks
 
-- <where it can get stuck, and how we'd find out early>
+- <where it can get stuck, and how we'd find out early; an estimate that drives a target gets
+  "measure by <date or milestone>">
 
 ## Decisions
 
 - <open: link to each blocking decision issue> / <closed: link — one-line answer>
+- <settled in shaping (date): one-line answer, for what was decided without an issue>
+- <settled in refinement (date): one-line answer, added by github-refine>
+
+**Affects ADRs** (optional): <ADRs this spec departs from or extends; the ADR update ships with the
+implementation PRs or via the `adr` skill>
+
+**Related** (optional): <issues, ADRs, docs>
 ```
 
 ## Decision issue (label `decision`)

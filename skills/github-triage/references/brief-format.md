@@ -1,6 +1,7 @@
 # Agent brief format
 
-Posted as a comment on the issue when it moves to `ready-for-agent` or `ready-for-human`. Written
+Posted as a comment on a triaged issue when it moves to `ready-for-agent` or `ready-for-human`;
+for tickets created by `github-refine`, it is the issue body. Written
 so `github-implement` (or a human) can start from it without re-reading the whole thread.
 
 ```markdown
@@ -18,7 +19,8 @@ checked out), log/error confirmed — not just "the reporter says">
 **Sensitive areas**: <`none`, or the sensitive areas (per docs/agents/workflow.md) this change is
 expected to touch and that the human approved for agent work, e.g. "CI workflows">
 
-**Pointers**: <relevant files/modules if already known; omit if unknown — do not guess>
+**Pointers**: <relevant modules if already known (paths only when verified and stable); omit if
+unknown — do not guess>
 
 **Out of scope**: <anything explicitly not included, to prevent scope creep>
 ```

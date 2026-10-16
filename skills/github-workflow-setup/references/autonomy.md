@@ -13,7 +13,16 @@ Agents may push `issue-*` branches, open PRs, and merge PRs of `ready-for-agent`
 reviews and CI are green (see docs/agents/workflow.md). Ask before any other push.
 ```
 
-For a supervised repo, write "Ask before every `git push`." instead and set `Unattended merge: no`.
+Three policies are valid; ask the user which one:
+
+| Policy | `CLAUDE.md` wording | `settings.json` | `Unattended merge` |
+|---|---|---|---|
+| **Full autonomy** | the block above | the `allow` list below | `yes` |
+| **Push, owner merges** | "Agents may push `issue-*` branches and open PRs; the owner merges. Ask before any other push." | the `allow` list below **without** `Bash(gh pr merge:*)` | `no` |
+| **Supervised** | "Ask before every `git push`." | no push or PR rules in `allow` | `no` |
+
+With *push, owner merges*, `github-implement` and `github-work-queue` still run unattended up to
+an open PR; the queue stops each ticket at "ready for your review".
 
 ## 2. Repo `.claude/settings.json` — the enforcement
 

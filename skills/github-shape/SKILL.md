@@ -27,24 +27,37 @@ line — refine requires one either way. Shaping a one-PR change is overhead.
 ## Procedure: shape
 
 1. **Starting point**: ask for the owner's position — the outcome they lean towards, their
-   hypothesis, or what they don't know yet — unless they already gave it. Read the repo's README,
-   `docs/decisions/` and open `spec`/`decision` issues touching the area, so you never ask what
-   you can read.
+   hypothesis, or what they don't know yet — unless they already gave it in this conversation. A
+   direction recorded in an ADR or an issue counts as a guess to confirm, not as given. Read the
+   repo's README, `docs/decisions/` and open `spec`/`decision` issues touching the area, so you
+   never ask what you can read.
 2. **Interview**: one question at a time, each with your guess and the reasoning behind it
    (`Q: … / GUESS: …`). Before the first question, state your one-sentence read of the goal and a
    confidence (0–100%) with what is missing; stop asking once you can predict the answers. Cover
    the pieces of the spec format; don't ask for what you can look up.
+   - **Owner first on two pieces**: for the **success metric** (metric, target, how it's measured)
+     and for **what we give up**, ask for the owner's own version *before* showing yours — then
+     add your guess as a challenge or a complement. These are the pieces where reacting to a
+     guess replaces the owner's judgment; everywhere else a guess to react to is fine.
+   - **Pivots**: if an answer changes the goal, re-state your read and confidence, and keep the
+     previous direction as an option in the draft.
+   - **Appetite** may be proposed in the draft when the other answers make it predictable; the
+     owner confirms it there. Size it in agent execution time, and list the human steps
+     (reviews, merges, secrets, manual checks) separately.
 3. **Fill the gaps**: when the owner lacks data or ideas, research them (repo, docs, primary
    sources) and propose. Label every figure **measured** (source) or **estimated** (assumption);
-   never invent one — leave a visible `TBD` with what's needed to fill it. Propose at least two
-   options with different shapes, including do-nothing and buy when they apply.
+   never invent one — leave a visible `TBD` with what's needed to fill it. An estimate that drives
+   a target gets a "measure by <date or milestone>" line in *Risks*. Propose at least two options
+   with different shapes, including do-nothing and buy when they apply.
 4. **Open decisions**: a question that can't be answered in this session (needs research, a
    prototype, someone else's input) becomes a **decision issue** (format in
    `references/spec-format.md`) that blocks the spec. Don't open one for what can be settled now.
 5. **Draft and approve**: show the full spec draft and the list of decision issues. Publish
    nothing until the owner approves.
-6. **Publish**: `gh issue create --label spec` for the spec and `--label decision` for each decision
-   issue, then the blocking edges (decision blocks spec) per
+6. **Publish**, in this order (the spec and its decisions link each other): create the spec
+   (`gh issue create --label spec`) with a placeholder in *Decisions*; create each decision issue
+   (`--label decision`) linking the spec; edit the spec's *Decisions* with the decision links; then
+   add the blocking edges (decision blocks spec) per
    `../github-workflow-setup/references/dependencies.md`. Never a `ready-for-*` label: specs and
    decisions are not implementation work, so `github-work-queue` never picks them up.
 7. **Report**: the spec's link, its open decisions, and the next step — resolve the decisions
@@ -52,9 +65,13 @@ line — refine requires one either way. Shaping a one-PR change is overhead.
 
 ## Procedure: resolve a decision
 
-Work the decision issue with the owner the same way (starting point, options, data). Record the
-answer as a comment — the conclusion first, then options weighed and what we give up — update the
-spec's *Options* or *Decisions* section if it changes, and close the issue. If the decision is
+Work the decision issue with the owner the same way (starting point, options, data). Code written
+only to research the answer (a replay, a benchmark, a spike) stays in the scratchpad, uncommitted;
+the closing comment states the method so it can be reproduced. Record the answer as a comment —
+the conclusion first, then options weighed and what we give up — and update **every** section of
+the spec whose figures or choices the answer changes (*Options*, *Risks*, *Decisions*, …). Then
+check the spec's targets still hold with the new data; if they don't, say so and agree the change
+with the owner. Close the issue. If the decision is
 hard to reverse, surprising without context **and** a real trade-off, also record it as an ADR
 with the `adr` skill and link it.
 

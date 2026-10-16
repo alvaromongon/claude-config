@@ -33,5 +33,6 @@ new behavior — it's demoable as "nothing broke, and the seam now exists."
 - Every ticket is demonstrable independently once its blockers have landed.
 - The first ticket in the graph has zero blockers.
 - Prefactoring tickets precede the feature tickets they unblock.
-- No file paths or line numbers baked into ticket bodies — they go stale; point at modules/behavior
-  instead.
+- Point at modules and behavior, not file paths or line numbers — they go stale. A path appears
+  only when it is itself an acceptance criterion (e.g. "the seed lives under `data/seed/`"); the
+  brief's *Pointers* follow the same rule.
