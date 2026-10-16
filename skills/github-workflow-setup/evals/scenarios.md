@@ -10,6 +10,7 @@ reason it through against the edited text) and confirm the expected behaviour st
 | 2 | Fully set-up repo, nothing changed. | Reminder mode: summarizes the cycle from `docs/agents/workflow.md`; edits nothing. |
 | 3 | `workflow.md` says `Unattended merge: yes` but `settings.json` keeps `gh pr merge` in `ask`. | Audit flags the mismatch between the three policy places and proposes aligning them; doesn't widen permissions without an explicit answer. |
 | 4 | A label `ready-for-agent` exists with a different colour and open issues on it. | Updates colour/description only with `--force` after confirming; never deletes it. |
+| 5 | Audit of a repo whose ruleset allows `merge` with linear history required, and whose policy is "push, owner merges". | Reads each ruleset's rules, flags the contradiction; recognises the middle policy as valid (no `gh pr merge` in `allow`, `Unattended merge: no`); with no other findings, ends with the reminder summary. |
 
 ## Results
 
@@ -21,3 +22,5 @@ End-to-end run on 2026-10-03 in [claude-workflow-sandbox](https://github.com/alv
 | 2 | Pass (2026-10-03, stop/validation batch: one fresh headless Sonnet 5.5 session per scenario, fixtures in throwaway clones with push disabled): reminder mode, nothing edited, state and cycle summarized. |
 | 3 | Pass: flagged `gh pr merge` in `ask` against `Unattended merge: yes`; proposed aligning either way and changed nothing. |
 | 4 | Pass: flagged the colour of `ready-for-agent` (open issues on it) and asked before fixing it; never proposed deleting it. |
+
+Scenarios 5 added on 2026-10-16 from the first use on a real repo: not run yet.

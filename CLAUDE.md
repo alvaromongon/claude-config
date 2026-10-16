@@ -57,7 +57,9 @@ weak, and draft the final version. The direction is mine; the research and the w
 
 Every figure is labelled as **measured** (with its source, and for a measurement its runs, spread
 and what limits it) or **estimated** (with its assumption);
-a rough estimate beats no number, an invented one is never acceptable. Pick the pattern or example
+a rough estimate beats no number, an invented one is never acceptable. An estimate that drives a
+target gets a date or milestone by which it will be measured. Size effort in agent execution time,
+with the human steps (reviews, merges, approvals) listed separately. Pick the pattern or example
 the problem asks for, not the most familiar one.
 
 ## When working inside ~/.claude (this repository)
