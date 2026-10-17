@@ -105,6 +105,13 @@ moves a number, revisit that ADR.
   requirements, how to run (with URLs), how to test (incl. load test), structure and conventions,
   design, SLO + calibration, assumptions, quality gates (local vs CI table), future enhancements,
   and a note on the AI-assisted development process.
+- **Glossary**: every domain term the docs use (units, metrics, roles, states — e.g. "R",
+  "silo", "SLI") is defined once in `docs/glossary.md`, with the ADR that decides it, and linked
+  from the README (*At a glance*) and on first use elsewhere. Specs, ADRs, briefs and generated
+  reports link the term instead of redefining it; a new term is added in the same PR that
+  introduces it. A small repo may keep it as a README section instead. Audit flag: a term used in
+  the README or in a published report with no glossary entry. Learned on finance-agent, where the
+  unit "R" was defined only inside one ADR and its owner couldn't read it in a PR summary.
 - Repo `CLAUDE.md`: a table pointing to README sections + Claude-only rules (TDD, run the local
   gate before finishing, keep SLO and k6 thresholds in sync) + the repo's **push/merge policy**
   (who may push which branches and whether agents may merge; omitted = ask before every push) +

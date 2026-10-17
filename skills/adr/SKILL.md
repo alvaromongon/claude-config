@@ -27,6 +27,8 @@ current shape; the issue tracks the work, the ADR holds the reasoning.
 - Template: `template.md` in this skill (MADR 4.0 plus a confidence level), in English. Write ADRs in
   the repo's documentation language (see its CLAUDE.md/README): English by default; if the docs are in
   another language, translate headings and statuses and keep that translation consistent across ADRs.
+- Link domain terms to the repo's glossary (`quality-baseline` › *Glossary*) instead of redefining
+  them; if the ADR introduces a term, add it to the glossary in the same PR.
 - Keep it pithy and factual. Cite sources (regulation, vendor docs, library issues) with links. Put
   long research in *More information* or a linked document; the decision must stand on its own.
 - Follow the decision method in the global `CLAUDE.md` › *Decisions*: the conclusion up front, the

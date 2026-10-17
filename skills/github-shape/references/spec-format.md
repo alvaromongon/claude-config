@@ -1,7 +1,8 @@
 # Spec and decision issue formats
 
 The global `CLAUDE.md` › *Decisions* method, applied to shaping. Write in the repo's documentation
-language; keep it short enough to re-read in one pass.
+language; keep it short enough to re-read in one pass. Link domain terms to the repo's glossary
+(`docs/glossary.md`) instead of defining them inline.
 
 ## Spec issue (label `spec`)
 
