@@ -34,7 +34,8 @@
 ## SLO
 
 <Reference environment and calibration runs (0.5×, 1×, 2×, 4×). One row per SLI; status is
-*Met*, *Aspirational* (state gap and plan) or *Baseline* (objective = measured value). The k6
+*Met*, *Aspirational* (state gap and plan), *Baseline* (objective = measured value) or
+*Insufficient data* (state minimum sample). The k6
 thresholds enforce the measured value unless the status is *Met*.>
 
 | SLI | How it is measured | Measured | Objective | Status |

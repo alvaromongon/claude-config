@@ -70,6 +70,9 @@ The README SLO section is a table, one row per SLI: *SLI | how it is measured | 
 - **Aspirational**: the objective is not reached yet; state the gap and the plan (or the ADR that
   accepts it).
 - **Baseline**: the objective is the measured value, by decision ("do not regress").
+- **Insufficient data**: the sample is too small to say met or not (statistical SLIs, e.g. a
+  confidence bound that still contains the threshold). State the minimum sample and when it is
+  expected; the k6/test guard, if any, enforces only what is measurable.
 
 State the reference environment. Treat the first numbers as a proposal and **calibrate**: run the
 load test at several rates (e.g. 0.5×, 1×, 2×, 4× the proposal) on the reference runner, find the
@@ -77,7 +80,8 @@ saturation point and set the sustained objective well below it (≈ half), docum
 the README.
 
 **k6 thresholds enforce what is true today**: the objective when status is *Met*, the measured
-value (the regression guard) when it is *Aspirational* or *Baseline*. An aspirational objective is
+value (the regression guard) when it is *Aspirational* or *Baseline*, and nothing when the status
+is *Insufficient data*. An aspirational objective is
 documented in the README, never as a failing threshold. When the measured value improves, ratchet
 the threshold up; when the objective is reached, change the status to *Met*.
 
