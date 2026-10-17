@@ -1,13 +1,13 @@
 ---
 name: quality-baseline
-description: Set up or audit a repository against my personal engineering quality baseline — tests (unit, component, load/SLO), CI gates, pre-push hook, branch protection, coverage, dependency audit, CodeQL, Docker, ADR decision log, folder structure, editorconfig and centralized build config — following each language's official conventions (C#/.NET Microsoft, TypeScript, others). Use when creating a new repo/project, scaffolding a solution, or when asked to check/raise the quality of an existing repo.
+description: Set up or audit a repository against my personal engineering quality baseline — tests (unit, component, load/SLI/SLO), CI gates, pre-push hook, branch protection, coverage, dependency audit, CodeQL, Docker, ADR decision log, folder structure, editorconfig and centralized build config — following each language's official conventions (C#/.NET Microsoft, TypeScript, others). Use when creating a new repo/project, scaffolding a solution, or when asked to check/raise the quality of an existing repo.
 model: sonnet
 ---
 
 # Quality baseline
 
 Set up (new repo) or audit (existing repo) against the baseline defined in `references/common.md`.
-Items are defaults: honour overrides recorded in the repo's `CLAUDE.md`/README, and adapt the SLO and
+Items are defaults: honour overrides recorded in the repo's `CLAUDE.md`/README, and adapt the SLI/SLO and
 load test to the kind of project (HTTP service, batch job/CLI, library).
 
 ## Procedure
@@ -39,6 +39,6 @@ empty afterwards):
 - `hackernews-stub` + `hackernews-stub/mappings/` — the stubbed dependency and its WireMock mappings.
 - `HackerNews__*` environment variables, `ENDPOINT` (`/api/stories/best`), `REQUESTS_PER_REFRESH`
   and the `hackernews_upstream_requests` metric in the k6 script.
-- SLO numbers (k6 `SLO` object, `RATE` defaults) and the required check names in
+- SLI/SLO table and numbers (k6 `SLO` object, `RATE` defaults) and the required check names in
   `.github/rulesets/main.json` (must match the job `name:`s).
 - `README.md`, `CLAUDE.md` and `docs/decisions/README.md` are skeletons: fill in every `<...>`.

@@ -12,7 +12,7 @@ Not yet verified in a real repo like the C# templates: check current versions an
   convention says so); kebab-case files, PascalCase types, camelCase functions.
 - **Tests**: Vitest (unit, coverage via v8 with thresholds ≥ 80%), component tests with the app
   in-process (e.g. supertest / Fastify inject) and HTTP deps stubbed (msw or WireMock), Playwright
-  for UI, k6 load tests with SLO thresholds.
+  for UI, k6 load tests with SLO thresholds (see `common.md` › SLI and SLO).
 - **Gates**: typecheck (`tsc --noEmit`), lint, format check, tests + coverage, `pnpm audit`
   (high+), CodeQL `javascript-typescript`, Docker build + Trivy.
 - **Local gate**: `.githooks/pre-push` (or lefthook) running typecheck, lint, format, tests.

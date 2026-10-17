@@ -19,7 +19,7 @@ Every item is a default: a repo may override it in its `CLAUDE.md`/README, stati
 - **Component**: run the service in-process, stub every external HTTP dependency (WireMock or
   equivalent). Never call real third-party APIs from tests.
 - **Load**: k6 against the container with dependencies stubbed (WireMock with latency), via Docker
-  Compose, in `tests/<Project>.LoadTests/`. The SLO numbers are the k6 **thresholds**. `setup()`
+  Compose, in `tests/<Project>.LoadTests/`. The k6 **thresholds** are the SLO's *enforced* values (see [SLI and SLO](#sli-and-slo-in-readme)). `setup()`
   waits on the readiness endpoint (`/health/ready`) so the run measures steady state. Also assert
   downstream protection by counting requests received by the stub (`/__admin/requests/count`).
   For a batch job/CLI, run the job against stubs with a representative volume and assert duration
@@ -50,17 +50,38 @@ Cross-language baseline for the code itself, independent of CI gates:
   within a bounded timeout, close connections, then exit — so deploys and container restarts
   don't surface as errors.
 
-## SLO (in README)
-Every repo has one, adapted to the kind of project:
+## SLI and SLO (in README)
+Every repo has them, adapted to the kind of project. Keep three things apart:
+- **SLI** (indicator): what is measured and how, e.g. "p95 latency at 1000 req/s, k6 against the
+  container with a stubbed dependency".
+- **Measured value**: what the SLI gives today, from a stated run.
+- **SLO** (objective): the target for that SLI. It may already be met, still be out of reach, or be
+  the measured value by decision.
+
+Indicators by kind of project:
 - HTTP service: sustained load (req/s) + latency p95/p99 at that load + error rate + downstream
   protection (upstream calls bounded independent of traffic) + data freshness when caching.
 - Batch job/CLI: duration per run at a stated volume + error rate + downstream protection (calls
   and rate towards each dependency bounded).
+
+The README SLO section is a table, one row per SLI: *SLI | how it is measured | measured | objective
+| status*. Status is one of:
+- **Met**: measured value reaches the objective.
+- **Aspirational**: the objective is not reached yet; state the gap and the plan (or the ADR that
+  accepts it).
+- **Baseline**: the objective is the measured value, by decision ("do not regress").
+
 State the reference environment. Treat the first numbers as a proposal and **calibrate**: run the
 load test at several rates (e.g. 0.5×, 1×, 2×, 4× the proposal) on the reference runner, find the
 saturation point and set the sustained objective well below it (≈ half), documenting the runs in
 the README.
-Each SLO number cites the ADR that set it (or that accepted the calibration); when recalibration
+
+**k6 thresholds enforce what is true today**: the objective when status is *Met*, the measured
+value (the regression guard) when it is *Aspirational* or *Baseline*. An aspirational objective is
+documented in the README, never as a failing threshold. When the measured value improves, ratchet
+the threshold up; when the objective is reached, change the status to *Met*.
+
+Each objective cites the ADR that set it (or that accepted the calibration); when recalibration
 moves a number, revisit that ADR.
 
 ## CI (GitHub Actions)
@@ -101,7 +122,7 @@ moves a number, revisit that ADR.
 
 ## Repository docs and Claude settings
 - **README is the single source of truth**, in this order (as in `templates/csharp/README.md`):
-  *At a glance* (what it does, one-command run, measured SLO, quality summary with links), then
+  *At a glance* (what it does, one-command run, SLO status (measured vs objective), quality summary with links), then
   requirements, how to run (with URLs), how to test (incl. load test), structure and conventions,
   design, SLO + calibration, assumptions, quality gates (local vs CI table), future enhancements,
   and a note on the AI-assisted development process.
@@ -113,7 +134,7 @@ moves a number, revisit that ADR.
   the README or in a published report with no glossary entry. Learned on finance-agent, where the
   unit "R" was defined only inside one ADR and its owner couldn't read it in a PR summary.
 - Repo `CLAUDE.md`: a table pointing to README sections + Claude-only rules (TDD, run the local
-  gate before finishing, keep SLO and k6 thresholds in sync) + the repo's **push/merge policy**
+  gate before finishing, keep SLO table and k6 thresholds in sync) + the repo's **push/merge policy**
   (who may push which branches and whether agents may merge; omitted = ask before every push) +
   any overrides of the personal baseline, with the reason.
 - **Decision log**: `docs/decisions/` with ADRs in MADR format and an index `README.md`, linked from
@@ -124,7 +145,8 @@ moves a number, revisit that ADR.
   check — a k6 threshold, a named test, a CI gate. A business promise (cost, time-to-market, team
   autonomy) names its metric and source, or is declared an estimate with its assumption; don't
   invent a proxy check just to have one. Audit flags: accepted ADRs whose success measure has
-  neither a check nor a named metric, and SLO numbers with no originating ADR.
+  neither a check nor a named metric, SLO objectives with no originating ADR, an objective with no measured value, and an
+  *Aspirational* row with no stated gap or plan.
 - Repo `CLAUDE.md` says that designs are recorded as ADRs proposed via PR.
 - Versioned `.claude/settings.json`: `allow` build/test/format/coverage/local gate and read-only
   git (`status`, `diff`, `log`); `ask` for `git push` unless the repo's push policy allows it

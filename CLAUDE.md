@@ -4,7 +4,7 @@
 repo-level rule wins, and the override should state why.
 
 ## Engineering baseline
-Every repo I build meets my engineering baseline: tests (unit, component, load against an SLO),
+Every repo I build meets my engineering baseline: tests (unit, component, load against the SLI/SLO),
 CI quality gates mirrored by a pre-push hook, branch protection, ADR decision log, Docker and
 centralized build/format config. Its full definition is the `quality-baseline` skill
 (`~/.claude/skills/quality-baseline`, canonical list in `references/common.md`); use it to set up
