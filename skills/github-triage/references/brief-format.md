@@ -29,5 +29,6 @@ unknown — do not guess>
 not listed here means stop and escalate. An issue whose sensitive areas aren't acceptable for
 agent work is `ready-for-human`, not `ready-for-agent` with a long list.
 
-Keep it short enough to re-read in one pass. No file paths/line numbers unless you actually
+Keep it short enough to re-read in one pass. Link domain terms to the repo's glossary; if the
+change introduces a term, adding it there is an acceptance criterion. No file paths/line numbers unless you actually
 verified them — stale pointers are worse than none.
