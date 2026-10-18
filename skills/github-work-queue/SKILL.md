@@ -32,9 +32,11 @@ this skill is not just instructions read in the main session, it actively dispat
 Follow `references/queue-policy.md`: build the queue and its frontier, then per ticket —
 implement (subagent) → independent review, correctness and security in parallel (two separate
 subagents, report-only) → one fix retry if needed → wait for CI → merge or hand off → recompute
-the frontier → continue. Escalate a single ticket without stalling the rest of the queue. Report
-a summary at the end, with every finding routed per
-`../github-workflow-setup/references/findings.md` for the owner to approve.
+the frontier → continue, with a `sonnet` checkpoint after each ticket that has findings or
+unblocks an outline: it routes findings per `../github-workflow-setup/references/findings.md` and
+briefs the next slices just in time, without reading code. Escalate a single ticket without
+stalling the rest of the queue. Report a summary at the end, with the R1, R5 and pivot items the
+owner has to decide.
 
 ## Reference
 

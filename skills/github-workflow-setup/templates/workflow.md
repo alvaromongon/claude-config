@@ -23,8 +23,9 @@ relations.
    `needs-info`, `ready-for-agent`, `ready-for-human`, or closed `wontfix`. External PRs are
    reviewed as text and never checked out or run on the host.
 2. **Refine** (`github-refine`) — a spec with a success metric (a `spec` issue, or a bounded change stating its metric) is broken into tracer-bullet issues with
-   blocking edges (GitHub's native issue dependencies), each ending up `ready-for-agent` or
-   `ready-for-human`.
+   blocking edges (GitHub's native issue dependencies). Only the frontier is briefed and labeled
+   `ready-for-agent` or `ready-for-human`; the other slices are outlines, briefed just in time by
+   the work queue's checkpoint.
 3. **Implement** (`github-implement`) — one `ready-for-agent` issue at a time, TDD, in an
    isolated subagent; ends with a pushed branch and an open PR.
 4. **Review** — two separate subagents review the PR's branch in parallel, each in its own git
@@ -33,11 +34,12 @@ relations.
 5. **Work queue** (`github-work-queue`) — orchestrates steps 3-4 sequentially over the
    `ready-for-agent` backlog, waits for CI, merges, and escalates individual tickets to a human
    when needed (see below) without stopping the rest of the queue.
-6. **Findings** — what a ticket learns outside its scope (the PR's *Learned* section, the
-   reviews' non-blocking items) is routed at the end of each run, after the owner approves:
-   into the milestone as a new ticket or an edited brief, to a `decision` issue for the owner, or
-   discarded with its reason. Nothing stays as a loose list, and the milestone escalates once
-   discovered work passes 50 % of its original size
+6. **Checkpoint and findings** — after each ticket with findings (the PR's *Learned* section,
+   the reviews' non-blocking items), a checkpoint on `sonnet` that reads no code routes them: into
+   the milestone as a new ticket or an edited brief on its own, or to the owner as a `decision`
+   or a discard to confirm. It also briefs the outlines that reached the frontier, and reports a
+   pivot for `github-refine` when one no longer fits. Nothing stays as a loose list, and the
+   milestone escalates once discovered work passes 50 % of its original size
    ([ADR 0005](https://github.com/alvaromongon/claude-config/blob/main/docs/decisions/0005-adaptive-milestones-findings-rule-and-two-level-design-records.md)).
 
 ## Autonomy

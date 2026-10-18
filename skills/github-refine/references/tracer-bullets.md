@@ -28,6 +28,24 @@ Preparatory work that must land before the feature tickets can be vertical slice
 blocking the feature tickets. It's the one legitimate case where a ticket isn't itself demoable
 new behavior — it's demoable as "nothing broke, and the seam now exists."
 
+## Outline issues
+
+A slice outside the frontier is published as an outline: decided (title, outcome, blockers) but
+not briefed, so its brief can use what the earlier tickets taught. It carries no `ready-*` label,
+so neither the work queue nor `github-implement` picks it up; the queue's checkpoint replaces the
+body with a brief and labels it once the slice reaches the frontier.
+
+```markdown
+## Outline
+
+**Outcome**: <the demoable behavior, one line>
+
+**Notes**: <what refinement already knows: assumptions to check, likely sensitive areas, links
+to the spec's *Decisions*; omit if none>
+
+_Brief pending: written by the work queue's checkpoint when this slice reaches the frontier._
+```
+
 ## Success indicators
 
 - Every ticket is demonstrable independently once its blockers have landed.

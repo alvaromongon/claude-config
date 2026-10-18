@@ -43,7 +43,7 @@ set `disable-model-invocation: true`: only typing the slash command starts them.
 | [`github-workflow-setup`](skills/github-workflow-setup/SKILL.md) | Set up or audit a repo's issue workflow; or get a reminder of the cycle. | Automatically | `sonnet` | Asks before widening any permission. |
 | [`github-shape`](skills/github-shape/SKILL.md) | Shape an idea into a `spec` issue with a success metric; resolve its decisions; close it checking the metric. | Automatically | `opus` | Starts from the owner's position; shows the draft before publishing. |
 | [`github-triage`](skills/github-triage/SKILL.md) | Classify incoming external issues and PRs. | Automatically | `sonnet` | Proposes; applies only after approval. |
-| [`github-refine`](skills/github-refine/SKILL.md) | Turn an agreed spec into a milestone of tracer-bullet issues. | Automatically | `opus`, effort high | Shows the draft before publishing. |
+| [`github-refine`](skills/github-refine/SKILL.md) | Turn an agreed spec into a milestone of tracer-bullet issues, briefing the frontier and outlining the rest; re-refine after a pivot. | Automatically | `opus`, effort high | Shows the draft before publishing. |
 | [`github-implement`](skills/github-implement/SKILL.md) | Implement one `ready-for-agent` issue with TDD, up to an open PR. | Automatically, e.g. `/github-implement 42` | `sonnet` | Runs in a forked context; needs the issue number. |
 | [`github-work-queue`](skills/github-work-queue/SKILL.md) | Work through the `ready-for-agent` backlog unattended. | **Manual only** | `sonnet`; reviewers `opus` | Merges PRs where the repo allows it. |
 | [`check-upstream-skills`](skills/check-upstream-skills/SKILL.md) | Review [mattpocock/skills](https://github.com/mattpocock/skills) for improvements; check the model assignment. | **Manual only** | session | Occasional, on demand. |
@@ -121,15 +121,17 @@ flowchart LR
   (required checks, no force-push), which agent merges never bypass.
 - **Per-ticket loop** of the work queue: implement in a subagent → `code-review` and
   `security-review` in parallel, each in its own worktree on the PR branch → one fix round →
-  CI → merge or hand off → recompute the frontier. A stuck ticket is relabeled `ready-for-human`
-  with a comment and the queue moves on. Details: [queue policy](skills/github-work-queue/references/queue-policy.md);
+  CI → merge or hand off → checkpoint → recompute the frontier. A stuck ticket is relabeled
+  `ready-for-human` with a comment and the queue moves on. Details: [queue policy](skills/github-work-queue/references/queue-policy.md);
   stop conditions: [delivery](skills/github-implement/references/delivery.md).
-- **Findings**: what a ticket learns outside its scope (its PR's *Learned* section, the reviews'
-  non-blocking items) is routed at the end of each queue run by the
-  [findings rule](skills/github-workflow-setup/references/findings.md): a new ticket or an edited
-  brief in the same milestone, a `decision` issue for the owner, or an explicit discard; the
-  milestone escalates once discovered work passes 50 % of its original size. Design:
-  [ADR 0005](docs/decisions/0005-adaptive-milestones-findings-rule-and-two-level-design-records.md) (proposed).
+- **Just-in-time refinement and findings**: `github-refine` briefs only the frontier; the other
+  slices are outlines. After each ticket with findings (its PR's *Learned* section, the reviews'
+  non-blocking items), a `sonnet` checkpoint that reads no code routes them by the
+  [findings rule](skills/github-workflow-setup/references/findings.md) — a new ticket or an edited
+  brief in the same milestone on its own, a `decision` or a discard for the owner — and briefs the
+  outlines that reached the frontier; an outline that no longer fits is a pivot for
+  `github-refine`. The milestone escalates once discovered work passes 50 % of its original size.
+  Design: [ADR 0005](docs/decisions/0005-adaptive-milestones-findings-rule-and-two-level-design-records.md) (proposed).
 - **What touches GitHub**, all through `gh`:
 
   | Skill | Reads | Writes |
@@ -139,7 +141,7 @@ flowchart LR
   | `github-triage` | issues, PR diffs (never checks out or runs external PRs) | labels, comments, closes `wontfix` — after approval |
   | `github-refine` | milestones | milestone, issues, dependencies — after approval |
   | `github-implement` | issue, dependencies | branch push, PR (only if the push policy allows) |
-  | `github-work-queue` | issues, PR checks | merges, relabels escalated issues; routed findings (issues, briefs, comments) — after approval |
+  | `github-work-queue` | issues, PR checks | merges, relabels escalated issues; checkpoint: new tickets, briefs, labels, spec *Decisions*, PR comments; R5 discards after approval |
 
 - **Notifications**: GitHub's own. The triage comment on a `needs-info` issue notifies the
   reporter; their reply notifies you and the `needs-info-reply` workflow sends it back to

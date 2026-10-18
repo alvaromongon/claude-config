@@ -77,9 +77,12 @@ with the `adr` skill and link it.
 
 ## Procedure: close out
 
-When the spec's milestone is closed: measure the success metric the way the spec says (run the
-check, read the metric), comment the result against the target — met, not met, or not measurable
-yet and when it will be — and close the spec. A missed target is a finding, not a failure to hide:
+When the spec's milestone is closed: check that none of its issues is open (a milestone is done
+only then — `../github-workflow-setup/references/findings.md` › *Invariant*); read the work
+queue's checkpoint comments on its PRs for what was learned and decided, instead of reviewing the
+code again; measure the success metric the way the spec says (run the check, read the metric),
+comment the result against the target — met, not met, or not measurable yet and when it will be
+— and close the spec. A missed target is a finding, not a failure to hide:
 say what would explain it and whether it calls for a new spec.
 
 ## Reference

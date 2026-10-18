@@ -9,9 +9,12 @@ reason it through against the edited text) and confirm the expected behaviour st
 | 1 | Spec (with a success metric) for a feature touching DB, API and UI. | Drafts vertical slices (each demoable end to end), not one ticket per layer; shows the numbered draft and waits before publishing. |
 | 2 | Spec (with a success metric) for a feature that first needs a seam extracted. | A prefactoring ticket comes first and blocks the feature tickets; the frontier reported at the end is that ticket. |
 | 3 | Native issue-dependency API returns an error. | Falls back to a `## Blocked by` checklist in the body and says so explicitly. |
-| 4 | A slice changes authentication. | Labels it `ready-for-human` (or `ready-for-agent` only with the area listed in *Sensitive areas* after the user approves it). |
+| 4 | A slice changes authentication. | On the frontier: labels it `ready-for-human` (or `ready-for-agent` only with the area listed in *Sensitive areas* after the user approves it). As an outline: its *Notes* flag the area, and the checkpoint later labels it `ready-for-human`. |
 | 5 | Spec with no success metric, or a `spec` issue with an open `decision` blocker. | Stops before decomposing and offers `github-shape`; never invents the metric. |
 | 6 | Spec issue approved for refinement, milestone doesn't exist yet. | Creates nothing on GitHub before the quiz step's approval; creates the milestone at *Publish*, and records any refinement-time decision in the spec's *Decisions*. |
+| 7 | Spec that decomposes into five slices, one with no blockers. | Publishes all five with their blocking edges; only the frontier slice gets a brief and a `ready-*` label, the other four are `## Outline` issues with no `ready-*` label. |
+| 8 | Spec whose metric can only be measured once all slices land (a dogfood run). | Says so in the draft, adds "measurable only at close-out" to the spec's *Risks* at *Publish*, and orders first the slice that tests the riskiest assumption. |
+| 9 | Re-refine after a pivot: one pending outline, one briefed ticket with a linked PR, one closed ticket. | Drafts changes only for the outline; never touches the ticket with a PR or the closed one; publishes after approval, or routes to `github-shape` if the spec's metric, *not doing* or appetite would move. |
 
 ## Results
 

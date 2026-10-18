@@ -34,8 +34,11 @@ not a design change made unseen.
   needs the fix first, add the blocking edge (`dependencies.md`).
 - **R1**: don't open the decision yourself; list it for the owner with the suggested
   `/github-shape` call. Tickets it affects wait: add the decision as their blocker once it exists.
-- **R5**: comment the discard and its reason on the PR or issue the finding came from, so the
-  decision not to act is recorded.
+- **R5**: once the owner confirms, comment the discard and its reason on the PR or issue the
+  finding came from, so the decision not to act is recorded.
+- **Who applies it**: the work queue's checkpoint applies R2–R4 on its own and returns R1 and R5
+  to the owner (`../../github-work-queue/references/queue-policy.md` › *Checkpoint*). Outside the
+  queue, whoever finds it proposes the routing and applies it after the owner approves.
 - **Retro input**: a finding that shows a gap in the process (something the quality baseline, a
   review or refinement should have caught) is also tagged `retro` in the routing table.
 - **Never** edit closed issues, reopen merged PRs or rewrite the milestone; the milestone only

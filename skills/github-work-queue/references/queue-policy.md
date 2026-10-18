@@ -15,6 +15,11 @@ the rest wait for their blockers. Leave out issues that already have a linked PR
 (`gh issue view <n> --json closedByPullRequestsReferences`): they are waiting for review from an
 earlier run (`Unattended merge: no`), and implementing them again would open a duplicate PR.
 
+Outlines (`../../github-refine/references/tracer-bullets.md` › *Outline issues*: no `ready-*`
+label, body headed `## Outline`) are never implemented. If an outline in the milestone of a queued
+issue (or the milestone the user scoped the run to) has all its blockers closed, run a *Checkpoint* before the first ticket, so it is briefed and can join
+the frontier.
+
 ## Waiting PRs
 
 With `Unattended merge: no`, PRs wait for review side by side, each branched from the same
@@ -34,7 +39,10 @@ Pass `model` on every `Agent` call
 ([ADR 0003](../../../docs/decisions/0003-assign-models-per-skill-by-role.md)): `"sonnet"` for
 implementer subagents (implement, fix loop, refreshing a conflicting PR) and `"opus"` for both
 reviewers. The reviewers are the only gate before an unattended merge, so they run on a stronger
-model than the one whose work they check. Aliases only, never model IDs.
+model than the one whose work they check. The checkpoint subagent runs on `"sonnet"`: it follows
+rules over findings already produced and never reviews code
+([ADR 0005](../../../docs/decisions/0005-adaptive-milestones-findings-rule-and-two-level-design-records.md)).
+Aliases only, never model IDs.
 
 ## Per-ticket loop
 
@@ -68,10 +76,13 @@ For each issue on the frontier, one at a time (no parallel worktrees in this ver
    strategy). With `Unattended merge: no`, stop at "ready for your review" instead — but keep the
    ticket marked done on this skill's side and continue the queue; don't block other frontier
    tickets on this one's human review.
-6. **Collect findings**: add to the run's findings list the PR's *Learned* section and every
-   non-blocking finding of both reviews (after the fix round, the ones still standing), each with
-   the PR it came from. Don't act on them yet — see *Routing findings*.
-7. **Recompute the frontier** (closing this ticket may unblock others) and continue.
+6. **Checkpoint**: collect the ticket's findings — the PR's *Learned* section and every
+   non-blocking finding of both reviews still standing after the fix round, each with the PR it
+   came from — and run a *Checkpoint* if there are any, or if an outline in the milestone now has
+   all its blockers closed. Also after an escalated ticket: its non-blocking findings count too.
+   Otherwise skip it and say so in the report.
+7. **Recompute the frontier** (closing this ticket may unblock others, and the checkpoint may have
+   briefed outlines or added tickets) and continue.
 
 ## Escalation
 
@@ -86,17 +97,42 @@ On escalation: leave the ticket's branch/PR as-is, label it back to `ready-for-h
 comment explaining why, and **keep processing the rest of the frontier** — one stuck ticket
 doesn't stall tickets that don't depend on it.
 
-## Routing findings
+## Checkpoint
 
-At the end of the run, route every collected finding per
-`../../github-workflow-setup/references/findings.md`, plus the ones you noticed yourself while
-orchestrating (a plan step with no issue, a check that didn't run). Merge duplicates first.
-Propose the routing as a table — finding, source, rule (R1–R5), destination, label, `retro` tag
-— including the growth-cap count, and apply it only after the owner approves: create the R3/R4
-issues, edit the R2 briefs, comment the R5 discards, and list the R1 items with their
-`/github-shape` call. Nothing is left as a loose list.
+Spawn one subagent (`Agent`, `model: "sonnet"`, fresh context). Its prompt carries the findings
+verbatim with their source PR, the milestone and its spec issue. It may read the spec (including
+*Decisions*) and the milestone's issues with `gh`; it **never** reads a diff, checks out a branch
+or explores the codebase — that is the reviewers' job and the expensive part. A question only the
+code can answer is routed as R1 or written into a brief as unverified. Its tasks:
+
+1. **Route** each finding per `../../github-workflow-setup/references/findings.md` (merge
+   duplicates first; check the growth cap). Apply R2, R3 and R4 directly — the agent decides
+   inside the spec's bounds. Don't apply R1 or R5: return them for the owner. When unsure, R1.
+2. **Brief** each outline whose blockers are all closed: replace its body with a brief
+   (`../../github-triage/references/brief-format.md`) built from the outline, the spec and what
+   the earlier tickets learned, and label it the way `github-refine` does. It can't pre-approve a
+   sensitive area: if the slice needs one, label it `ready-for-human` and propose the area.
+3. **Spot pivots**: if an outline no longer fits — what was learned changes its outcome, its
+   blockers or the order of the slices — don't brief or rewrite it; return it as a pivot with the
+   reason, for `/github-refine` to re-refine (`opus`, owner-approved). If the spec's metric,
+   *not doing* or appetite would move, return it as R1 instead.
+4. **Record decisions**: a design choice settled while briefing goes into the spec's *Decisions*
+   as "settled in checkpoint (date, PR #n)". The checkpoint is the only writer of *Decisions*
+   while the milestone is open, and runs between tickets, never during a review.
+5. **Leave a record**: one comment on the ticket's PR — findings routed (rule → destination),
+   outlines briefed, pivots, R1/R5 items returned, and the growth-cap count. The spec's close-out
+   reads these comments instead of reviewing the milestone's code again.
+
+## Routing at the end of the run
+
+Run one last checkpoint for the findings you noticed yourself while orchestrating (a plan step
+with no issue, a check that didn't run). Then put every returned R1, R5 and pivot item in the
+report for the owner: R1 with its `/github-shape` call, pivots with their `/github-refine` call,
+and R5 discards to confirm — comment each confirmed discard on its source PR or issue. Nothing is
+left as a loose list.
 
 ## End-of-run report
 
 Summarize: merged, waiting-for-human-review (including refreshed ones), escalated (with reason),
-still-blocked (with what they're waiting on), and the findings routing table to approve.
+still-blocked (with what they're waiting on), what the checkpoints routed and briefed (with the
+growth-cap count), and the R1, R5 and pivot items waiting for the owner.
