@@ -68,7 +68,10 @@ For each issue on the frontier, one at a time (no parallel worktrees in this ver
    strategy). With `Unattended merge: no`, stop at "ready for your review" instead — but keep the
    ticket marked done on this skill's side and continue the queue; don't block other frontier
    tickets on this one's human review.
-6. **Recompute the frontier** (closing this ticket may unblock others) and continue.
+6. **Collect findings**: add to the run's findings list the PR's *Learned* section and every
+   non-blocking finding of both reviews (after the fix round, the ones still standing), each with
+   the PR it came from. Don't act on them yet — see *Routing findings*.
+7. **Recompute the frontier** (closing this ticket may unblock others) and continue.
 
 ## Escalation
 
@@ -83,7 +86,17 @@ On escalation: leave the ticket's branch/PR as-is, label it back to `ready-for-h
 comment explaining why, and **keep processing the rest of the frontier** — one stuck ticket
 doesn't stall tickets that don't depend on it.
 
+## Routing findings
+
+At the end of the run, route every collected finding per
+`../../github-workflow-setup/references/findings.md`, plus the ones you noticed yourself while
+orchestrating (a plan step with no issue, a check that didn't run). Merge duplicates first.
+Propose the routing as a table — finding, source, rule (R1–R5), destination, label, `retro` tag
+— including the growth-cap count, and apply it only after the owner approves: create the R3/R4
+issues, edit the R2 briefs, comment the R5 discards, and list the R1 items with their
+`/github-shape` call. Nothing is left as a loose list.
+
 ## End-of-run report
 
-Summarize: merged, waiting-for-human-review (including refreshed ones), escalated (with reason), and still-blocked (with
-what they're waiting on).
+Summarize: merged, waiting-for-human-review (including refreshed ones), escalated (with reason),
+still-blocked (with what they're waiting on), and the findings routing table to approve.

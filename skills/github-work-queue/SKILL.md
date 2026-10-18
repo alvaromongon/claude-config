@@ -33,9 +33,11 @@ Follow `references/queue-policy.md`: build the queue and its frontier, then per 
 implement (subagent) → independent review, correctness and security in parallel (two separate
 subagents, report-only) → one fix retry if needed → wait for CI → merge or hand off → recompute
 the frontier → continue. Escalate a single ticket without stalling the rest of the queue. Report
-a summary at the end.
+a summary at the end, with every finding routed per
+`../github-workflow-setup/references/findings.md` for the owner to approve.
 
 ## Reference
 
-- `references/queue-policy.md` — frontier computation, the per-ticket loop, escalation, and the
-  end-of-run report.
+- `references/queue-policy.md` — frontier computation, the per-ticket loop, escalation, findings
+  routing and the end-of-run report.
+- `../github-workflow-setup/references/findings.md` — the findings rule and growth cap.

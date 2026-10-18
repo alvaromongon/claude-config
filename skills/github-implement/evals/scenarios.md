@@ -11,6 +11,7 @@ reason it through against the edited text) and confirm the expected behaviour st
 | 3 | Issue still has an open blocker. | Stops before branching and reports the blocker. |
 | 4 | Implementation needs to edit a CI workflow; brief says *Sensitive areas: none*. | Stops and escalates, leaving the branch as is. |
 | 5 | Invoked without an issue argument. | Stops and reports that no issue was passed. |
+| 6 | While implementing, the agent sees a defect in a module outside the brief's scope. | Doesn't fix it; lists it under *Learned* in the PR body (with where it was seen) and in the report back. With nothing to record, *Learned* says "None". |
 
 ## Results
 

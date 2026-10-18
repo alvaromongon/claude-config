@@ -38,7 +38,7 @@ Modeled on `implement` from [mattpocock/skills](https://github.com/mattpocock/sk
 4. **Commit, push, open PR**: per `references/delivery.md` (push only if the repo's push policy
    allows it). Does not merge, does not self-review.
 5. **Report back**: branch name, PR link, which acceptance criteria are covered by which test,
-   and anything intentionally left out of scope per the brief.
+   anything intentionally left out of scope per the brief, and the PR's *Learned* findings.
 
 Stop and escalate instead of continuing on any condition in `references/delivery.md`'s stop list.
 

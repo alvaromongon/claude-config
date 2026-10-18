@@ -63,5 +63,7 @@ never overwritten: keep what the repo already has and add only what's missing, s
 - `references/dependencies.md` — how blocking edges are written and checked (shared by the
   `github-*` skills).
 - `references/autonomy.md` — the push/merge policy and the permissions that enforce it.
+- `references/findings.md` — where a finding learned during a milestone goes (rules R1–R5, growth
+  cap; shared by `github-implement` and `github-work-queue`).
 - `templates/workflow.md` — the per-repo doc this skill writes to `docs/agents/workflow.md`.
 - `templates/ISSUE_TEMPLATE/`, `templates/workflows/needs-info-reply.yml` — issue intake.

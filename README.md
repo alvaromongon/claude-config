@@ -124,6 +124,12 @@ flowchart LR
   CI → merge or hand off → recompute the frontier. A stuck ticket is relabeled `ready-for-human`
   with a comment and the queue moves on. Details: [queue policy](skills/github-work-queue/references/queue-policy.md);
   stop conditions: [delivery](skills/github-implement/references/delivery.md).
+- **Findings**: what a ticket learns outside its scope (its PR's *Learned* section, the reviews'
+  non-blocking items) is routed at the end of each queue run by the
+  [findings rule](skills/github-workflow-setup/references/findings.md): a new ticket or an edited
+  brief in the same milestone, a `decision` issue for the owner, or an explicit discard; the
+  milestone escalates once discovered work passes 50 % of its original size. Design:
+  [ADR 0005](docs/decisions/0005-adaptive-milestones-findings-rule-and-two-level-design-records.md) (proposed).
 - **What touches GitHub**, all through `gh`:
 
   | Skill | Reads | Writes |
@@ -133,7 +139,7 @@ flowchart LR
   | `github-triage` | issues, PR diffs (never checks out or runs external PRs) | labels, comments, closes `wontfix` — after approval |
   | `github-refine` | milestones | milestone, issues, dependencies — after approval |
   | `github-implement` | issue, dependencies | branch push, PR (only if the push policy allows) |
-  | `github-work-queue` | issues, PR checks | merges, relabels escalated issues |
+  | `github-work-queue` | issues, PR checks | merges, relabels escalated issues; routed findings (issues, briefs, comments) — after approval |
 
 - **Notifications**: GitHub's own. The triage comment on a `needs-info` issue notifies the
   reporter; their reply notifies you and the `needs-info-reply` workflow sends it back to

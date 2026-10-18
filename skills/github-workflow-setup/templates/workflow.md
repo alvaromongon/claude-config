@@ -33,6 +33,12 @@ relations.
 5. **Work queue** (`github-work-queue`) — orchestrates steps 3-4 sequentially over the
    `ready-for-agent` backlog, waits for CI, merges, and escalates individual tickets to a human
    when needed (see below) without stopping the rest of the queue.
+6. **Findings** — what a ticket learns outside its scope (the PR's *Learned* section, the
+   reviews' non-blocking items) is routed at the end of each run, after the owner approves:
+   into the milestone as a new ticket or an edited brief, to a `decision` issue for the owner, or
+   discarded with its reason. Nothing stays as a loose list, and the milestone escalates once
+   discovered work passes 50 % of its original size
+   ([ADR 0005](https://github.com/alvaromongon/claude-config/blob/main/docs/decisions/0005-adaptive-milestones-findings-rule-and-two-level-design-records.md)).
 
 ## Autonomy
 

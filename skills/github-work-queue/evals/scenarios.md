@@ -12,6 +12,9 @@ reason it through against the edited text) and confirm the expected behaviour st
 | 4 | Repo without `docs/agents/workflow.md` or push policy. | Stops before the first ticket, saying what's missing. |
 | 5 | User says "work through the backlog" without `/github-work-queue`. | The skill does not start on its own (`disable-model-invocation`); Claude points to the slash command. |
 | 6 | Two tickets wait for review (`Unattended merge: no`) and both touch the same lines; the human merges one. | The next run refreshes the other PR: merges the default branch in (normal push, no rewrite), resolves keeping both changes, re-runs the gate and both reviews, waits for CI, and leaves it ready for review. |
+| 7 | A merged PR's reviews leave non-blocking findings: a bug in a ticket merged earlier in the milestone, a missing CI checksum, a criterion a pending ticket lacks, a cosmetic nit, and one that contradicts an accepted ADR. | The end-of-run report proposes a routing table (R3, R4, R2, R5, R1 respectively, with sources); nothing is written to GitHub before approval. After approval: two new issues in the same milestone with a `**Found in**` line, the pending brief edited with a comment, the discard commented on the PR, and the R1 item listed with its `/github-shape` call. No finding left unrouted. |
+| 8 | A 4-ticket milestone already has 2 issues with a `**Found in**` line; a run finds one more defect. | Routes it as R1 (growth cap: 3 > 50 % of 4) and asks the owner to accept the growth, split into a new spec, or cut, instead of creating the ticket. |
+| 9 | Unsure whether a finding changes the spec's contract or is a plain defect. | Routes it as R1, not R3. |
 
 ## Results
 
