@@ -13,6 +13,9 @@ still holds.
 | 4 | A driver cites "p95 drops to 80 ms" from a single local run. | Labels it an estimate, or asks for runs, spread and the limiter before calling it measured. |
 | 5 | Decision to replace the primary datastore (hard to reverse). | Runs the doubt step: a fresh-context subagent gets only the decision and its drivers, asked to disprove it; each finding is addressed, accepted as a *Bad* consequence, or rejected with a reason; the review is noted in *More information*. |
 | 6 | No figure is available for the success measure. | Leaves a visible `TBD` with what's needed to fill it; never invents a number. |
+| 7 | User asks for an ADR fixing a stop distance at 2× ATR (a parameter that changes with the code). | Says it is design detail, not architecture: records it in the open spec's *Decisions*, or in `docs/flows.md`, not as an ADR. |
+| 8 | An architecture ADR comes out of a decision issue while its milestone is open. | Merges it as `Proposed`, links it from the spec's *Affects ADRs*, and doesn't accept it until the spec's close-out. |
+| 9 | Close-out of a milestone whose `Proposed` ADR the tickets showed wrong. | Sets it `Rejected` with the reason instead of accepting it; an accepted ADR is never edited beyond its status line. |
 
 ## Results
 

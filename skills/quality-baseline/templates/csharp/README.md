@@ -29,7 +29,8 @@
 
 ## Design
 
-<Main components and flows. Decisions: [docs/decisions/](docs/decisions/README.md).>
+<Main components, in a paragraph. How each main flow works: [docs/flows.md](docs/flows.md).
+Decisions: [docs/decisions/](docs/decisions/README.md).>
 
 ## SLO
 

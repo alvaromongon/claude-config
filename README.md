@@ -39,7 +39,7 @@ set `disable-model-invocation: true`: only typing the slash command starts them.
 | Skill | Use it to | Starts | Model | Notes |
 |---|---|---|---|---|
 | [`quality-baseline`](skills/quality-baseline/SKILL.md) | Set up or audit a repo against the baseline (tests, CI gates, pre-push, rulesets, Docker, ADRs…). | Automatically | `sonnet` | C# templates in `templates/csharp/`; language references in `references/`. |
-| [`adr`](skills/adr/SKILL.md) | Write, propose, supersede or list ADRs (MADR 4.0). | Automatically | `opus` | |
+| [`adr`](skills/adr/SKILL.md) | Write, propose, supersede or list ADRs (MADR 4.0) — architecture only; design detail goes to the spec and the flow document. | Automatically | `opus` | An ADR proposed inside a milestone stays `Proposed` until the spec's close-out. |
 | [`github-workflow-setup`](skills/github-workflow-setup/SKILL.md) | Set up or audit a repo's issue workflow; or get a reminder of the cycle. | Automatically | `sonnet` | Asks before widening any permission. |
 | [`github-shape`](skills/github-shape/SKILL.md) | Shape an idea into a `spec` issue with a success metric; resolve its decisions; close it checking the metric. | Automatically | `opus` | Starts from the owner's position; shows the draft before publishing. |
 | [`github-triage`](skills/github-triage/SKILL.md) | Classify incoming external issues and PRs. | Automatically | `sonnet` | Proposes; applies only after approval. |
@@ -132,6 +132,10 @@ flowchart LR
   outlines that reached the frontier; an outline that no longer fits is a pivot for
   `github-refine`. The milestone escalates once discovered work passes 50 % of its original size.
   Design: [ADR 0005](docs/decisions/0005-adaptive-milestones-findings-rule-and-two-level-design-records.md) (proposed).
+- **Design records**: ADRs record architecture only and, when they come out of an open milestone,
+  stay `Proposed` until the spec's close-out, which accepts them with the milestone's data and
+  moves the design detail from the spec's *Decisions* into the repo's `docs/flows.md`
+  ([`quality-baseline` › *Flow document*](skills/quality-baseline/references/common.md)).
 - **What touches GitHub**, all through `gh`:
 
   | Skill | Reads | Writes |
@@ -167,6 +171,7 @@ This repo holds documentation and templates, not an application, so:
 | Unit/component/load tests, SLO, coverage | Behavioural scenarios (`evals/`) | Skills are prose; templates are verified in the repos they come from. |
 | Build, CodeQL, Docker | Docs CI (frontmatter, links, YAML/JSON, shellcheck) | No executable product. |
 | One PR per step, review via PR | Direct commits to `main` by the owner (ruleset bypass); PRs for everyone else | Single maintainer, nothing for PR CI to gate beyond the docs checks. |
+| Flow document (`docs/flows.md`) | [How the GitHub workflow works](#how-the-github-workflow-works) | The repo's only "flow" is the workflow cycle, already described there. |
 | Pre-push hook | Run `validate.py` manually | A hook needs `core.hooksPath` in `.git/config`, which isn't versioned. |
 | Push policy | Ask before every push | Default from [ADR 0002](docs/decisions/0002-per-repository-push-and-merge-policy.md). |
 

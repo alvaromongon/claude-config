@@ -71,19 +71,30 @@ the closing comment states the method so it can be reproduced. Record the answer
 the conclusion first, then options weighed and what we give up — and update **every** section of
 the spec whose figures or choices the answer changes (*Options*, *Risks*, *Decisions*, …). Then
 check the spec's targets still hold with the new data; if they don't, say so and agree the change
-with the owner. Close the issue. If the decision is
+with the owner. Close the issue. If the decision is architecture (`adr` › *Architecture only*) and
 hard to reverse, surprising without context **and** a real trade-off, also record it as an ADR
-with the `adr` skill and link it.
+with the `adr` skill, `Proposed` until this spec's close-out, and link it from the spec's
+*Affects ADRs*. Design detail stays in the spec's *Decisions*.
 
 ## Procedure: close out
 
-When the spec's milestone is closed: check that none of its issues is open (a milestone is done
-only then — `../github-workflow-setup/references/findings.md` › *Invariant*); read the work
-queue's checkpoint comments on its PRs for what was learned and decided, instead of reviewing the
-code again; measure the success metric the way the spec says (run the check, read the metric),
-comment the result against the target — met, not met, or not measurable yet and when it will be
-— and close the spec. A missed target is a finding, not a failure to hide:
-say what would explain it and whether it calls for a new spec.
+When the spec's milestone is closed:
+
+1. **Done check**: none of its issues is open (a milestone is done only then —
+   `../github-workflow-setup/references/findings.md` › *Invariant*). If one is, stop and report it.
+2. **What was learned**: read the work queue's checkpoint comments on its PRs and the spec's
+   *Decisions*, instead of reviewing the code again.
+3. **Measure**: the success metric the way the spec says (run the check, read the metric); comment
+   the result against the target — met, not met, or not measurable yet and when it will be. A
+   missed target is a finding, not a failure to hide: say what would explain it and whether it
+   calls for a new spec.
+4. **Design records**, in one PR the owner reviews (push per the repo's policy): bring each
+   `Proposed` ADR in *Affects ADRs* up to date with the milestone's data and accept it, or reject it
+   if the milestone showed it wrong (`adr` skill); and move the design detail settled in
+   *Decisions* into the flow document (`docs/flows.md`), each flow linking this spec for the *why*.
+   With nothing to record, say so.
+5. **Close** the spec once the design-records PR is merged, or right after step 3 when there was
+   nothing to record.
 
 ## Reference
 

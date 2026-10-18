@@ -61,6 +61,10 @@ For each issue on the frontier, one at a time (no parallel worktrees in this ver
    - one invoking `security-review`, which reviews the pending changes of the checked-out branch
      against the default branch, i.e. the PR's diff.
 
+   Tell the `code-review` reviewer to also report, as findings, a change to a main flow that
+   doesn't update `docs/flows.md`, and a change that contradicts an accepted ADR, a `Proposed` ADR
+   of the open milestone or the spec's *Decisions*.
+
    Both report-only, neither edits code nor pushes. This is the only review gate before an
    unattended merge, so security findings get the same weight as correctness findings here, not
    left to CI's CodeQL pass alone. Tell each reviewer it **must** invoke its skill through the

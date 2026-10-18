@@ -15,6 +15,14 @@ current shape; the issue tracks the work, the ADR holds the reasoning.
   result of a **real trade-off** (genuine alternatives, one chosen for specific reasons). Typical
   areas: structure, deployment/state, non-functional requirements, dependencies, interfaces. If any
   of the three is missing, a comment on the issue or PR is enough; not for implementation details.
+- **Architecture only**: an ADR records a decision expected to survive changes to the spec and the
+  code — the shape of the system, its contracts, where state lives, its non-functional promises —
+  not the rules and parameters that change with the code (a threshold, a detector, a file layout).
+  Design detail lives in the spec's *Decisions* while its milestone is open, then in the repo's
+  flow document (`docs/flows.md`, `quality-baseline` › *Flow document*), which with the code is the
+  source of truth for how the system works. Test: would the decision still read as true after the
+  next refactor of the module it names? If not, it is detail. Design: ADR 0005 in
+  `claude-config`.
 - Brownfield: when revisiting a decision that was never recorded, first write it retroactively
   (status `Accepted`, date and source link of the original decision), then the new one that
   supersedes it.
@@ -59,10 +67,19 @@ current shape; the issue tracks the work, the ADR holds the reasoning.
    faking it.
 3. **Propose**: open a PR adding the ADR with status `Proposed` and linking the issue (the issue links
    back). The PR review is the discussion.
+   - **Inside an open milestone** (the ADR comes from a spec, a decision issue or a pivot): merge it
+     as `Proposed`, link it from the spec's *Affects ADRs*, and keep it editable while the
+     milestone runs. What the tickets learn goes into the spec's *Decisions* (the work queue's
+     checkpoint writes it there), and the ADR is brought up to date with it when accepted; a
+     ticket whose brief asks for it may edit the ADR in its own PR. Implementation PRs link it.
 4. **Accept**: once the user decides, set the chosen option, status `Accepted` and date, update the
-   index, and merge. Implementation goes in separate PRs that link the ADR.
+   index, and merge. Implementation goes in separate PRs that link the ADR. An ADR proposed inside
+   a milestone is accepted at the spec's close-out (`github-shape` › *Close out*), with the data
+   the milestone produced — or rejected, if the milestone showed it wrong.
 5. **Reject**: keep the file with status `Rejected` and the reason, so the debate isn't reopened.
 6. **Immutable once accepted**: never rewrite an accepted ADR's decision. To change it, write a new ADR;
    when it's accepted, set the old one to `Superseded by [NNNN](NNNN-...md)` (the only edit allowed,
    plus fixing typos/links) and link the new one back with `Supersedes`.
-7. Code reviews check changes against accepted ADRs.
+7. Code reviews check changes against accepted ADRs and, while a milestone is open, against its
+   `Proposed` ADRs and the spec's *Decisions*. A change that contradicts one is a finding (R1,
+   `github-workflow-setup` › `references/findings.md`), not something to fix silently.

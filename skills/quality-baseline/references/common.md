@@ -142,8 +142,19 @@ moves a number, revisit that ADR.
   (who may push which branches and whether agents may merge; omitted = ask before every push) +
   any overrides of the personal baseline, with the reason.
 - **Decision log**: `docs/decisions/` with ADRs in MADR format and an index `README.md`, linked from
-  the repo README (design section). Brownfield audit: propose retroactive ADRs for the main past
-  decisions. Format and process: the `adr` skill.
+  the repo README (design section). ADRs record **architecture only** — decisions that survive
+  changes to the spec and the code; design detail goes to the flow document. Brownfield audit:
+  propose retroactive ADRs for the main past architecture decisions. Format and process: the `adr`
+  skill. Audit flag: an ADR that records a rule or parameter that changes with the code — propose
+  moving it to the flow document (and marking the ADR `Deprecated` with a link there).
+- **Flow document**: `docs/flows.md` describes each main flow of the subsystem the repo implements,
+  as it works today (template: `templates/csharp/docs/flows.md`). Per flow: what starts it, the
+  steps through the modules (behaviour, not file paths), the state it reads and writes, how it
+  fails, and links to the ADRs and closed specs that explain why. The flow document and the code
+  are the source of truth for how the system works; the README's design section links it and
+  doesn't duplicate it. A PR that changes a main flow updates it in the same PR, and code review
+  checks it. Design: ADR 0005 in `claude-config`. Audit flags: no `docs/flows.md` linked from the
+  README; a main entry point of the code with no flow describing it.
 - **Decision ↔ check traceability**: an ADR's success measure links to what proves it. A
   technical promise (latency, throughput, error rate, coverage, a behaviour) links to an executable
   check — a k6 threshold, a named test, a CI gate. A business promise (cost, time-to-market, team

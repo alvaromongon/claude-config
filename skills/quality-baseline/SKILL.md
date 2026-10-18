@@ -20,7 +20,7 @@ load test to the kind of project (HTTP service, batch job/CLI, library).
    - TypeScript/Node → `references/typescript.md`.
    - Other languages → apply `references/common.md` with that language's official conventions.
 4. **Verify locally**: run the full local gate (pre-push hook), build the container and smoke-test it.
-5. **Document**: README, `docs/decisions/` (`adr` skill), repo `CLAUDE.md` and versioned
+5. **Document**: README, `docs/flows.md`, `docs/decisions/` (`adr` skill), repo `CLAUDE.md` and versioned
    `.claude/settings.json`, per `references/common.md` › *Repository docs and Claude settings*.
 6. **Commit** as the user. Push / open PRs per the repo's push policy (ask when it has none);
    change GitHub settings only with explicit confirmation.
@@ -41,4 +41,5 @@ empty afterwards):
   and the `hackernews_upstream_requests` metric in the k6 script.
 - SLI/SLO table and numbers (k6 `SLO` object, `RATE` defaults) and the required check names in
   `.github/rulesets/main.json` (must match the job `name:`s).
-- `README.md`, `CLAUDE.md` and `docs/decisions/README.md` are skeletons: fill in every `<...>`.
+- `README.md`, `CLAUDE.md`, `docs/flows.md` and `docs/decisions/README.md` are skeletons: fill in
+  every `<...>`.

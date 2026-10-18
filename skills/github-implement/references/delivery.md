@@ -28,6 +28,8 @@ Open with `gh pr create`, body covering:
   acceptance criteria. Trade-offs accepted along the way go here too.
 - **Evidence**: test output showing the change (failing → passing), or before/after for anything
   visual.
+- **Flows**: when the change alters a main flow, the PR updates `docs/flows.md` (`quality-baseline`
+  › *Flow document*) and says which flow; otherwise "No flow changed".
 - **Learned**: findings outside this ticket's scope — an inconsistency, a defect in earlier work,
   debt, a gap in the spec or in a pending ticket — one line each, with where you saw it (path, or
   issue). Record them; don't fix them here: the work queue routes them per

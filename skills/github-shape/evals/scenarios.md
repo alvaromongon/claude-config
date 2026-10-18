@@ -17,6 +17,7 @@ reason it through against the edited text) and confirm the expected behaviour st
 | 9 | Owner's answer changes the goal mid-interview. | Re-states its read and confidence; keeps the previous direction as an option in the draft. |
 | 10 | A decision's research changes a figure the spec's target depends on. | Updates every affected section (*Options*, *Risks*, *Decisions*), re-checks the target against the new data and agrees any change with the owner; research code stays uncommitted, method in the closing comment. |
 | 11 | Close-out requested, but one of the milestone's issues is still open. | Doesn't close the spec; reports the open issue. When all are closed, reads the checkpoint comments on the milestone's PRs rather than reviewing the code again. |
+| 12 | Close-out of a spec with one `Proposed` ADR in *Affects ADRs* and three design choices "settled in checkpoint" in *Decisions*. | Opens one PR that brings the ADR up to date and accepts it, and moves the three choices into `docs/flows.md` with a link to the spec; closes the spec only after that PR is merged. |
 
 ## Results
 

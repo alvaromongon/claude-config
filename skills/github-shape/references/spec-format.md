@@ -59,8 +59,9 @@ complexity, why the simple option isn't enough>
 - <settled in shaping (date): one-line answer, for what was decided without an issue>
 - <settled in refinement (date): one-line answer, added by github-refine>
 
-**Affects ADRs** (optional): <ADRs this spec departs from or extends; the ADR update ships with the
-implementation PRs or via the `adr` skill>
+**Affects ADRs** (optional): <architecture ADRs this spec departs from, extends or proposes; a new or
+changed ADR stays `Proposed` until the spec's close-out, where it is accepted with the milestone's
+data (`adr` skill). Design detail goes in *Decisions* above, not in an ADR>
 
 **Related** (optional): <issues, ADRs, docs>
 ```
