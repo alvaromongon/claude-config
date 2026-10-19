@@ -131,10 +131,11 @@ moves a number, revisit that ADR.
   design, SLO + calibration, assumptions, quality gates (local vs CI table), future enhancements,
   and a note on the AI-assisted development process.
 - **Glossary**: every domain term the docs use (units, metrics, roles, states — e.g. "R",
-  "silo", "SLI") is defined once in `docs/glossary.md`, with the ADR that decides it, and linked
-  from the README (*At a glance*) and on first use elsewhere. Specs, ADRs, briefs and generated
-  reports link the term instead of redefining it; a new term is added in the same PR that
-  introduces it. A small repo may keep it as a README section instead. Audit flag: a term used in
+  "silo", "SLI") is defined in `docs/glossary.md`, and linked from the README (*At a glance*) and
+  on first use elsewhere. The glossary is self-contained: each entry says in full what the term
+  means and links nothing outside the glossary — no ADR, spec or other doc. Specs, briefs, flow documents and generated reports link the term instead of
+  redefining it; ADRs define it in place, because they are self-contained (`adr` skill), and that
+  duplication is accepted. A new term is added in the same PR that introduces it. A small repo may keep it as a README section instead. Audit flag: a term used in
   the README or in a published report with no glossary entry. Learned on finance-agent, where the
   unit "R" was defined only inside one ADR and its owner couldn't read it in a PR summary.
 - Repo `CLAUDE.md`: a table pointing to README sections + Claude-only rules (TDD, run the local
@@ -146,7 +147,8 @@ moves a number, revisit that ADR.
   changes to the spec and the code; design detail goes to the flow document. Brownfield audit:
   propose retroactive ADRs for the main past architecture decisions. Format and process: the `adr`
   skill. Audit flag: an ADR that records a rule or parameter that changes with the code — propose
-  moving it to the flow document (and marking the ADR `Deprecated` with a link there).
+  moving it to the flow document (and marking the ADR `Deprecated`, saying in its status line that
+  the detail moved to the flow document, without a link; the flow document links the ADR).
 - **Flow document**: `docs/flows.md` describes each main flow of the subsystem the repo implements,
   as it works today (template: `templates/csharp/docs/flows.md`). Per flow: what starts it, the
   steps through the modules (behaviour, not file paths), the state it reads and writes, how it
@@ -155,9 +157,11 @@ moves a number, revisit that ADR.
   doesn't duplicate it. A PR that changes a main flow updates it in the same PR, and code review
   checks it. Design: ADR 0005 in `claude-config`. Audit flags: no `docs/flows.md` linked from the
   README; a main entry point of the code with no flow describing it.
-- **Decision ↔ check traceability**: an ADR's success measure links to what proves it. A
-  technical promise (latency, throughput, error rate, coverage, a behaviour) links to an executable
-  check — a k6 threshold, a named test, a CI gate. A business promise (cost, time-to-market, team
+- **Decision ↔ check traceability**: an ADR's success measure names what proves it, and the proof
+  names the ADR (ADRs link nothing outside the decision log). A technical promise (latency, throughput,
+  error rate, coverage, a behaviour) is proved by an executable check — a k6 threshold, a named
+  test, a CI gate — described in the ADR by what it checks, and naming the ADR in its name, a
+  comment or its description. A business promise (cost, time-to-market, team
   autonomy) names its metric and source, or is declared an estimate with its assumption; don't
   invent a proxy check just to have one. Audit flags: accepted ADRs whose success measure has
   neither a check nor a named metric, SLO objectives with no originating ADR, an objective with no measured value, and an

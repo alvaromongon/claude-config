@@ -13,3 +13,4 @@ traceability*) and are not retrofitted; the rule applies from 0004 on.
 | [0003](0003-assign-models-per-skill-by-role.md) | Assign a model per skill by role, using family aliases | Accepted |
 | [0004](0004-three-layer-baseline-decisions-shaping-implementation.md) | A three-layer baseline: decisions, shaping and implementation, with a new `github-shape` | Accepted |
 | [0005](0005-adaptive-milestones-findings-rule-and-two-level-design-records.md) | Adaptive milestones: a findings rule, a post-merge checkpoint and two-level design records | Proposed |
+| [0006](0006-self-contained-adrs-and-glossary.md) | ADRs and the glossary are self-contained; references point towards them | Proposed |

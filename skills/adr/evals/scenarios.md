@@ -16,6 +16,8 @@ still holds.
 | 7 | User asks for an ADR fixing a stop distance at 2× ATR (a parameter that changes with the code). | Says it is design detail, not architecture: records it in the open spec's *Decisions*, or in `docs/flows.md`, not as an ADR. |
 | 8 | An architecture ADR comes out of a decision issue while its milestone is open. | Merges it as `Proposed`, links it from the spec's *Affects ADRs*, and doesn't accept it until the spec's close-out. |
 | 9 | Close-out of a milestone whose `Proposed` ADR the tickets showed wrong. | Sets it `Rejected` with the reason instead of accepting it; an accepted ADR is never edited beyond its status line. |
+| 10 | The ADR comes from a decision issue, uses a glossary term, cites a vendor doc and is proved by a named test. | The ADR links nothing outside the decision log: no `Issue` line, the term defined in place, the vendor doc explained with its name and date read, the test described by what it checks. The PR, the spec's *Affects ADRs* and the test name the ADR. |
+| 11 | A new ADR replaces one decision of an accepted ADR and relies on another accepted ADR without replacing it. | Links the replaced ADR with `Supersedes` and sets that one to `Superseded by` with a link back; links the other under `Builds on` with a one- or two-sentence summary of what it decided. |
 
 ## Results
 

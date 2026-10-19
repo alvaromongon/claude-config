@@ -24,8 +24,8 @@ current shape; the issue tracks the work, the ADR holds the reasoning.
   next refactor of the module it names? If not, it is detail. Design: ADR 0005 in
   `claude-config`.
 - Brownfield: when revisiting a decision that was never recorded, first write it retroactively
-  (status `Accepted`, date and source link of the original decision), then the new one that
-  supersedes it.
+  (status `Accepted`, date and source of the original decision, described in place), then the new
+  one that supersedes it.
 - If one decision has phases (short/mid/long term), write one ADR per phase.
 
 ## Where and how
@@ -35,10 +35,18 @@ current shape; the issue tracks the work, the ADR holds the reasoning.
 - Template: `template.md` in this skill (MADR 4.0 plus a confidence level), in English. Write ADRs in
   the repo's documentation language (see its CLAUDE.md/README): English by default; if the docs are in
   another language, translate headings and statuses and keep that translation consistent across ADRs.
-- Link domain terms to the repo's glossary (`quality-baseline` › *Glossary*) instead of redefining
-  them; if the ADR introduces a term, add it to the glossary in the same PR.
-- Keep it pithy and factual. Cite sources (regulation, vendor docs, library issues) with links. Put
-  long research in *More information* or a linked document; the decision must stand on its own.
+- **Self-contained**: an ADR links nothing outside the decision log — no issue, PR, spec, glossary,
+  other doc, code file or URL. Links to other ADRs are allowed, because they are as stable as the
+  ADR itself: `Supersedes` / `Superseded by` link both ways, and an ADR that builds on an earlier
+  one may link it with a one- or two-sentence summary of what it decided, so it reads without
+  opening it. Other documents are less stable than an accepted ADR, so references point
+  towards it: the spec's *Affects ADRs*, the PR, the flow document and the checks name the
+  ADR, never the reverse. Define each domain term the ADR needs
+  in place, even if the glossary also defines it; if the ADR introduces a term, add it to the
+  glossary in the same PR (`quality-baseline` › *Glossary*). Design: ADR 0006 in `claude-config`.
+- Keep it pithy and factual. Explain what an outside source says (regulation, vendor docs, library
+  issues) in the ADR, naming the source and the date read, instead of linking it: links rot. Put
+  long research in *More information*; the decision must stand on its own.
 - Follow the decision method in the global `CLAUDE.md` › *Decisions*: the conclusion up front, the
   business impact, options including buy and do-nothing when they apply, the accepted trade-off,
   the sequence by impact, and a measurable outcome with its scope. Label every figure as measured (source) or estimated (assumption); never
@@ -46,8 +54,10 @@ current shape; the issue tracks the work, the ADR holds the reasoning.
 - A **measured** figure carries its evidence: how many runs, the spread, and what limits it (why
   isn't it twice as good — a core, a lock, the network, the load generator itself). Without that
   it's an estimate; label it so.
-- Link the success measure to what proves it: an executable check for a technical promise, a named
-  metric and source for a business one (`quality-baseline` › *Decision ↔ check traceability*).
+- Tie the success measure to what proves it: describe the executable check for a technical
+  promise by what it checks, and the check names the ADR (a test name or comment, a CI gate
+  description); a named metric and source for a business one (`quality-baseline` › *Decision ↔
+  check traceability*).
 - Never hide negative consequences. State the confidence level and what would make us revisit it.
 
 ## Process
@@ -65,8 +75,8 @@ current shape; the issue tracks the work, the ADR holds the reasoning.
    and note the review in *More information*. One round; a second only if the first changed the
    decision. If you're already inside a subagent, say the review couldn't run instead of
    faking it.
-3. **Propose**: open a PR adding the ADR with status `Proposed` and linking the issue (the issue links
-   back). The PR review is the discussion.
+3. **Propose**: open a PR adding the ADR with status `Proposed`; the PR and the issue link the ADR,
+   the ADR links neither. The PR review is the discussion.
    - **Inside an open milestone** (the ADR comes from a spec, a decision issue or a pivot): merge it
      as `Proposed`, link it from the spec's *Affects ADRs*, and keep it editable while the
      milestone runs. What the tickets learn goes into the spec's *Decisions* (the work queue's
