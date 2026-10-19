@@ -57,7 +57,8 @@ line — refine requires one either way. Shaping a one-PR change is overhead.
 6. **Publish**, in this order (the spec and its decisions link each other): create the spec
    (`gh issue create --label spec`) with a placeholder in *Decisions*; create each decision issue
    (`--label decision`) linking the spec; edit the spec's *Decisions* with the decision links; then
-   add the blocking edges (decision blocks spec) per
+   add the blocking edges (decision blocks spec, and another spec blocks this one when this
+   spec needs what it delivers — `dependencies.md` › *Between milestones*) per
    `../github-workflow-setup/references/dependencies.md`. Never a `ready-for-*` label: specs and
    decisions are not implementation work, so `github-work-queue` never picks them up.
 7. **Report**: the spec's link, its open decisions, and the next step — resolve the decisions

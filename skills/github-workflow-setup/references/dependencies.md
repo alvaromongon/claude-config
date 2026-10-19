@@ -41,3 +41,25 @@ number. Treat an unparseable section as blocked and report it, rather than guess
 
 The frontier of a set of issues is those with no open blocker by either method. Recompute it after
 every merge: closing one issue may unblock others.
+
+## Between milestones
+
+GitHub has no relations between milestones. The order between milestones is the blocking edges
+between their `spec` issues: spec A is blocked by spec B when work in A needs what B delivers —
+typically a ticket of A blocked by a ticket of B. Only **real** dependencies: a preference ("do B
+first") is never an edge, so the graph stays trustworthy; between milestones with no edge, the
+owner chooses. `github-shape` adds the edge when a new spec needs another one's outcome, and
+`github-refine` when a slice's blocker (or a ticket it blocks) lives in another milestone.
+
+A spec blocked by another spec can still be shaped and refined (only an open `decision` blocks
+refinement). The work queue doesn't read these edges: they tell the owner which milestone to scope
+a queue run to. **What's next** = the open specs with no open `spec` blocker, and within each of
+their milestones, the ticket frontier above:
+
+```bash
+for n in $(gh issue list --label spec --state open --json number --jq '.[].number'); do
+  echo "#$n blocked by specs: $(gh api repos/{owner}/{repo}/issues/$n/dependencies/blocked_by \
+    --jq '[.[] | select(.state == "open" and any(.labels[]; .name == "spec")) | "#\(.number)"] | join(" ")')"
+done
+```
+

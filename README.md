@@ -112,7 +112,8 @@ flowchart LR
 
 - **Mapping**: `spec` issue = the shaped what and why, linked from its milestone; milestone = epic; issue = tracer-bullet ticket
   ([slicing rules](skills/github-refine/references/tracer-bullets.md)); "blocked by" = GitHub's
-  native issue dependencies ([how they're written and checked](skills/github-workflow-setup/references/dependencies.md)).
+  native issue dependencies ([how they're written and checked](skills/github-workflow-setup/references/dependencies.md));
+  the order between milestones = real blocking edges between their specs, never a preference.
 - **States**: [triage state machine](skills/github-triage/references/states.md). Each issue
   ready for work carries an [agent brief](skills/github-triage/references/brief-format.md):
   acceptance criteria, what was verified, and the *Sensitive areas* pre-approved for the agent.

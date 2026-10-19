@@ -32,7 +32,8 @@ Modeled on `to-tickets` from [mattpocock/skills](https://github.com/mattpocock/s
    *Risks* as "measurable only at close-out" — and put the slice that tests the riskiest
    assumption first.
 3. **Quiz step**: present the numbered draft (title, one-line demoable outcome, blockers, and
-   which slices form the frontier) to the user before publishing anything. Ask about granularity,
+   which slices form the frontier, and any blocker in another milestone) to the user before
+   publishing anything. Ask about granularity,
    blocking edges, and invite merges/splits — same spirit as `grilling`: surface the open calls,
    don't just publish a guess. A design decision taken here goes back into the spec's *Decisions*
    as "settled in refinement (date)" when you publish, so the spec stays the single record of what
@@ -49,7 +50,9 @@ Modeled on `to-tickets` from [mattpocock/skills](https://github.com/mattpocock/s
    --milestone ...` for each slice, with `--label <ready-for-agent|ready-for-human>` on the
    briefed ones only. Set every slice's blocking edges, outlines included, per
    `../github-workflow-setup/references/dependencies.md` (native relations, or the checklist
-   fallback — say explicitly if you had to fall back).
+   fallback — say explicitly if you had to fall back). When a blocking edge crosses milestones,
+   also add the edge between the two specs if it isn't there (`dependencies.md` › *Between
+   milestones*).
 6. **Report the frontier**: tell the user which ticket(s) have zero blockers and are immediately
    workable by `github-work-queue` or `github-implement`, and which slices are outlines waiting to
    be briefed.

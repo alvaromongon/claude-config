@@ -11,7 +11,7 @@ This repo uses the GitHub-native workflow from `~/.claude/skills/github-*`
 and [ADR 0004](https://github.com/alvaromongon/claude-config/blob/main/docs/decisions/0004-three-layer-baseline-decisions-shaping-implementation.md)
 in `claude-config`). A `spec` issue holds the shaped what and why; its milestone is the epic;
 issues are tracer-bullet tickets; blocking dependencies are GitHub's native issue-blocking
-relations.
+relations. The order between milestones is the real blocking edges between their specs.
 
 ## Cycle
 

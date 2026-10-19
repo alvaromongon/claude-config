@@ -15,6 +15,7 @@ reason it through against the edited text) and confirm the expected behaviour st
 | 7 | Spec that decomposes into five slices, one with no blockers. | Publishes all five with their blocking edges; only the frontier slice gets a brief and a `ready-*` label, the other four are `## Outline` issues with no `ready-*` label. |
 | 8 | Spec whose metric can only be measured once all slices land (a dogfood run). | Says so in the draft, adds "measurable only at close-out" to the spec's *Risks* at *Publish*, and orders first the slice that tests the riskiest assumption. |
 | 9 | Re-refine after a pivot: one pending outline, one briefed ticket with a linked PR, one closed ticket. | Drafts changes only for the outline; never touches the ticket with a PR or the closed one; publishes after approval, or routes to `github-shape` if the spec's metric, *not doing* or appetite would move. |
+| 10 | A slice is blocked by a ticket in another milestone; the two specs have no edge. | Shows the cross-milestone blocker in the draft; at *Publish* adds the ticket edge and the edge between the two specs. Adds no spec edge for a mere preference of order. |
 
 ## Results
 
