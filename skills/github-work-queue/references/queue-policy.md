@@ -53,9 +53,11 @@ For each issue on the frontier, one at a time (no parallel worktrees in this ver
    a prompt that invokes `github-implement` with the issue number as argument. Wait for it to
    finish; collect branch/PR.
 2. **Review**: spawn two **separate** subagents in parallel (`model: "opus"`, fresh context each,
-   never the implementer's), each with `isolation: "worktree"` and told to run `gh pr checkout <n>`
-   in that worktree first — so both review exactly the PR's branch, without touching each other's
-   or the main session's working tree:
+   never the implementer's), each with `isolation: "worktree"` and told to run
+   `git fetch origin pull/<n>/head && git checkout --detach FETCH_HEAD` in that worktree first —
+   so both review exactly the PR's head, without touching each other's or the main session's
+   working tree. Not `gh pr checkout <n>`: the implementer usually leaves the issue branch checked
+   out in the main checkout, and git refuses to check out one branch in two worktrees:
    - one invoking `code-review` with the PR number as target (correctness, reuse, simplification
      — same pattern as Matt Pocock's `code-review` axes);
    - one invoking `security-review`, which reviews the pending changes of the checked-out branch
