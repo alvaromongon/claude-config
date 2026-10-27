@@ -7,7 +7,7 @@ consulted: "N/A"
 
 # 0007. The README is a landing page with a measured efficiency log; topic documents own their topics
 
-**Decision**: the README of this public repository becomes a landing page — what it is, a snapshot of measured efficiency with a chart that ties each configuration change to its effect, how to start, the skills and where to read more — and documents under `docs/` own their topics (the workflow, maintaining the repository, the efficiency history). Efficiency is measured from real work in public repositories, one window per configuration change, recorded as aggregated rows in a versioned log and rendered into the pages by a script that CI checks. Target: cost per merged pull request below the baseline of $12.17 (estimated) after the first change, with owner messages per merged pull request not above 3.97.
+**Decision**: the README of this public repository becomes a landing page — what it is, a snapshot of measured efficiency with a chart that ties each configuration change to its effect, how to start, the skills and where to read more — and documents under `docs/` own their topics (the workflow, maintaining the repository, the efficiency history). Efficiency is measured from real work in public repositories, one window per configuration change, recorded as aggregated rows in a versioned log and rendered into the pages by a script that CI checks. Target: cost per merged pull request below the baseline of $8.83 (estimated) after the first change, with owner messages per merged pull request not above 3.97.
 
 ## Context and problem statement
 
@@ -15,7 +15,7 @@ The README had grown to about 215 lines that mixed what the repository is, how t
 
 The data comes from Claude Code's local session transcripts (one file per session and subagent, with the token usage of every model call). They exist only on the owner's machine and hold full conversations, so CI cannot produce the data and the transcripts themselves must never be published; only aggregated figures may be.
 
-**Why it matters**: the configuration's cost is dominated by orchestration and review, not by writing code — in the first measured window, implementing and fixing were 16% of the estimated cost (measured token usage over 31 merged pull requests in a public repository, 2026-10-16 to 2026-10-26, priced at list prices; the cost itself is an estimate). Changes that could cut it — a cheaper model for the orchestrator, a narrower re-review, a conditional security review — are trade-offs against quality that need numbers before and after. The same numbers, shown on the landing page, are what a visitor of a public repository can check.
+**Why it matters**: the configuration's cost is dominated by orchestration and review, not by writing code — in the first measured window, implementing and fixing were 15% of the estimated cost (measured token usage over 31 merged pull requests in a public repository, 2026-10-16 to 2026-10-26, priced at list prices; the cost itself is an estimate). Changes that could cut it — a cheaper model for the orchestrator, a narrower re-review, a conditional security review — are trade-offs against quality that need numbers before and after. The same numbers, shown on the landing page, are what a visitor of a public repository can check.
 
 ## Decision drivers
 
@@ -61,7 +61,7 @@ Chosen option: "A", with B kept for later, because field data costs nothing beyo
 
 The documentation check in CI renders the snapshot and the history from the log and fails when the README or `docs/efficiency.md` differs from that rendering; its description names this ADR. The `session-metrics` tests check how a window becomes a row.
 
-**Success measure**: cost per merged pull request (estimated) below $12.17 and owner messages per merged pull request not above 3.97 in the first window after a change, read from `docs/efficiency.csv`; measured once that window reaches 10 merged pull requests.
+**Success measure**: cost per merged pull request (estimated) below $8.83 and owner messages per merged pull request not above 3.97 in the first window after a change, read from `docs/efficiency.csv`; measured once that window reaches 10 merged pull requests.
 
 ## Pros and cons of the options
 
@@ -74,7 +74,7 @@ The documentation check in CI renders the snapshot and the history from the log 
 ### B. Lab benchmark
 
 - Good: the same tickets for every configuration, so small effects show; repeat runs give a spread.
-- Bad: each run costs real usage — estimated $60 per configuration for 5 tickets at the baseline's $12 per pull request — and a benchmark repository to keep realistic.
+- Bad: each run costs real usage — estimated $45 per configuration for 5 tickets at the baseline's $9 per pull request — and a benchmark repository to keep realistic.
 
 ### C. External dashboard
 
@@ -91,3 +91,5 @@ The documentation check in CI renders the snapshot and the history from the log 
 Sources read on 2026-10-27: write-ups on measuring coding agents agree that no single metric is enough and pair cost per merged pull request with the human intervention rate, the defect rate and cycle time, accepting a cost cut only if the others hold; benchmark papers on coding agents count tokens per solved task including failed attempts; a public token-usage comparison tool for Claude Code keeps its results as files committed to its repository after each run; guides on README structure advise a short hero, a handful of badges and links to deeper documents before the README turns into a manual. GitHub's Markdown viewer was checked on 2026-10-27 to render `xychart-beta` bar charts, on a public README that uses one.
 
 Doubt review: not run. The decision is cheap to reverse (pages and a CSV) and was settled with the owner option by option.
+
+Correction (2026-10-27, same day as acceptance): the baseline figures first written here priced cache reads at 0.1× of the input price; Opus 5.5 and Sonnet 5.5 charge 0.05× (Anthropic's pricing page, read that day). The cost figures above are the corrected ones; the decision is unchanged.

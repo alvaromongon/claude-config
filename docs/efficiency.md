@@ -11,7 +11,7 @@ One row per window; a window measures one configuration change. Data:
 <!-- efficiency:history:start -->
 | Change | Repo | Window | Merged PRs | $/PR (est.) | Owner msgs/PR | Clean 1st review | Review rounds | Active min/PR | Tokens/PR | Limit hits | Fixed context main / subagent |
 |---|---|---|---|---|---|---|---|---|---|---|---|
-| Baseline | alvaromongon/finance-agent | 2026-10-16 → 2026-10-26 | 31 | 12.17 | 3.97 | 38% | 1.86 | 35 | 21,504,461 | 5 | 72696 / 54713 |
+| Baseline | alvaromongon/finance-agent | 2026-10-16 → 2026-10-26 | 31 | 8.83 | 3.97 | 38% | 1.86 | 35 | 21,504,461 | 5 | 72696 / 54713 |
 <!-- efficiency:history:end -->
 
 ## Method
@@ -25,8 +25,8 @@ One row per window; a window measures one configuration change. Data:
   the first review (one round, no fix), owner messages, active agent minutes (gaps between events
   of up to 15 minutes; longer ones count as paused), usage-limit hits, and the fixed context of each
   transcript's first call.
-- **Estimated**: cost, at list prices per model with cache writes at 1.25×/2× and reads at 0.1× of
-  the input price. A subscription is billed by plan; the prices only make windows comparable.
+- **Estimated**: cost, at list prices per model with cache writes at 1.25×/2× of the input price
+  and cache reads at that model's rate (0.05× on Opus and Sonnet 5.5, 0.025× on Fable 5.1). A subscription is billed by plan; the prices only make windows comparable.
 - **Not in the transcripts**: defects that escape review (bugs filed later, reverts) — checked
   with `gh` over the same window before keeping a change.
 - **Keep a change** when cost per merged PR falls and owner messages per PR, review rounds and

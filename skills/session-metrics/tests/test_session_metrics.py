@@ -13,7 +13,7 @@ import session_metrics as sm  # noqa: E402
 from transcripts import (assistant, human, limit_hit, notification, tool_result, tool_use,  # noqa: E402
                          write_session)
 
-PRICES = {"opus": (4.0, 20.0), "sonnet": (2.0, 10.0)}
+PRICES = {"opus": (4.0, 20.0, 0.05), "sonnet": (2.0, 10.0, 0.05)}  # (input, output, cache-read multiplier)
 
 
 class TempProject(unittest.TestCase):
@@ -37,8 +37,8 @@ class CostTests(TempProject):
 
         m = self.measure()
 
-        # input 4 + 5m write 4*1.25 + 1h write 4*2 + read 4*0.1 + output 20
-        self.assertAlmostEqual(m["cost"]["total"], 4 + 5 + 8 + 0.4 + 20)
+        # input 4 + 5m write 4*1.25 + 1h write 4*2 + read 4*0.05 + output 20
+        self.assertAlmostEqual(m["cost"]["total"], 4 + 5 + 8 + 0.2 + 20)
         self.assertEqual(m["calls"], 1)
 
     def test_splits_main_session_cost_by_model(self):

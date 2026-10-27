@@ -22,7 +22,7 @@ in which it starts.
 
 ## Read the result
 
-- **Cost is estimated** (list prices in the script, from ADR 0003); everything else is measured
+- **Cost is estimated** (list prices in the script, with each model's cache-read rate); everything else is measured
   from the transcripts. Say so when quoting figures.
 - **Roles** come from each subagent's `Agent` description (`Implement…`, `Code review…`, `Fix…`,
   `Checkpoint…`); a nested subagent counts towards its parent's role. `main` is the session the

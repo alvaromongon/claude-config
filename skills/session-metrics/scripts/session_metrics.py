@@ -20,10 +20,12 @@ from pathlib import Path
 
 import efficiency
 
-# $/MTok (input, output) at list price — source: ADR 0003, 2026-10-06. Cost is an estimate:
-# a subscription is billed by plan, and these prices only make runs comparable.
-PRICES = {"opus": (4.0, 20.0), "sonnet": (2.0, 10.0), "haiku": (1.0, 5.0), "fable": (10.0, 50.0)}
-CACHE_WRITE_5M, CACHE_WRITE_1H, CACHE_READ = 1.25, 2.0, 0.1
+# (input $/MTok, output $/MTok, cache-read multiplier of input) at list price — source: Anthropic's
+# pricing page, read 2026-10-27 (Haiku 5.5: prompts up to 100k tokens; longer ones cost 5x).
+# Cost is an estimate: a subscription is billed by plan, and these prices only make runs comparable.
+PRICES = {"opus": (4.0, 20.0, 0.05), "sonnet": (2.0, 10.0, 0.05), "haiku": (0.10, 0.50, 0.1),
+          "fable": (10.0, 50.0, 0.025)}
+CACHE_WRITE_5M, CACHE_WRITE_1H = 1.25, 2.0
 PAUSE = timedelta(minutes=15)  # a longer gap between events counts as paused, not active
 
 ROLES = [  # first match wins; matched against the Agent call's description
@@ -44,13 +46,13 @@ def model_family(model: str) -> str:
 
 
 def call_cost(usage: dict, family: str, prices: dict) -> float:
-    price_in, price_out = prices[family]
+    price_in, price_out, cache_read = prices[family]
     write_1h = (usage.get("cache_creation") or {}).get("ephemeral_1h_input_tokens", 0)
     write_5m = usage.get("cache_creation_input_tokens", 0) - write_1h
     return (usage.get("input_tokens", 0) * price_in
             + write_5m * price_in * CACHE_WRITE_5M
             + write_1h * price_in * CACHE_WRITE_1H
-            + usage.get("cache_read_input_tokens", 0) * price_in * CACHE_READ
+            + usage.get("cache_read_input_tokens", 0) * price_in * cache_read
             + usage.get("output_tokens", 0) * price_out) / 1e6
 
 
@@ -221,7 +223,7 @@ def render_markdown(m: dict) -> str:
     lines = [
         f"# Session metrics ({m['sessions']} sessions, {m['calls']} API calls)",
         "",
-        "## Cost (estimated: list prices from ADR 0003, cache writes x1.25/x2, reads x0.1)",
+        "## Cost (estimated: list prices per model, cache writes x1.25/x2, reads x0.05 on Opus/Sonnet 5.5)",
         "",
         f"- Total: ${m['cost']['total']:,.2f}",
         f"- Cost per merged PR: ${per_pr(m['cost']['total'])} ({merged} merged)",

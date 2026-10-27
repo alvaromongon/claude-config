@@ -34,7 +34,7 @@ Latest window: **Baseline** on `alvaromongon/finance-agent`, 2026-10-16 → 2026
 
 | Metric | Latest | vs baseline |
 |---|---|---|
-| Cost per merged PR (estimated, list prices) | $12.17 | = |
+| Cost per merged PR (estimated, list prices) | $8.83 | = |
 | Owner messages per merged PR | 3.97 | = |
 | PRs clean at first review | 38% | = |
 | Active agent minutes per merged PR | 35 | = |
@@ -48,8 +48,8 @@ config:
 xychart-beta
     title "Cost per merged PR (USD, estimated)"
     x-axis ["Baseline"]
-    y-axis 0 --> 15
-    bar [12.17]
+    y-axis 0 --> 11
+    bar [8.83]
 ```
 
 ```mermaid
