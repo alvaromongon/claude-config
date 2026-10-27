@@ -24,7 +24,7 @@ End-to-end run on 2026-10-03 in [claude-workflow-sandbox](https://github.com/alv
 | # | Result |
 |---|---|
 | 1 | Pass (CLI-only spec): three vertical slices plus a CI ticket, numbered draft shown and approved before publishing. |
-| 3 | Not triggered: the native dependency endpoints (add, check, remove) all work on a private free-plan repo. |
+| 3 | Pass (2026-10-27, Claude Code headless in a throwaway clone of the sandbox, Opus 5.5, $0.85 over two turns): a `gh` test double on `PATH` returned `HTTP 404` for every `…/dependencies…` call and passed everything else to the real `gh`. Before publishing it warned that the native API was failing and that it would fall back; after approval it tried the relation, got the 404, wrote `## Blocked by` / `- #28` in the blocked outline's body, and said so in its report. The native endpoints do work on a private free-plan repo, so the failure had to be simulated. |
 | 2 | Pass (2026-10-03, stop/validation batch: one fresh headless Sonnet 5.5 session per scenario, fixtures in throwaway clones with push disabled): prefactoring ticket first, blocking the feature slices; draft shown, nothing published, frontier = the prefactoring ticket. |
 | 4 | Partial: proposed `ready-for-agent` with *Sensitive areas: none* for the auth slices, but raised it as an explicit open question. Consistent with that repo's `workflow.md`, whose sensitive areas don't include auth — list auth there when it matters. |
 | 5 | Pass (2026-10-14, Claude Code 2.1.289, fresh headless session, init model Opus 5.5, throwaway clone): `spec` issue without a success metric — stopped before decomposing, created nothing, asked for the metric and offered `github-shape`. |
