@@ -29,3 +29,6 @@ jobs:
 
       - name: Shell scripts (templates)
         run: shellcheck $(git ls-files '*.sh' '*/.githooks/*')
+
+      - name: Script tests (session-metrics)
+        run: python3 -m unittest discover -s skills/session-metrics/tests

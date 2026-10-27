@@ -46,6 +46,7 @@ set `disable-model-invocation: true`: only typing the slash command starts them.
 | [`github-refine`](skills/github-refine/SKILL.md) | Turn an agreed spec into a milestone of tracer-bullet issues, briefing the frontier and outlining the rest; re-refine after a pivot. | Automatically | `opus`, effort high | Shows the draft before publishing. |
 | [`github-implement`](skills/github-implement/SKILL.md) | Implement one `ready-for-agent` issue with TDD, up to an open PR. | Automatically, e.g. `/github-implement 42` | `sonnet` | Runs in a forked context; needs the issue number. |
 | [`github-work-queue`](skills/github-work-queue/SKILL.md) | Work through the `ready-for-agent` backlog unattended. | **Manual only** | `sonnet`; reviewers `opus` | Merges PRs where the repo allows it. |
+| [`session-metrics`](skills/session-metrics/SKILL.md) | Measure a repo's sessions (cost and tokens per merged PR by role, review rounds, human messages, time) as a before/after baseline for configuration changes. | Automatically | `sonnet` | Reads local transcripts in `~/.claude/projects/`; cost is estimated from list prices. |
 | [`check-upstream-skills`](skills/check-upstream-skills/SKILL.md) | Review [mattpocock/skills](https://github.com/mattpocock/skills) for improvements; check the model assignment. | **Manual only** | session | Occasional, on demand. |
 
 The built-in `code-review` and `security-review` skills are reused as the review gate of the work
@@ -156,8 +157,9 @@ flowchart LR
 
 - **Conventions**: skills in English, one folder each, `SKILL.md` kept short with detail in
   `references/`. Architecturally significant changes get an ADR (`adr` skill).
-- **Checks**: `python3 .github/scripts/validate.py` (skill frontmatter, relative links, YAML/JSON)
-  and `shellcheck` on template scripts — the same as the [Docs workflow](.github/workflows/docs.yml).
+- **Checks**: `python3 .github/scripts/validate.py` (skill frontmatter, relative links, YAML/JSON),
+  `shellcheck` on template scripts and `python3 -m unittest discover -s skills/session-metrics/tests`
+  — the same as the [Docs workflow](.github/workflows/docs.yml).
 - **Behaviour**: before a significant edit to a workflow skill, walk through its
   `evals/scenarios.md` and confirm each expected behaviour still holds.
 - **Upstream and models**: `/check-upstream-skills` now and then — it also checks the model
