@@ -17,9 +17,9 @@ Rules that apply in every session, with or without that skill:
   dependencies stubbed, never call real third-party services). Test folders/namespaces mirror the
   source; shared hand-written fakes/stubs live in a `TestDoubles/` folder per test project.
 - Before finishing a change, run the repo's local quality gate (the same checks as CI).
-- The **README is the single source of truth**; other docs (including the repo `CLAUDE.md`) point
-  to it instead of duplicating it. Domain terms are defined in a glossary (`docs/glossary.md`)
-  and linked on first use, never redefined in place — except in ADRs and the glossary itself, which
+- The **README is the single entry point** and each topic lives in exactly one document; the
+  others (including the repo `CLAUDE.md`) link it instead of duplicating it. Domain terms are
+  defined in a glossary (`docs/glossary.md`) and linked on first use, never redefined in place — except in ADRs and the glossary itself, which
   are self-contained: they say in full what they need and link nothing outside themselves (an ADR
   may link other ADRs).
 - **Language**: code, identifiers and code comments in English; README and docs may use the
@@ -73,5 +73,4 @@ file freely, but I must only create/edit/delete files that are versioned in the 
 `git check-ignore -v <path>` if in doubt). Touching any non-versioned file requires your explicit
 permission.
 
-This repo's own conventions and its overrides of the baseline are in the README › *Changing this
-repository*.
+This repo's own conventions and its overrides of the baseline are in `docs/maintaining.md`.

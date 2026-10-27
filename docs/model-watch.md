@@ -30,3 +30,4 @@ To pin one family temporarily (e.g. a release that misbehaves), set
 | Date | Line-up reviewed | Outcome |
 |---|---|---|
 | 2026-10-06 | Fable 5.1, Opus 5.5, Sonnet 5.5, Haiku 4.5 | Initial assignment (ADR 0003). Pending: first `github-work-queue` run on `sonnet` in the sandbox. |
+| 2026-10-27 | Same line-up | First real queue runs (finance-agent, 4 runs, 2026-10-17 to 2026-10-26), measured from transcripts: the orchestrator's `model: sonnet` holds only for the first turn — in 3 of 4 runs the session went back to `opus` once the first subagent returned, so 40% of the estimated cost was the orchestrator on `opus`. Subagent models held as assigned. Assignment unchanged; making the orchestrator stay on `sonnet` is the next change to measure ([efficiency](efficiency.md)). |

@@ -125,7 +125,7 @@ moves a number, revisit that ADR.
   `-**/obj/**`) and upload it with `codeql-action/upload-sarif`.
 
 ## Repository docs and Claude settings
-- **README is the single source of truth**, in this order (as in `templates/csharp/README.md`):
+- **README is the single entry point** — each topic lives in one document, which the others link — in this order (as in `templates/csharp/README.md`):
   *At a glance* (what it does, one-command run, SLO status (measured vs objective), quality summary with links), then
   requirements, how to run (with URLs), how to test (incl. load test), structure and conventions,
   design, SLO + calibration, assumptions, quality gates (local vs CI table), future enhancements,
