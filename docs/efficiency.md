@@ -38,7 +38,7 @@ One row per window; a window measures one configuration change. Data:
 ```bash
 python3 skills/session-metrics/scripts/session_metrics.py ~/.claude/projects/<project> \
   --since YYYY-MM-DD --until YYYY-MM-DD \
-  --record docs/efficiency.csv --repo <owner>/<name> --change "<change>"
+  --record docs/efficiency.csv --repo <owner>/<name> --change "<change>" --issue <n>
 python3 skills/session-metrics/scripts/efficiency.py   # re-render README and this page
 ```
 

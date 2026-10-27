@@ -7,7 +7,7 @@ and model), review rounds per PR, human messages, active and paused time, usage-
 fixed context every call pays before doing any work.
 
 Usage: session_metrics.py PROJECT_DIR [PROJECT_DIR...] [--since YYYY-MM-DD] [--until YYYY-MM-DD] [--json]
-       [--record docs/efficiency.csv --repo OWNER/NAME --change LABEL]
+       [--record docs/efficiency.csv --repo OWNER/NAME --change LABEL [--issue N]]
 """
 import argparse
 import json
@@ -270,6 +270,7 @@ def main(argv: list[str]) -> int:
                         help="append the window to this efficiency log (e.g. docs/efficiency.csv)")
     parser.add_argument("--repo", help="with --record: the public repo measured, as owner/name")
     parser.add_argument("--change", help="with --record: the configuration change this window measures")
+    parser.add_argument("--issue", help="with --record: number of the claude-config issue that tracks the change")
     args = parser.parse_args(argv)
     if args.record and not (args.repo and args.change):
         parser.error("--record needs --repo and --change")
@@ -277,7 +278,8 @@ def main(argv: list[str]) -> int:
     print(json.dumps(metrics, indent=2) if args.json else render_markdown(metrics), end="")
     if args.record:
         efficiency.append_row(args.record, efficiency.row_from(metrics, repo=args.repo, change=args.change,
-                                                               since=args.since, until=args.until))
+                                                               since=args.since, until=args.until,
+                                                               issue=args.issue))
     return 0
 
 

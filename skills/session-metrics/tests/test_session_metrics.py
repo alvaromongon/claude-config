@@ -193,9 +193,9 @@ class RecordTests(TempProject):
 
         with contextlib.redirect_stdout(io.StringIO()):
             sm.main([str(self.project), "--since", "2026-10-16", "--until", "2026-10-26", "--record", str(log),
-                     "--repo", "o/r", "--change", "Baseline"])
+                     "--repo", "o/r", "--change", "Sonnet orchestrator", "--issue", "12"])
 
-        self.assertIn("Baseline,o/r,2026-10-16,2026-10-26,1,", log.read_text())
+        self.assertIn("Sonnet orchestrator,12,o/r,2026-10-16,2026-10-26,1,", log.read_text())
 
 
 if __name__ == "__main__":

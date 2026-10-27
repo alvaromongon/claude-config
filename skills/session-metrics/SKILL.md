@@ -40,10 +40,11 @@ Only for **public** repos: the row is published. Append it and re-render the pag
 ```bash
 python3 ~/.claude/skills/session-metrics/scripts/session_metrics.py ~/.claude/projects/<project> \
   --since YYYY-MM-DD --until YYYY-MM-DD --record ~/.claude/docs/efficiency.csv \
-  --repo <owner>/<name> --change "<the change this window measures>"
+  --repo <owner>/<name> --change "<the change this window measures>" --issue <n>
 python3 ~/.claude/skills/session-metrics/scripts/efficiency.py
 ```
 
+`--issue` is the claude-config issue that tracks the change; the pages link the change to it.
 `--record` refuses a window with no merged PRs. The Docs check fails if the README or
 `docs/efficiency.md` no longer matches the CSV.
 

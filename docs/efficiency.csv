@@ -1,2 +1,2 @@
-change,repo,since,until,merged_prs,cost_per_pr_usd_est,human_msgs_per_pr,first_review_clean_pct,review_rounds_mean,active_min_per_pr,tokens_per_pr,usage_limit_hits,main_context,subagent_context
-Baseline,alvaromongon/finance-agent,2026-10-16,2026-10-26,31,8.83,3.97,38,1.86,35,21504461,5,72696,54713
+change,issue,repo,since,until,merged_prs,cost_per_pr_usd_est,human_msgs_per_pr,first_review_clean_pct,review_rounds_mean,active_min_per_pr,tokens_per_pr,usage_limit_hits,main_context,subagent_context
+Baseline,,alvaromongon/finance-agent,2026-10-16,2026-10-26,31,8.83,3.97,38,1.86,35,21504461,5,72696,54713

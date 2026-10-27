@@ -16,19 +16,21 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[3]
 CSV = Path("docs/efficiency.csv")
 PAGES = {Path("README.md"): "snapshot", Path("docs/efficiency.md"): "history"}
-FIELDS = ["change", "repo", "since", "until", "merged_prs", "cost_per_pr_usd_est", "human_msgs_per_pr",
+ISSUES_URL = "https://github.com/alvaromongon/claude-config/issues"
+FIELDS = ["change", "issue", "repo", "since", "until", "merged_prs", "cost_per_pr_usd_est", "human_msgs_per_pr",
           "first_review_clean_pct", "review_rounds_mean", "active_min_per_pr", "tokens_per_pr",
           "usage_limit_hits", "main_context", "subagent_context"]
 
 
-def row_from(metrics: dict, repo: str, change: str, since: str | None, until: str | None) -> dict:
+def row_from(metrics: dict, repo: str, change: str, since: str | None, until: str | None,
+             issue: str | None = None) -> dict:
     merged = len(metrics["outcomes"]["merged_prs"])
     if not merged:
         raise ValueError("no merged PRs in the window: nothing to compare per PR")
     rounds = list(metrics["outcomes"]["review_rounds"].values())
     reviewed = len(rounds)
     return {
-        "change": change, "repo": repo, "since": since or "", "until": until or "",
+        "change": change, "issue": issue or "", "repo": repo, "since": since or "", "until": until or "",
         "merged_prs": str(merged),
         "cost_per_pr_usd_est": f"{metrics['cost']['total'] / merged:.2f}",
         "human_msgs_per_pr": f"{metrics['human']['messages'] / merged:.2f}",
@@ -60,6 +62,11 @@ def append_row(path: Path, row: dict) -> None:
         writer.writerow(row)
 
 
+def _change(row: dict) -> str:
+    """The change's label, linked to the issue that tracks it when there is one."""
+    return f"[{row['change']}]({ISSUES_URL}/{row['issue']})" if row.get("issue") else row["change"]
+
+
 def _delta(latest: str, baseline: str) -> str:
     if not latest or not baseline or float(baseline) == 0:
         return "—"
@@ -86,7 +93,7 @@ def render_snapshot(rows: list[dict]) -> str:
         ("Active agent minutes per merged PR", latest["active_min_per_pr"], "active_min_per_pr"),
     ]
     lines = [
-        f"Latest window: **{latest['change']}** on `{latest['repo']}`, {latest['since']} → {latest['until']}, "
+        f"Latest window: **{_change(latest)}** on `{latest['repo']}`, {latest['since']} → {latest['until']}, "
         f"{latest['merged_prs']} merged PRs ({since_baseline}).",
         "",
         "| Metric | Latest | vs baseline |",
@@ -105,7 +112,7 @@ def render_history(rows: list[dict]) -> str:
              "Review rounds | Active min/PR | Tokens/PR | Limit hits | Fixed context main / subagent |",
              "|---|---|---|---|---|---|---|---|---|---|---|---|"]
     for r in rows:
-        lines.append(f"| {r['change']} | {r['repo']} | {r['since']} → {r['until']} | {r['merged_prs']} | "
+        lines.append(f"| {_change(r)} | {r['repo']} | {r['since']} → {r['until']} | {r['merged_prs']} | "
                      f"{r['cost_per_pr_usd_est']} | {r['human_msgs_per_pr']} | {r['first_review_clean_pct']}% | "
                      f"{r['review_rounds_mean']} | {r['active_min_per_pr']} | {int(r['tokens_per_pr']):,} | "
                      f"{r['usage_limit_hits']} | {r['main_context']} / {r['subagent_context']} |")

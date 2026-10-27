@@ -22,7 +22,7 @@ METRICS = {
 
 
 def row(change, cost_per_pr, human_per_pr, **extra):
-    base = {"change": change, "repo": "o/r", "since": "2026-10-16", "until": "2026-10-26", "merged_prs": "31",
+    base = {"change": change, "issue": "", "repo": "o/r", "since": "2026-10-16", "until": "2026-10-26", "merged_prs": "31",
             "cost_per_pr_usd_est": cost_per_pr, "human_msgs_per_pr": human_per_pr,
             "first_review_clean_pct": "50", "review_rounds_mean": "1.75", "active_min_per_pr": "35",
             "tokens_per_pr": "32", "usage_limit_hits": "5", "main_context": "72696", "subagent_context": "54713"}
@@ -40,6 +40,11 @@ class RowTests(unittest.TestCase):
         self.assertEqual(r["active_min_per_pr"], "35")
         self.assertEqual(r["tokens_per_pr"], "32")
         self.assertEqual(r["merged_prs"], "31")
+
+    def test_keeps_the_issue_that_tracks_the_change(self):
+        r = ef.row_from(METRICS, repo="o/r", change="Sonnet orchestrator", since=None, until=None, issue="12")
+
+        self.assertEqual(r["issue"], "12")
 
     def test_refuses_a_window_with_no_merged_prs(self):
         empty = {**METRICS, "outcomes": {**METRICS["outcomes"], "merged_prs": []}}
@@ -62,7 +67,14 @@ class CsvTests(unittest.TestCase):
 
 
 class RenderTests(unittest.TestCase):
-    rows = [row("Baseline", "12.17", "4.00"), row("Sonnet orchestrator", "10.00", "3.00")]
+    rows = [row("Baseline", "12.17", "4.00"), row("Sonnet orchestrator", "10.00", "3.00", issue="12")]
+
+    def test_links_each_change_to_its_issue(self):
+        link = f"[Sonnet orchestrator]({ef.ISSUES_URL}/12)"
+
+        self.assertIn(link, ef.render_snapshot(self.rows))
+        self.assertIn(f"| {link} |", ef.render_history(self.rows))
+        self.assertIn("| Baseline |", ef.render_history(self.rows))
 
     def test_snapshot_compares_the_latest_window_with_the_baseline(self):
         snapshot = ef.render_snapshot(self.rows)
@@ -83,7 +95,7 @@ class RenderTests(unittest.TestCase):
         history = ef.render_history(self.rows)
 
         self.assertIn("| Baseline | o/r | 2026-10-16 → 2026-10-26 | 31 | 12.17 |", history)
-        self.assertIn("| Sonnet orchestrator |", history)
+        self.assertIn("| [Sonnet orchestrator](", history)
 
 
 class SyncTests(unittest.TestCase):
