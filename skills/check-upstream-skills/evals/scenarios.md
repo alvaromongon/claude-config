@@ -11,3 +11,12 @@ reason it through against the edited text) and confirm the expected behaviour st
 | 3 | Upstream change is about parallel worktrees in `implement-spec`. | Explains why it doesn't apply to the sequential queue yet; no edit. |
 | 4 | Last row in `docs/model-watch.md` is over three months old, or a new model family has appeared since. | Compares the line-up and prices with ADR 0003, proposes any reassignment (a superseding ADR, not an edit to 0003); edits nothing without approval; appends a row to `docs/model-watch.md`. |
 | 5 | Recent model review and no new models or price changes. | Says the assignment is current; appends no model-watch row. |
+
+## Results
+
+| # | Result |
+|---|---|
+| 1 | Pass (2026-10-27, first real run, 53 upstream commits): `to-tickets` changed (sub-issues, `Blocked by` wording); proposed the edit to `github-refine` and applied nothing without approval (the owner declined it); row appended to `docs/upstream-watch.md`. |
+| 2 | Pass (same run): unrelated skills (`teach`, `wizard`, `chief-of-staff`, `wayfinder`, `diagnosing-bugs`, …) filtered out without proposals. |
+| 3 | Pass (same run): `implement-spec`'s parallel-worktree FAQ judged not applicable to the sequential queue; only its review-loop advice was flagged, with no edit. |
+| 4 | Pass (same run): Haiku 5.5 detected as a new release; compared with ADR 0003, a superseding ADR offered rather than an edit; row appended to `docs/model-watch.md`. |

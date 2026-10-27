@@ -31,11 +31,11 @@ Modeled on `to-tickets` from [mattpocock/skills](https://github.com/mattpocock/s
    can only be measured once everything has landed, say so in the draft — it goes into the spec's
    *Risks* as "measurable only at close-out" — and put the slice that tests the riskiest
    assumption first.
-3. **Quiz step**: present the numbered draft (title, one-line demoable outcome, blockers, and
-   which slices form the frontier, and any blocker in another milestone) to the user before
-   publishing anything. Ask about granularity,
-   blocking edges, and invite merges/splits — same spirit as `grilling`: surface the open calls,
-   don't just publish a guess. A design decision taken here goes back into the spec's *Decisions*
+3. **Quiz step**: present the numbered draft (title, one-line demoable outcome, blockers, and which
+   slices form the frontier, and any blocker in another milestone) to the user before publishing
+   anything. Ask about granularity, blocking edges, and invite merges/splits — same spirit as
+   `grilling`: surface the open calls, don't just publish a guess. Word each open call so that "yes"
+   accepts your recommendation. A design decision taken here goes back into the spec's *Decisions*
    as "settled in refinement (date)" when you publish, so the spec stays the single record of what
    and why.
 4. **Brief + autonomy, frontier only**: for the frontier — the slices with no blockers, at most

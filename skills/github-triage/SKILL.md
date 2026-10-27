@@ -30,9 +30,9 @@ who wrote them — skip to `github-shape` (not yet bounded) or `github-refine`.
 3. **Decide** the outcome using `references/states.md`. For `ready-for-agent`/`ready-for-human`,
    draft the brief per `references/brief-format.md`.
 4. **Propose, don't apply**: show the user the proposed outcome (state change + brief or closing
-   reason) and wait for approval — this skill surfaces a recommendation, it does not silently
-   relabel or close issues. Every example or claim in a comment meant for the reporter must be
-   one you ran, not one you reasoned out.
+   reason), asked so that "yes" approves it, and wait for approval — this skill surfaces a
+   recommendation, it does not silently relabel or close issues. Every example or claim in a comment
+   meant for the reporter must be one you ran, not one you reasoned out.
 5. **Apply** once approved: post the brief or comment first, then update labels
    (`gh issue edit <n> --add-label ... --remove-label ...`), close if `wontfix`. The order matters
    for `needs-info`: a comment posted after the label, by the issue's own author, triggers the

@@ -32,9 +32,10 @@ line — refine requires one either way. Shaping a one-PR change is overhead.
    repo's README, `docs/decisions/` and open `spec`/`decision` issues touching the area, so you
    never ask what you can read.
 2. **Interview**: one question at a time, each with your guess and the reasoning behind it
-   (`Q: … / GUESS: …`). Before the first question, state your one-sentence read of the goal and a
-   confidence (0–100%) with what is missing; stop asking once you can predict the answers. Cover
-   the pieces of the spec format; don't ask for what you can look up.
+   (`Q: … / GUESS: …`), worded so that "yes" accepts your guess. Before the first question, state
+   your one-sentence read of the goal and a confidence (0–100%) with what is missing; stop asking
+   once you can predict the answers. Cover the pieces of the spec format; don't ask for what you
+   can look up.
    - **Owner first on two pieces**: for the **success metric** (metric, target, how it's measured)
      and for **what we give up**, ask for the owner's own version *before* showing yours — then
      add your guess as a challenge or a complement. These are the pieces where reacting to a
