@@ -33,6 +33,20 @@ in which it starts.
 - **Active time** adds gaps of up to 15 minutes between events; longer gaps are paused (waiting for
   the user, usage limits).
 
+## Record a window (this repo's efficiency log)
+
+Only for **public** repos: the row is published. Append it and re-render the pages:
+
+```bash
+python3 ~/.claude/skills/session-metrics/scripts/session_metrics.py ~/.claude/projects/<project> \
+  --since YYYY-MM-DD --until YYYY-MM-DD --record ~/.claude/docs/efficiency.csv \
+  --repo <owner>/<name> --change "<the change this window measures>"
+python3 ~/.claude/skills/session-metrics/scripts/efficiency.py
+```
+
+`--record` refuses a window with no merged PRs. The Docs check fails if the README or
+`docs/efficiency.md` no longer matches the CSV.
+
 ## Compare before and after
 
 1. Take the baseline over a window of at least 10 merged PRs and record it with its date range.

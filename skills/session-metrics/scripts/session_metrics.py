@@ -7,6 +7,7 @@ and model), review rounds per PR, human messages, active and paused time, usage-
 fixed context every call pays before doing any work.
 
 Usage: session_metrics.py PROJECT_DIR [PROJECT_DIR...] [--since YYYY-MM-DD] [--until YYYY-MM-DD] [--json]
+       [--record docs/efficiency.csv --repo OWNER/NAME --change LABEL]
 """
 import argparse
 import json
@@ -16,6 +17,8 @@ import sys
 from collections import Counter, defaultdict
 from datetime import datetime, timedelta
 from pathlib import Path
+
+import efficiency
 
 # $/MTok (input, output) at list price — source: ADR 0003, 2026-10-06. Cost is an estimate:
 # a subscription is billed by plan, and these prices only make runs comparable.
@@ -261,9 +264,18 @@ def main(argv: list[str]) -> int:
     parser.add_argument("--since", help="first session start date to include (YYYY-MM-DD)")
     parser.add_argument("--until", help="last session start date to include (YYYY-MM-DD)")
     parser.add_argument("--json", action="store_true", help="print the raw metrics as JSON")
+    parser.add_argument("--record", type=Path, metavar="CSV",
+                        help="append the window to this efficiency log (e.g. docs/efficiency.csv)")
+    parser.add_argument("--repo", help="with --record: the public repo measured, as owner/name")
+    parser.add_argument("--change", help="with --record: the configuration change this window measures")
     args = parser.parse_args(argv)
+    if args.record and not (args.repo and args.change):
+        parser.error("--record needs --repo and --change")
     metrics = measure(args.projects, since=args.since, until=args.until)
     print(json.dumps(metrics, indent=2) if args.json else render_markdown(metrics), end="")
+    if args.record:
+        efficiency.append_row(args.record, efficiency.row_from(metrics, repo=args.repo, change=args.change,
+                                                               since=args.since, until=args.until))
     return 0
 
 

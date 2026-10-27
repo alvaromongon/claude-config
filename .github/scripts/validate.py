@@ -5,6 +5,7 @@
 - Relative Markdown links resolve to an existing file (templates are skipped: their links are
   relative to the repository they get copied into).
 - Every YAML and JSON file parses.
+- The efficiency blocks in README.md and docs/efficiency.md match docs/efficiency.csv.
 """
 import json
 import os
@@ -16,6 +17,8 @@ from pathlib import Path
 import yaml
 
 ROOT = Path(__file__).resolve().parents[2]
+sys.path.insert(0, str(ROOT / "skills/session-metrics/scripts"))
+import efficiency  # noqa: E402
 SKILL_KEYS = {"name", "description", "context", "agent", "disable-model-invocation", "allowed-tools",
               "argument-hint", "user-invocable", "model", "effort"}
 LINK = re.compile(r"\[[^\]]*\]\(([^)\s]+)\)")
@@ -71,6 +74,11 @@ def main() -> int:
                 json.loads(path.read_text(encoding="utf-8"))
         except (yaml.YAMLError, json.JSONDecodeError) as error:
             errors.append(f"{path}: invalid {path.suffix[1:].upper()}: {error}")
+    try:
+        for page in efficiency.stale_pages(ROOT):
+            errors.append(f"{page}: efficiency block out of date — run skills/session-metrics/scripts/efficiency.py")
+    except ValueError as error:
+        errors.append(f"efficiency: {error}")
     for error in errors:
         print(f"::error::{error}" if "GITHUB_ACTIONS" in os.environ else error)
     print(f"validate: {len(errors)} error(s).")

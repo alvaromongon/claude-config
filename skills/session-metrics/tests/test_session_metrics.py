@@ -1,3 +1,5 @@
+import contextlib
+import io
 import sys
 import tempfile
 import unittest
@@ -178,6 +180,22 @@ class ReportTests(TempProject):
         self.assertIn("Cost per merged PR", report)
         self.assertIn("$20.00", report)
         self.assertIn("estimated", report)
+
+
+class RecordTests(TempProject):
+    def test_record_appends_the_window_to_the_efficiency_log(self):
+        call = tool_use("Bash", command="gh pr merge 7 --squash")
+        write_session(self.project, "s1", [
+            assistant("2026-10-20T10:00:00Z", output_tokens=1_000_000, content=[call]),
+            tool_result("2026-10-20T10:00:01Z", call["id"], "MERGED abc"),
+        ])
+        log = Path(self._tmp.name) / "efficiency.csv"
+
+        with contextlib.redirect_stdout(io.StringIO()):
+            sm.main([str(self.project), "--since", "2026-10-16", "--until", "2026-10-26", "--record", str(log),
+                     "--repo", "o/r", "--change", "Baseline"])
+
+        self.assertIn("Baseline,o/r,2026-10-16,2026-10-26,1,", log.read_text())
 
 
 if __name__ == "__main__":
