@@ -85,8 +85,10 @@ Verified against Claude Code (see `../evals/scenarios.md`):
 - **Trust the workspace**: Claude Code ignores a project's `allow` rules until the folder has
   been trusted once (run `claude` there interactively and accept the dialog). Say so at the end of
   setup.
-- An unattended run (e.g. `claude -p "/github-work-queue"`) also needs file edits approved: use
-  `--permission-mode acceptEdits` (or auto mode in an interactive session).
+- An unattended run (e.g. `claude -p "/github-work-queue" --model sonnet`) also needs file edits
+  approved: use `--permission-mode acceptEdits` (or auto mode in an interactive session).
+  `--model sonnet` keeps the orchestrator on Sonnet for the whole run
+  (`../../github-work-queue/references/queue-policy.md` › *Session model*).
 
 ## 3. `docs/agents/workflow.md` — the switch the work queue reads
 

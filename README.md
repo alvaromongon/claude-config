@@ -107,7 +107,7 @@ command.
 | [`github-triage`](skills/github-triage/SKILL.md) | Classify incoming external issues and PRs. | Automatically | `sonnet` |
 | [`github-refine`](skills/github-refine/SKILL.md) | Turn a spec into a milestone of tracer-bullet tickets; re-refine after a pivot. | Automatically | `opus`, effort high |
 | [`github-implement`](skills/github-implement/SKILL.md) | Implement one `ready-for-agent` issue with TDD, up to an open PR. | Automatically | `sonnet` |
-| [`github-work-queue`](skills/github-work-queue/SKILL.md) | Work through the `ready-for-agent` backlog unattended, merging where allowed. | **Manual only** | `sonnet`; reviewers `opus` |
+| [`github-work-queue`](skills/github-work-queue/SKILL.md) | Work through the `ready-for-agent` backlog unattended, merging where allowed. | **Manual only** | `sonnet` (start the session with `--model sonnet`); reviewers `opus` |
 | [`session-metrics`](skills/session-metrics/SKILL.md) | Measure a repo's sessions: cost per merged PR, review rounds, owner messages, time. | Automatically | `sonnet` |
 | [`check-upstream-skills`](skills/check-upstream-skills/SKILL.md) | Review upstream skill repos for improvements; check the model assignment. | **Manual only** | session |
 

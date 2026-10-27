@@ -33,6 +33,23 @@ again (step 2 below) and wait for CI, and leave it ready for review. If a confli
 resolved without guessing at intent, escalate that ticket. Re-run the queue after merging a
 waiting PR to refresh the rest.
 
+## Session model
+
+The orchestrator runs on `sonnet`
+([ADR 0003](../../../docs/decisions/0003-assign-models-per-skill-by-role.md)), and only the
+session model keeps it there. The skill's `model: sonnet` covers the turn `/github-work-queue` is
+invoked in; each subagent's notification starts a new turn on the session model, so a session
+started on Opus orchestrates every ticket after the first launch on Opus. `context: fork` doesn't
+help: the forked skill returns once it has launched its first subagent, and the main session
+orchestrates the rest on its own model. Measured in the workflow sandbox on 2026-10-27
+(`docs/model-watch.md`).
+
+So, before the first ticket, say in one line that the queue must run in a session started on
+Sonnet — `claude --model sonnet`, `claude -p '/github-work-queue' --model sonnet` unattended, or
+`/model sonnet` before invoking the skill — and that a session on another model should be
+restarted that way. Then continue: the reviewers and the checkpoint pick their own models below,
+whatever the session model.
+
 ## Subagent models
 
 Pass `model` on every `Agent` call
