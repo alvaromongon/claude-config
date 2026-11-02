@@ -27,13 +27,15 @@ manually or after a confirmation: tell the user to run `/github-work-queue` inst
 The `Agent` tool, to spawn an implementer subagent and a separate reviewer subagent per ticket —
 this skill is not just instructions read in the main session, it actively dispatches subagents.
 
-## Launch on Sonnet
+## Orchestrator subagent
 
-Start the queue session on Sonnet: `claude --model sonnet` (or `claude -p '/github-work-queue'
---model sonnet` unattended), or `/model sonnet` before `/github-work-queue`. The `model: sonnet`
-above only holds for the turn the skill is invoked in; every later turn — each one a subagent's
-notification starts — runs on the session model. Before the first ticket, say this in one line,
-with the command to relaunch — see `references/queue-policy.md` › *Session model*.
+Do not orchestrate in this session, whatever its model: the session model isn't part of the
+contract, and only a Sonnet subagent stays on Sonnet for the whole run
+(`references/queue-policy.md` › *Orchestrator*). Make exactly one `Agent` call with
+`model: "sonnet"`, `subagent_type: "general-purpose"` and `run_in_background: false`, and wait for
+it. Its prompt: you are the work-queue orchestrator for this repo; follow
+`~/.claude/skills/github-work-queue/references/queue-policy.md` to the end of the queue and return
+the end-of-run report. Pass on any scope the user gave. When it returns, show its report and stop.
 
 ## Procedure
 

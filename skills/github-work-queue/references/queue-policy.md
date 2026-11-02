@@ -33,22 +33,16 @@ again (step 2 below) and wait for CI, and leave it ready for review. If a confli
 resolved without guessing at intent, escalate that ticket. Re-run the queue after merging a
 waiting PR to refresh the rest.
 
-## Session model
+## Orchestrator
 
-The orchestrator runs on `sonnet`
-([ADR 0003](../../../docs/decisions/0003-assign-models-per-skill-by-role.md)), and only the
-session model keeps it there. The skill's `model: sonnet` covers the turn `/github-work-queue` is
-invoked in; each subagent's notification starts a new turn on the session model, so a session
-started on Opus orchestrates every ticket after the first launch on Opus. `context: fork` doesn't
-help: the forked skill returns once it has launched its first subagent, and the main session
-orchestrates the rest on its own model. Measured in the workflow sandbox on 2026-10-27
-(`docs/model-watch.md`).
+You run this policy as a subagent on `sonnet`, started by the skill in the main session
+([ADR 0008](../../../docs/decisions/0008-run-the-work-queue-orchestrator-as-a-foreground-sonnet-subagent.md)).
+The session model doesn't matter: yours is fixed for the whole run.
 
-So, before the first ticket, say in one line that the queue must run in a session started on
-Sonnet — `claude --model sonnet`, `claude -p '/github-work-queue' --model sonnet` unattended, or
-`/model sonnet` before invoking the skill — and that a session on another model should be
-restarted that way. Then continue: the reviewers and the checkpoint pick their own models below,
-whatever the session model.
+Pass `run_in_background: false` on every `Agent` call and wait for it, so your turn never ends
+while a subagent runs: a background subagent ends your turn, you return, and the main session takes
+over the queue on its own model. Put the two reviewers in one message, so they still run in
+parallel. You can't ask the owner anything: what needs them goes in the end-of-run report.
 
 ## Subagent models
 
@@ -88,7 +82,8 @@ For each issue on the frontier, one at a time (no parallel worktrees in this ver
    unattended merge, so security findings get the same weight as correctness findings here, not
    left to CI's CodeQL pass alone. Tell each reviewer it **must** invoke its skill through the
    Skill tool — not "if available": given the option, reviewers skip `code-review` and review by
-   hand. Afterwards remove both worktrees (`git worktree remove --force <path>`, then
+   hand. Also tell the security reviewer it must run every sub-task `security-review` asks for, each
+   through `Agent` with `run_in_background: false`, however small the diff: otherwise it skips them. Afterwards remove both worktrees (`git worktree remove --force <path>`, then
    `git branch -D worktree-agent-*`): they hold another commit, so Claude Code keeps them.
 3. **Fix loop**: if either review raises blocking findings, spawn one more implementer subagent to
    address them, referencing both reviews' findings verbatim. One retry only — if it's still not

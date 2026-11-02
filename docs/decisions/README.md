@@ -15,3 +15,4 @@ traceability*) and are not retrofitted; the rule applies from 0004 on.
 | [0005](0005-adaptive-milestones-findings-rule-and-two-level-design-records.md) | Adaptive milestones: a findings rule, a post-merge checkpoint and two-level design records | Proposed |
 | [0006](0006-self-contained-adrs-and-glossary.md) | ADRs and the glossary are self-contained; references point towards them | Proposed |
 | [0007](0007-readme-as-landing-page-with-a-measured-efficiency-log.md) | The README is a landing page with a measured efficiency log; topic documents own their topics | Accepted |
+| [0008](0008-run-the-work-queue-orchestrator-as-a-foreground-sonnet-subagent.md) | Run the work-queue orchestrator as a foreground Sonnet subagent | Accepted |
